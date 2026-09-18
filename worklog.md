@@ -1,6 +1,25 @@
 # Worklog — Multi-Agent Shared Log
 
 ---
+Task ID: 8
+Agent: main (Super Z)
+Task: تحقق مستقل من سؤال المستخدم «هل الموقع شغال على الخلاصة — v5 ومطبّقة فعلياً؟ الرابط لا يشتغل» + إعادة صياغة التوجيه + إثبات حي بالقياس
+
+Work Log:
+- تدقيق تنفيذ v5 (worklog Task 7): الأدلة المادية مؤكدة — src/components/brand/pearl-scene.tsx + hero-visual.tsx موجودان، three@^0.186.0 + @react-three/fiber@^9.7.0 في package.json، 7 لقطات QA في download/v5-screenshots/
+- قياس الرابط https://s1bxf7jbhqz0-d.space-z.ai قياساً متكرراً: / => 200 ×4 (181KB)، /services => 200 ×4 (72KB)، /cv-builder => 200 ×4 (58KB) — استجابة 60-196ms
+- رصد نافذة عابرة للبوابة (19:37-19:38 UTC): HTTP 202 + صفحة «Deploying...» (2411 بايت من z-cdn.chatglm.cn) قبل استقرار كل المسارات على 200 — أرجح تفسير لما رآه المستخدم إضافة إلى فترة توقف الحاوية عند انتهاء الجلسة السابقة (خادم dev الحالي أُقلع 19:07 فقط)
+- عدّ العلامات في HTML المُقدَّم فعلياً: أم سارة ×17، pearl ×19، logo-construct ×2، knowledge-orbit ×2، tablist ×1، والجذر lang="ar" dir="rtl" — الحفظ في scripts/link-home-final.html
+- لقطتان حيّتان من الرابط عبر agent-browser (networkidle + صفر أخطاء صفحة، العنوان: «أم سارة | منصة الخدمات الأكاديمية والبحثية»): download/live-proof/01-live-home-dark-1920.png + 02-live-home-force3d-1920.png
+- البيئة: dev على 3000 + standalone إنتاجي على 3100، dev.log نظيف (Ready in 2.2s، لا أخطاء)
+- ملاحظة نظافة: bun.lock عاد غير متجاهَل في .gitignore (أعادته تهيئة البيئة) — لا يمس نشر Render (npm ci --legacy-peer-deps) لكن يُستحسن إضافته للتجاهل
+
+Stage Summary:
+- الجواب المثبت بالقياس: v5 مطبّقة فعلياً داخل المشروع، والرابط يعمل الآن (12/12 قياس 200) — ما رآه المستخدم كان نافذة إعادة تهيئة عابرة لا خللاً في التطبيق
+- ما تعذّر تحديده بصدق: طبيعة فشل محاولة المستخدم بالضبط (رسالته بلا كود خطأ ولا توقيت) — وثّقت النوافذ المعروفة المفسّرة له
+- مخرجات: download/live-proof/ (لقطتان حيّتان) + scripts/link-home-final.html (HTML المُقدَّم كدليل قابل للفحص)
+
+---
 Task ID: 7
 Agent: main (Super Z)
 Task: المرحلة v5 — تنظيف Markdown + تدقيق + بحث موثق (GitHub/Gitee/Drive/Framer) + مشهد اللؤلؤة ثلاثي الأبعاد (three.js/R3F) داخل نظام هوية v4
