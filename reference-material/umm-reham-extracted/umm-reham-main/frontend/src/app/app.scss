@@ -1,0 +1,175 @@
+.app-viewport {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+.page-content {
+  flex: 1;
+}
+
+.page-content.admin-mode {
+  padding: 0;
+}
+
+.floating-whatsapp-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  left: auto;
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.42);
+  z-index: 990;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.floating-whatsapp-btn:hover {
+  transform: scale(1.12);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
+  border-color: #FFFFFF;
+}
+
+.floating-whatsapp-btn svg {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .floating-whatsapp-btn {
+    bottom: 74px; /* Elevated cleanly above bottom nav bar */
+    right: 12px;
+    width: 44px;
+    height: 44px;
+    box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+  }
+  .floating-whatsapp-btn svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Floating Accessibility Button (الموجود أسفل اليسار بالصورة) */
+.floating-accessibility-btn {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  right: auto;
+  width: 46px;
+  height: 46px;
+  background: var(--theme-cta-bg, #0F5132);
+  color: var(--theme-cta-text, #FFFFFF);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 990;
+  transition: all 0.25s ease;
+}
+
+.floating-accessibility-btn:hover {
+  transform: scale(1.1);
+  filter: brightness(1.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+  border-color: #FFFFFF;
+}
+
+@media (max-width: 768px) {
+  .floating-accessibility-btn {
+    bottom: 74px; /* Elevated cleanly above bottom nav bar */
+    left: 12px;
+    width: 38px;
+    height: 38px;
+    opacity: 0.88;
+  }
+}
+
+/* =========================================================
+   Mobile Luxury Floating Bottom App Bar (شريط التنقل السفلي الفاخر)
+   محدد ومثبت بأسفل شاشة الهاتف تماماً خارج أي حاويات
+   ========================================================= */
+.mobile-bottom-appbar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: var(--theme-primary, #0A2F24);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1.5px solid rgba(var(--theme-accent-rgb, 229, 185, 79), 0.35);
+  z-index: 9995;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 0.5rem;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.4);
+
+  .m-tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.72rem;
+    font-weight: 700;
+    flex: 1;
+    padding: 6px 0;
+    transition: color 0.2s, transform 0.2s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    .m-tab-ico {
+      font-size: 1.25rem;
+      line-height: 1;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .m-tab-txt {
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    &.active {
+      color: var(--theme-accent, #E5B94F) !important;
+      font-weight: 800;
+
+      .m-tab-ico {
+        transform: scale(1.22);
+        filter: drop-shadow(0 0 6px var(--theme-accent, #E5B94F));
+      }
+
+      .m-tab-txt {
+        color: var(--theme-accent, #E5B94F) !important;
+        font-weight: 800;
+        text-shadow: 0 0 8px rgba(var(--theme-accent-rgb, 229, 185, 79), 0.5);
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-appbar {
+    display: flex !important;
+  }
+  .page-content:not(.admin-mode) {
+    padding-bottom: 110px !important; /* يمنع حجب أي محتوى خلف الشريط السفلي والأزرار العائمة */
+  }
+}
+

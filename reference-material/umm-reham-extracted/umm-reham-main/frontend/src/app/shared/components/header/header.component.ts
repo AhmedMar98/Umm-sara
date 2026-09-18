@@ -1,0 +1,1199 @@
+import { Component, OnInit, OnDestroy, inject, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
+import { AudioService } from '../../../core/services/audio.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { ThemeService } from '../../../core/services/theme.service';
+import { ApiService } from '../../../core/services/api.service';
+import { CartService } from '../../../core/services/cart.service';
+import { ClientAuthService } from '../../../core/services/client-auth.service';
+import { CartDrawerComponent } from '../cart-drawer/cart-drawer.component';
+import { FavoritesDrawerComponent } from '../favorites-drawer/favorites-drawer.component';
+import { ThemeSwitcherComponent } from '../theme-switcher/theme-switcher.component';
+import { ClientAuthModalComponent } from '../client-auth-modal/client-auth-modal.component';
+import { NotificationService } from '../../../core/services/notification.service';
+import { NotificationsDrawerComponent } from '../notifications-drawer/notifications-drawer.component';
+
+@Component({
+  selector: 'app-header',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    CartDrawerComponent,
+    FavoritesDrawerComponent,
+    ThemeSwitcherComponent,
+    ClientAuthModalComponent,
+    NotificationsDrawerComponent
+  ],
+  template: `
+    <!-- ==========================================
+         1. TOP BAR (الشريط العلوي المعتمد)
+         ========================================== -->
+    <div class="site-topbar" dir="rtl">
+      <div class="topbar-inner-container">
+        
+        <!-- Right: Saudi Platform Title -->
+        <div class="topbar-platform-info">
+          <span class="flag-icon" role="img" aria-label="علم السعودية">🇸🇦</span>
+          <span class="platform-text">منصة سعودية للدعم الأكاديمي والاستشارات – نخدم جميع مناطق المملكة</span>
+        </div>
+
+        <!-- Left: Live Weather, City, Time & Hijri Date -->
+        <div class="topbar-meta-row">
+          <span class="meta-item"><span class="meta-icon">🌙</span> صافي، C°44</span>
+          <span class="meta-sep">|</span>
+          <span class="meta-item"><span class="meta-icon">📍</span> الرياض</span>
+          <span class="meta-sep">|</span>
+          <span class="meta-item"><span class="meta-icon">🕒</span> {{ currentTime }}</span>
+          <span class="meta-sep">|</span>
+          <span class="meta-item date-highlight" [title]="'اليوم: ' + todayGregorian"><span class="meta-icon">📅</span> {{ currentHijriDate }}</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==========================================
+         2. MAIN NAVIGATION HEADER (الترويسة البيضاء الفاخرة)
+         ========================================== -->
+    <header class="main-site-header" [class.scrolled]="isScrolled" dir="rtl">
+      <div class="header-inner-container">
+        
+        <!-- Right: Hamburger & Brand Logo Group (أيقونة القائمة بيمين شعار واسم المنصة) -->
+        <div class="header-brand-wrapper">
+          <!-- Mobile Hamburger Menu Button -->
+          <button type="button" class="btn-mobile-toggle" (click)="toggleMobileMenu()" aria-label="القائمة الرئيسية" title="القائمة الرئيسية">
+            <span class="hamburger-box">
+              <span class="bar" [class.open]="isMobileMenuOpen"></span>
+              <span class="bar" [class.open]="isMobileMenuOpen"></span>
+              <span class="bar" [class.open]="isMobileMenuOpen"></span>
+            </span>
+          </button>
+
+          <!-- Brand Logo (UR Monogram with Sunburst + Slogan) -->
+          <div class="header-brand-section">
+          <a routerLink="/" class="brand-link" (click)="onNavClick()">
+            
+            <!-- UR Monogram Logo with Sunburst (الشعار أولاً قبل الاسم) -->
+            <div class="ur-logo-emblem" title="أم رهام — UMM REHAM">
+              <svg viewBox="0 0 48 48" width="44" height="44" class="ur-svg">
+                <!-- Sunburst Rays above R -->
+                <g fill="#E5B94F" stroke="#E5B94F">
+                  <circle cx="34" cy="7" r="1.6" />
+                  <path d="M34 1.5 L34 4" stroke-width="1.8" stroke-linecap="round" />
+                  <path d="M39 3.5 L37 5.5" stroke-width="1.8" stroke-linecap="round" />
+                  <path d="M41 9 L38.5 8" stroke-width="1.8" stroke-linecap="round" />
+                  <path d="M29 3.5 L31 5.5" stroke-width="1.8" stroke-linecap="round" />
+                  <path d="M27 9 L29.5 8" stroke-width="1.8" stroke-linecap="round" />
+                </g>
+                <!-- U Letter -->
+                <path d="M7 13 V25 C7 31.5 11.5 35 16.5 35 C21.5 35 26 31.5 26 25 V13 H20.5 V24.8 C20.5 27.5 18.8 29.5 16.5 29.5 C14.2 29.5 12.5 27.5 12.5 24.8 V13 Z" fill="var(--theme-accent, #0F5132)" />
+                <!-- R Letter -->
+                <path d="M25 13 H34.5 C38.5 13 41.5 15.8 41.5 19.5 C41.5 22.8 39.2 24.8 36.2 25.4 L41.5 35 H35.2 L30.8 26.2 H29.5 V35 H25 Z M29.5 17.5 V22 H34 C35.8 22 36.8 21.2 36.8 19.8 C36.8 18.4 35.8 17.5 34 17.5 Z" fill="var(--theme-accent, #0F5132)" />
+              </svg>
+            </div>
+
+            <!-- Brand Text Details (الاسم والتفاصيل بعد الشعار) -->
+            <div class="brand-text-col">
+              <span class="brand-name">أم رهام</span>
+              <span class="brand-subtext">تعليم • استشارات • تطوير • إنجاز</span>
+            </div>
+
+          </a>
+        </div>
+        </div>
+
+        <!-- Center: Navigation Links -->
+        <nav class="header-nav-menu">
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (mouseenter)="onHover()" (click)="onNavClick()">الرئيسية</a>
+          <a routerLink="/about" routerLinkActive="active" (mouseenter)="onHover()" (click)="onNavClick()">من نحن</a>
+          
+          <!-- Dropdown for Services -->
+          <div class="nav-dropdown-item" (mouseenter)="isServicesMenuOpen = true" (mouseleave)="isServicesMenuOpen = false">
+            <a routerLink="/services" routerLinkActive="active" (click)="onNavClick()" class="dropdown-trigger">
+              <span>خدماتنا</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </a>
+            
+            <div class="dropdown-panel" *ngIf="isServicesMenuOpen">
+              <a routerLink="/services" [queryParams]="{category: 'all'}" (click)="isServicesMenuOpen = false; onNavClick()">
+                <span class="dp-icon">✨</span> جميع الخدمات بالمتجر
+              </a>
+              <a routerLink="/services" [queryParams]="{category: 'schools'}" (click)="isServicesMenuOpen = false; onNavClick()">
+                <span class="dp-icon">🎒</span> خدمات طلاب المدارس
+              </a>
+              <a routerLink="/services" [queryParams]="{category: 'university'}" (click)="isServicesMenuOpen = false; onNavClick()">
+                <span class="dp-icon">🎓</span> الخدمات الجامعية
+              </a>
+              <a routerLink="/services" [queryParams]="{category: 'office'}" (click)="isServicesMenuOpen = false; onNavClick()">
+                <span class="dp-icon">📑</span> الخدمات المكتبية
+              </a>
+              <a routerLink="/services" [queryParams]="{category: 'general'}" (click)="isServicesMenuOpen = false; onNavClick()">
+                <span class="dp-icon">🏛️</span> الخدمات العامة
+              </a>
+            </div>
+          </div>
+
+          <a routerLink="/order" routerLinkActive="active" (mouseenter)="onHover()" (click)="onNavClick()">طلب خدمة</a>
+          <a routerLink="/testimonials" routerLinkActive="active" (mouseenter)="onHover()" (click)="onNavClick()">آراء العملاء</a>
+          <a routerLink="/articles" routerLinkActive="active" (mouseenter)="onHover()" (click)="onNavClick()">المقالات</a>
+          <a routerLink="/contact" routerLinkActive="active" (mouseenter)="onHover()" (click)="onNavClick()">تواصل معنا</a>
+        </nav>
+
+        <!-- Left: Action CTA & Tools -->
+        <div class="header-action-group">
+          
+          <!-- Green "طلب خدمة" Button -->
+          <a routerLink="/order" class="btn-consultation-cta" (click)="onNavClick()">
+            <span>طلب خدمة</span>
+            <span class="btn-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+              </svg>
+            </span>
+          </a>
+
+          <!-- Favorites Trigger Icon -->
+          <button type="button" class="btn-favorites-icon" (click)="cartService.toggleFavorites()" title="قائمة المفضلة">
+            <span class="fav-heart-icon">❤️</span>
+            <span class="favorites-badge" *ngIf="cartService.favoritesCount() > 0">
+              {{ cartService.favoritesCount() }}
+            </span>
+          </button>
+
+          <!-- Cart Trigger Icon -->
+          <button type="button" class="btn-cart-icon" (click)="cartService.toggleCart()" title="سلة الخدمات والطلبات">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="cart-badge" *ngIf="cartService.totalCount() > 0">
+              {{ cartService.totalCount() }}
+            </span>
+          </button>
+
+          <!-- Notification Bell Trigger Icon -->
+          <button type="button" class="btn-notif-icon" (click)="notifService.toggleClientDrawer()" title="مركز التنبيهات والإشعارات">
+            <span class="notif-bell-icon">🔔</span>
+            <span class="notif-badge" *ngIf="notifService.clientUnreadCount() > 0">
+              {{ notifService.clientUnreadCount() }}
+            </span>
+          </button>
+
+          <!-- Client Profile / Login Trigger -->
+          <ng-container *ngIf="!clientAuth.isAuthenticated()">
+            <button type="button" class="btn-client-login-trigger" (click)="openClientTab('login')" title="تسجيل الدخول أو إنشاء حساب طالب">
+              <span class="client-mini-icon">👤</span>
+              <span class="btn-client-label">حسابي</span>
+            </button>
+          </ng-container>
+
+          <ng-container *ngIf="clientAuth.isAuthenticated()">
+            <div class="client-account-capsule-wrap" (click)="$event.stopPropagation()">
+              <button type="button" class="btn-client-capsule" (click)="toggleClientMenu($event)" [title]="'حساب: ' + clientAuth.currentClient()?.fullName">
+                <div class="client-avatar-circle" [style.background]="clientAuth.currentClient()?.avatarColor">
+                  {{ getClientInitials(clientAuth.currentClient()?.fullName) }}
+                </div>
+                <div class="client-name-wrap">
+                  <span class="client-name">{{ clientAuth.currentClient()?.fullName }}</span>
+                  <span class="client-role">{{ clientAuth.currentClient()?.academicLevel }}</span>
+                </div>
+                <span class="chevron-arrow" [class.open]="isClientMenuOpen">▾</span>
+              </button>
+
+              <!-- Dropdown Menu -->
+              <div class="client-dropdown-menu" *ngIf="isClientMenuOpen">
+                <div class="dropdown-client-header">
+                  <div class="header-avatar-circle" [style.background]="clientAuth.currentClient()?.avatarColor">
+                    {{ getClientInitials(clientAuth.currentClient()?.fullName) }}
+                  </div>
+                  <div class="header-info-col">
+                    <strong>{{ clientAuth.currentClient()?.fullName }}</strong>
+                    <small>{{ clientAuth.currentClient()?.phone }}</small>
+                    <span class="header-univ-badge">{{ clientAuth.currentClient()?.university }}</span>
+                  </div>
+                </div>
+
+                <div class="dropdown-menu-links">
+                  <button type="button" class="dropdown-link-item" (click)="openClientTab('profile')">
+                    <span class="item-icon">🎓</span>
+                    <span>الملف الأكاديمي وتعديل البيانات</span>
+                  </button>
+                  <button type="button" class="dropdown-link-item" (click)="openClientTab('orders')">
+                    <span class="item-icon">📦</span>
+                    <span>طلباتي وسجل الإنجاز</span>
+                  </button>
+                  <button type="button" class="dropdown-link-item" (click)="openCartFromMenu()">
+                    <span class="item-icon">🛒</span>
+                    <span>سلة الخدمات ({{ cartService.totalCount() }})</span>
+                  </button>
+                  <div class="dropdown-divider"></div>
+                  <button type="button" class="dropdown-link-item logout-link" (click)="logoutClient()">
+                    <span class="item-icon">🚪</span>
+                    <span>تسجيل الخروج</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- Multi-Theme Palette Switcher (👑 السيادية | 🤍 العاجي | 🌙 الزمرد الليلي | 🏛️ التراثي) -->
+          <app-theme-switcher></app-theme-switcher>
+
+
+
+        </div>
+
+      </div>
+
+      <!-- Mobile Dropdown Navigation Drawer -->
+      <div class="mobile-nav-drawer" [class.open]="isMobileMenuOpen">
+        <!-- Mobile Client Section -->
+        <div class="mobile-client-banner">
+          <ng-container *ngIf="!clientAuth.isAuthenticated()">
+            <button type="button" class="btn-mobile-client-login" (click)="openClientTab('login'); closeMobileMenu()">
+              <span>👤 تسجيل الدخول / حساب جديد</span>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="clientAuth.isAuthenticated()">
+            <div class="mobile-client-card" (click)="openClientTab('profile'); closeMobileMenu()">
+              <div class="client-avatar-circle" [style.background]="clientAuth.currentClient()?.avatarColor">
+                {{ getClientInitials(clientAuth.currentClient()?.fullName) }}
+              </div>
+              <div>
+                <strong>{{ clientAuth.currentClient()?.fullName }}</strong>
+                <small>{{ clientAuth.currentClient()?.academicLevel }} • {{ clientAuth.currentClient()?.university }}</small>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <nav class="mobile-nav-items">
+          <a routerLink="/" (click)="closeMobileMenu()">الرئيسية</a>
+          <a routerLink="/about" (click)="closeMobileMenu()">من نحن</a>
+          <a routerLink="/services" (click)="closeMobileMenu()">المتجر والخدمات 🛒</a>
+          <a (click)="cartService.openFavorites(); closeMobileMenu()" style="cursor: pointer;">المفضلة الأكاديمية ❤️ <span *ngIf="cartService.favoritesCount() > 0">({{ cartService.favoritesCount() }})</span></a>
+          <a (click)="notifService.openClientDrawer(); closeMobileMenu()" style="cursor: pointer;">الإشعارات والتنبيهات 🔔 <span *ngIf="notifService.clientUnreadCount() > 0" class="mobile-notif-pill">{{ notifService.clientUnreadCount() }} جديد</span></a>
+          <a routerLink="/order" (click)="closeMobileMenu()">طلب خدمة ومتابعة ✍️</a>
+          <a routerLink="/testimonials" (click)="closeMobileMenu()">آراء العملاء ⭐</a>
+          <a routerLink="/articles" (click)="closeMobileMenu()">المقالات والأدلة العلمية 📚</a>
+          <a routerLink="/contact" (click)="closeMobileMenu()">تواصل معنا 📞</a>
+          <a routerLink="/portfolio" (click)="closeMobileMenu()">أعمالنا السابقة 🎨</a>
+          <div class="mobile-theme-box" style="padding-top: 0.75rem; border-top: 1px solid #ECECEC;">
+            <app-theme-switcher></app-theme-switcher>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Global Favorites Drawer Component -->
+    <app-favorites-drawer></app-favorites-drawer>
+
+    <!-- Global Cart Drawer Component -->
+    <app-cart-drawer></app-cart-drawer>
+
+    <!-- Client Account & Profile Modal Component -->
+    <app-client-auth-modal></app-client-auth-modal>
+
+    <!-- Client Notifications Drawer Component -->
+    <app-notifications-drawer></app-notifications-drawer>
+  `,
+  styles: [`
+    :host {
+      display: block;
+      position: sticky;
+      top: 0;
+      z-index: 1050;
+      width: 100%;
+    }
+
+    /* =========================================================
+       1. TOP BAR STYLES
+       ========================================================= */
+    .site-topbar {
+      background: #FFFFFF;
+      border-bottom: 1px solid #ECECEC;
+      padding: 0.38rem 1.5rem;
+      font-size: 0.82rem;
+      color: #555555;
+      font-family: var(--font-family-arabic) !important;
+      position: relative;
+      z-index: 1010;
+    }
+
+    .topbar-inner-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .topbar-platform-info {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .flag-icon {
+      font-size: 1rem;
+    }
+
+    .platform-text {
+      color: #333333;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+    }
+
+    .topbar-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      white-space: nowrap;
+      font-size: 0.8rem;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: #555555;
+      font-weight: 500;
+    }
+
+    .meta-icon {
+      font-size: 0.85rem;
+    }
+
+    .meta-sep {
+      color: #D1D5DB;
+      font-size: 0.75rem;
+    }
+
+    .date-highlight {
+      color: #222222;
+      font-weight: 600;
+    }
+
+    /* =========================================================
+       2. MAIN WHITE NAVIGATION HEADER
+       ========================================================= */
+    .main-site-header {
+      background: #FFFFFF;
+      border-bottom: 1px solid #EAEAEA;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+      position: relative;
+      z-index: 1000;
+      transition: all 0.25s ease;
+      font-family: var(--font-family-arabic) !important;
+    }
+
+    .main-site-header.scrolled {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .header-inner-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0.65rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    /* Brand Section & Mobile Toggle Group */
+    .header-brand-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-shrink: 0;
+    }
+
+    .header-brand-section {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .brand-text-col {
+      display: flex;
+      flex-direction: column;
+      text-align: right;
+    }
+
+    .brand-name {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--theme-accent, #0F5132);
+      line-height: 1.15;
+      letter-spacing: -0.3px;
+      transition: color 0.3s ease;
+    }
+
+    .brand-subtext {
+      font-size: 0.68rem;
+      color: #718096;
+      font-weight: 500;
+      margin-top: 2px;
+      white-space: nowrap;
+    }
+
+    .ur-logo-emblem {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s ease;
+    }
+
+    .brand-link:hover .ur-logo-emblem {
+      transform: scale(1.05);
+    }
+
+    /* Navigation Menu */
+    .header-nav-menu {
+      display: flex;
+      align-items: center;
+      gap: clamp(0.55rem, 1.15vw, 1.45rem);
+      margin: 0 auto;
+    }
+
+    .header-nav-menu a {
+      color: #2D3748;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 0.4rem 0.2rem;
+      position: relative;
+      transition: color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      white-space: nowrap;
+    }
+
+    .header-nav-menu a:hover,
+    .header-nav-menu a.active {
+      color: var(--theme-accent, #0F5132);
+    }
+
+    .header-nav-menu a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2.5px;
+      background: var(--theme-accent, #0F5132);
+      border-radius: 4px;
+    }
+
+    /* Dropdown for Services */
+    .nav-dropdown-item {
+      position: relative;
+    }
+
+    .dropdown-trigger {
+      cursor: pointer;
+    }
+
+    .dropdown-panel {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: #FFFFFF;
+      min-width: 210px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      border: 1px solid #ECECEC;
+      padding: 0.5rem 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 1050;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .dropdown-panel a {
+      padding: 0.65rem 1.1rem;
+      color: #333333;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .dropdown-panel a:hover {
+      background: var(--theme-badge-bg, #F4FAF7);
+      color: var(--theme-accent, #0F5132);
+      padding-right: 1.35rem;
+    }
+
+    .dropdown-panel a::after {
+      display: none !important;
+    }
+
+    .dp-icon {
+      margin-left: 0.35rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Action Group */
+    .header-action-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    /* Dynamic Theme Consultation Button */
+    .btn-consultation-cta {
+      background: var(--theme-cta-bg, #0F5132);
+      color: var(--theme-cta-text, #FFFFFF) !important;
+      padding: 0.55rem 1.15rem;
+      border-radius: 7px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.25s ease;
+    }
+
+    .btn-consultation-cta:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-favorites-icon,
+    .btn-cart-icon,
+    .btn-notif-icon,
+    .btn-theme-icon,
+    .btn-admin-icon {
+      background: #F7FAFC;
+      border: 1px solid #E2E8F0;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4A5568;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .btn-favorites-icon:hover,
+    .btn-cart-icon:hover,
+    .btn-notif-icon:hover,
+    .btn-theme-icon:hover,
+    .btn-admin-icon:hover {
+      background: var(--theme-badge-bg, #EDF2F7);
+      color: var(--theme-accent, #0F5132);
+      border-color: var(--theme-badge-border, #CBD5E0);
+    }
+
+    .btn-favorites-icon:hover,
+    .btn-notif-icon:hover {
+      transform: scale(1.06);
+    }
+
+    .fav-heart-icon {
+      font-size: 1.15rem;
+      line-height: 1;
+      filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.4));
+    }
+
+    .notif-bell-icon {
+      font-size: 1.15rem;
+      line-height: 1;
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-notif-icon:hover .notif-bell-icon {
+      transform: rotate(15deg) scale(1.1);
+    }
+
+    .favorites-badge,
+    .cart-badge,
+    .notif-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #E53E3E;
+      color: #FFFFFF;
+      font-size: 0.7rem;
+      font-weight: 800;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 4px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #FFFFFF;
+    }
+
+    .notif-badge {
+      background: #EF4444;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+      animation: notifPulse 2s infinite;
+    }
+
+    @keyframes notifPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+
+    .mobile-notif-pill {
+      background: #EF4444;
+      color: #fff;
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    .favorites-badge {
+      background: #EF4444;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+    }
+
+    /* Mobile Hamburger Button */
+    .btn-mobile-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--theme-primary, #0A2F24) !important;
+      color: #FFFFFF !important;
+      border: 1.8px solid var(--theme-accent, #E5B94F) !important;
+      border-radius: 50%;
+      padding: 0;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      transition: all 0.25s ease;
+
+      &:hover {
+        transform: scale(1.06);
+        border-color: #FFFFFF !important;
+      }
+    }
+    .hamburger-box {
+      display: flex;
+      flex-direction: column;
+      gap: 3.5px;
+      width: 16px;
+    }
+    .btn-mobile-toggle .bar {
+      width: 100%;
+      height: 2px;
+      background: currentColor;
+      border-radius: 2px;
+      transition: all 0.25s ease;
+    }
+    .toggle-lbl {
+      font-size: 0.8rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    /* Mobile Drawer */
+    .mobile-nav-drawer {
+      display: none;
+      max-height: 0;
+      overflow: hidden;
+      background: #FFFFFF;
+      border-top: 1.5px solid rgba(201, 169, 110, 0.35);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mobile-nav-drawer.open {
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .mobile-nav-items {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 1.5rem;
+      gap: 0.75rem;
+    }
+
+    .mobile-nav-items a {
+      color: #2D3748;
+      font-size: 0.98rem;
+      font-weight: 600;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #F0F4F2;
+      text-decoration: none;
+    }
+
+    .mobile-nav-items a.admin-link {
+      color: var(--theme-accent, #0F5132);
+      font-weight: 700;
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 1024px) {
+      .header-nav-menu {
+        display: none;
+      }
+      .btn-mobile-toggle {
+        display: flex !important;
+      }
+      .mobile-nav-drawer {
+        display: block;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-action-group app-theme-switcher {
+        display: none !important; /* Theme switcher is in the mobile drawer */
+      }
+      .btn-consultation-cta {
+        display: none !important; /* CTA is in hero, bottom bar, and drawer */
+      }
+      .topbar-platform-info {
+        font-size: 0.74rem;
+      }
+      .topbar-meta-row {
+        display: none;
+      }
+      .brand-name {
+        font-size: 1.15rem;
+      }
+      .brand-subtext {
+        display: none;
+      }
+      .header-action-group {
+        gap: 0.45rem;
+        display: flex;
+        align-items: center;
+      }
+      .btn-mobile-toggle {
+        display: flex !important;
+        order: 0;
+        margin-left: 0.35rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-inner-container {
+        padding: 0 0.5rem;
+      }
+      .ur-logo-emblem svg {
+        width: 34px;
+        height: 34px;
+      }
+      .brand-name {
+        font-size: 1rem;
+      }
+      .btn-client-label {
+        display: none;
+      }
+      .btn-client-login-trigger {
+        padding: 0.4rem 0.55rem;
+      }
+      .header-action-group {
+        gap: 0.35rem;
+      }
+      .toggle-lbl {
+        display: none; /* Icon-only on very narrow screens */
+      }
+      .btn-mobile-toggle {
+        padding: 8px 10px;
+      }
+    }
+
+    /* Client Account Trigger & Capsule */
+    .btn-client-login-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--theme-badge-bg, rgba(16, 185, 129, 0.08));
+      border: 1.5px solid var(--theme-badge-border, rgba(16, 185, 129, 0.35));
+      color: var(--theme-accent, #0F5132);
+      padding: 0.45rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.25s ease;
+
+      &:hover {
+        background: var(--theme-accent, #0F5132);
+        color: var(--theme-cta-text, #FFFFFF);
+        border-color: var(--theme-accent, #0F5132);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .client-account-capsule-wrap {
+      position: relative;
+    }
+
+    .btn-client-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #FFFFFF;
+      border: 1.5px solid rgba(197, 168, 105, 0.45);
+      padding: 0.22rem 0.65rem 0.22rem 0.35rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      transition: all 0.2s;
+
+      &:hover {
+        border-color: #C5A869;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(197, 168, 105, 0.25);
+      }
+    }
+
+    .client-avatar-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      flex-shrink: 0;
+    }
+
+    .client-name-wrap {
+      display: flex;
+      flex-direction: column;
+      text-align: right;
+      line-height: 1.15;
+    }
+
+    .client-name {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #0A2F24;
+      max-width: 95px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .client-role {
+      font-size: 0.68rem;
+      color: #059669;
+      font-weight: 600;
+    }
+
+    .chevron-arrow {
+      font-size: 0.75rem;
+      color: #555555;
+      transition: transform 0.2s;
+      &.open { transform: rotate(180deg); }
+    }
+
+    .client-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 255px;
+      background: #0B2516;
+      border: 1.5px solid rgba(197, 168, 105, 0.4);
+      border-radius: 16px;
+      padding: 0.85rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+      animation: fadeIn 0.2s ease-out;
+      backdrop-filter: blur(16px);
+      direction: rtl;
+    }
+
+    .dropdown-client-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 0.5rem;
+    }
+
+    .header-avatar-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 800;
+      border: 1.5px solid #C5A869;
+      flex-shrink: 0;
+    }
+
+    .header-info-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      strong { color: #FFFFFF; font-size: 0.88rem; }
+      small { color: #A7F3D0; font-size: 0.75rem; }
+    }
+
+    .header-univ-badge {
+      font-size: 0.68rem;
+      color: #C5A869;
+    }
+
+    .dropdown-menu-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .dropdown-link-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: transparent;
+      border: none;
+      color: #E2ECE7;
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      width: 100%;
+      text-align: right;
+      transition: all 0.2s;
+
+      &:hover {
+        background: rgba(16, 185, 129, 0.15);
+        color: #34D399;
+      }
+
+      &.logout-link {
+        color: #FCA5A5;
+        &:hover { background: rgba(239, 68, 68, 0.2); }
+      }
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 0.35rem 0;
+    }
+
+    .mobile-client-banner {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid #ECECEC;
+      background: rgba(16, 185, 129, 0.04);
+    }
+
+    .btn-mobile-client-login {
+      width: 100%;
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      color: #FFFFFF;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .mobile-client-card {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      strong { display: block; font-size: 0.92rem; color: #0A2F24; }
+      small { display: block; font-size: 0.75rem; color: #059669; }
+    }
+  `]
+})
+export class HeaderComponent implements OnInit, OnDestroy {
+  audio = inject(AudioService);
+  authService = inject(AuthService);
+  themeService = inject(ThemeService);
+  api = inject(ApiService);
+  cartService = inject(CartService);
+  clientAuth = inject(ClientAuthService);
+  notifService = inject(NotificationService);
+  router = inject(Router);
+
+  isScrolled = false;
+  isMobileMenuOpen = false;
+  isServicesMenuOpen = false;
+  isClientMenuOpen = false;
+
+  whatsappNumber: string = '966572651058';
+  currentTime: string = '';
+  currentHijriDate: string = '';
+  todayGregorian: string = '';
+  private timeInterval: any;
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    this.isClientMenuOpen = false;
+  }
+
+  toggleClientMenu(event?: Event): void {
+    if (event) event.stopPropagation();
+    this.audio.playClick();
+    this.isClientMenuOpen = !this.isClientMenuOpen;
+  }
+
+  openClientTab(tab: 'login' | 'register' | 'profile' | 'orders'): void {
+    this.isClientMenuOpen = false;
+    this.clientAuth.openAuthModal(tab);
+  }
+
+  openCartFromMenu(): void {
+    this.isClientMenuOpen = false;
+    this.cartService.openCart();
+  }
+
+  logoutClient(): void {
+    this.isClientMenuOpen = false;
+    this.clientAuth.logout();
+  }
+
+  getClientInitials(name?: string): string {
+    if (!name) return '👤';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]);
+    }
+    return parts[0].slice(0, 2);
+  }
+
+  ngOnInit(): void {
+    this.updateLiveTime();
+    // Live ticking clock updating every second (1000ms)
+    this.timeInterval = setInterval(() => this.updateLiveTime(), 1000);
+
+    this.api.getWhatsAppNumber().subscribe(num => {
+      if (num) this.whatsappNumber = num;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.timeInterval) clearInterval(this.timeInterval);
+  }
+
+  updateLiveTime(): void {
+    const now = new Date();
+
+    // Live ticking time with seconds
+    let hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const displayHours = hours % 12 || 12;
+    const minStr = minutes < 10 ? '0' + minutes : minutes;
+    const secStr = seconds < 10 ? '0' + seconds : seconds;
+    this.currentTime = `${displayHours}:${minStr}:${secStr} ${ampm}`;
+
+    // Dynamic Today's Hijri and Gregorian dates
+    try {
+      const hijriFormatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+      const gregFormatter = new Intl.DateTimeFormat('ar-SA-u-nu-latn', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+      this.currentHijriDate = hijriFormatter.format(now);
+      this.todayGregorian = gregFormatter.format(now);
+    } catch {
+      this.currentHijriDate = now.toLocaleDateString('ar-SA');
+      this.todayGregorian = now.toLocaleDateString('ar-SA');
+    }
+  }
+
+  toggleTheme(): void {
+    const cur = this.themeService.currentTheme();
+    if (cur === 'emerald-night') {
+      this.themeService.setTheme('emerald');
+    } else {
+      this.themeService.setTheme('emerald-night');
+    }
+  }
+
+  constructor() {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', () => {
+        this.isScrolled = window.scrollY > 20;
+      });
+    }
+  }
+
+
+  onHover(): void {
+    this.audio.playHover();
+  }
+
+  onNavClick(): void {
+    this.audio.playClick();
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  }
+
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    this.audio.playClick();
+  }
+
+  closeMobileMenu(): void {
+    this.isMobileMenuOpen = false;
+    this.audio.playClick();
+  }
+}
