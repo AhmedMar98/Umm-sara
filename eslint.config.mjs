@@ -46,7 +46,7 @@ const eslintConfig = [
     "no-useless-escape": "off",
   },
 }, {
-  ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts", "examples/**", "skills"]
+  ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts", "examples/**", "skills", "research/**", "download/**", "upload/**", "scripts/**"]
 }];
 
 export default eslintConfig;

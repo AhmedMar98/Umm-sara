@@ -60,7 +60,7 @@ export function SectionHeading({
   );
 }
 
-/** بطاقة قسم — فهرس رقمي + خط شعري ذهبي + لمعان سفحي + ميلان خفيف */
+/** بطاقة قسم — v3: فهرس شبحي عملاق + خط شعري ذهبي + لمعان سفحي + معاينة خدمات */
 export function CategoryCard({
   name,
   slug,
@@ -68,6 +68,7 @@ export function CategoryCard({
   tagline,
   description,
   subCount,
+  preview,
   index,
   delay = 0,
 }: {
@@ -77,32 +78,44 @@ export function CategoryCard({
   tagline: string;
   description: string;
   subCount: number;
+  preview?: string;
   index?: number;
   delay?: number;
 }) {
   const Icon = ICONS[icon] ?? GraduationCap;
   return (
-    <Reveal delay={delay}>
+    <Reveal delay={delay} variant="up">
       <Link
         href={`/services/${slug}`}
         className="hairline-top shine group relative flex h-full flex-col rounded-xl border border-border bg-card p-6 card-glow tilt"
       >
-        <div className="flex items-start justify-between">
+        {/* فهرس شبحي عملاق (درس التحريرية) */}
+        {index && (
+          <span className="ghost-index pointer-events-none absolute -top-4 end-5 text-[5.5rem]" dir="ltr">
+            {String(index).padStart(2, "0")}
+          </span>
+        )}
+        <div className="relative flex items-start justify-between">
           <span className="flex size-12 items-center justify-center rounded-xl border border-gold/20 bg-gold-soft text-gold transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
             <Icon className="size-6" strokeWidth={1.8} />
           </span>
           <span className="mono-chip text-[9px] text-muted-foreground" dir="ltr">
-            {index ? `${String(index).padStart(2, "0")}/06` : `${String(subCount).padStart(2, "0")} SVC`}
+            {`${String(subCount).padStart(2, "0")} SVC`}
           </span>
         </div>
-        <h3 className="mt-5 font-display text-lg font-bold transition-colors duration-300 group-hover:text-gold">
+        <h3 className="relative mt-5 font-display text-lg font-bold transition-colors duration-300 group-hover:text-gold">
           {name}
         </h3>
-        <p className="font-serif-accent mt-1 text-base text-gold/90">{tagline}</p>
-        <p className="mt-3 flex-1 text-sm leading-7 text-muted-foreground">
+        <p className="font-serif-accent relative mt-1 text-base text-gold/90">{tagline}</p>
+        <p className="relative mt-3 flex-1 text-sm leading-7 text-muted-foreground">
           {description}
         </p>
-        <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
+        {preview && (
+          <p className="relative mt-3 border-t border-border/60 pt-3 text-[11px] leading-6 text-muted-foreground/80">
+            {preview}
+          </p>
+        )}
+        <span className="relative mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
           استكشف القسم
           <ArrowLeft className="size-4 transition-transform duration-500 group-hover:-translate-x-1.5" />
         </span>

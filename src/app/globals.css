@@ -490,7 +490,81 @@
   .animate-marquee { animation: none; }
   .gold-gradient-text { animation: none; }
   .animate-scroll-hint { animation: none; }
+  .orbit-spin-slow, .orbit-spin-rev, .orbit-spin-fast { animation: none !important; }
+  .orbit-node { animation: none !important; }
+  .knowledge-orbit { animation: none !important; }
   html { scroll-behavior: auto; }
+}
+
+/* ======================================================================
+   مدار المعرفة — المرساة البصرية للهيرو (v3)
+   دوران بطيء متعاكس + عقد متوهجة نابضة + طفو هادئ
+   ======================================================================= */
+.knowledge-orbit {
+  animation: orbit-float 14s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes orbit-float {
+  0%   { transform: translate3d(0, -1.2%, 0); }
+  100% { transform: translate3d(0, 1.6%, 0); }
+}
+
+.orbit-spin-slow {
+  transform-origin: 300px 300px;
+  animation: orbit-rotate 110s linear infinite;
+}
+.orbit-spin-rev {
+  transform-origin: 300px 300px;
+  animation: orbit-rotate 78s linear infinite reverse;
+}
+.orbit-spin-fast {
+  transform-origin: 300px 300px;
+  animation: orbit-rotate 46s linear infinite;
+}
+@keyframes orbit-rotate {
+  to { transform: rotate(360deg); }
+}
+
+.orbit-node {
+  filter: drop-shadow(0 0 6px rgba(232, 212, 139, 0.55));
+  animation: orbit-node-pulse 4.2s ease-in-out infinite;
+}
+.orbit-node-dim {
+  filter: drop-shadow(0 0 4px rgba(46, 211, 154, 0.4));
+  animation-duration: 5.6s;
+  animation-delay: -1.8s;
+}
+@keyframes orbit-node-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+/* أرقام فهرس شبحية عملاقة داخل البطاقات (درس التحريرية) */
+.ghost-index {
+  font-family: var(--font-plex-mono), monospace;
+  font-weight: 500;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(139, 162, 151, 0.16);
+  user-select: none;
+  pointer-events: none;
+  transition: -webkit-text-stroke-color 0.6s var(--ease-expo);
+}
+.group:hover .ghost-index {
+  -webkit-text-stroke-color: rgba(197, 160, 89, 0.42);
+}
+.light .ghost-index {
+  -webkit-text-stroke: 1px rgba(10, 61, 44, 0.14);
+}
+.light .group:hover .ghost-index {
+  -webkit-text-stroke-color: rgba(154, 123, 63, 0.5);
+}
+
+/* حلقة تركيز ذهبية موحدة عبر النظام (إمكانية الوصول بفخامة) */
+:where(a, button, [role="button"], input, textarea, select, summary):focus-visible {
+  outline: 2px solid rgba(197, 160, 89, 0.75);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 /* ===== الطباعة: معاينة السيرة فقط ===== */

@@ -64,3 +64,25 @@ Stage Summary:
 - الهوية v2 مبنية على أدلة منزّلة ومقروءة (لا ذوق مجرد): داكن غابي دافئ + ذهبي عتيق→شمبانيا متدرج + زمردي + Amiri/mono + حبيبات + مؤشر مخصص + Lenis
 - المواد البحثية محفوظة في research/ (لقطات + أكواد + مودبورد + تحليلات + وثيقة القرار)
 - جاهز للاعتماد: إن أقرّ المستخدم الاتجاه تُعمَّم أنماط v2 على بقية تفاصيل الصفحات الداخلية وتبدأ مرحلة النشر على Render+Supabase
+
+---
+Task ID: 4
+Agent: main (Super Z)
+Task: تعلم من 3 فيديوهات Pinterest + تحسين موجّه شامل للواجهة القائمة (v3) وفق عملية المهندس الأول (تدقيق → مراجع → اتجاه → تنفيذ → استجابة → تلميع → تحقق)
+
+Work Log:
+- حُلّلت روابط pin.it الثلاثة: فك قصيرة → استخراج روابط v1.pinimg.com → تنزيل MP4 → تحليل video-understand عبر SDK (base64) → 3 وثائق في research/pinterest-videos/
+- الدروس المستخلصة: هيرو غير متماثل + عمق طبقي + مجاز بصري تجريدي + cubic-bezier(0.16,1,0.3,1) + stagger + مؤشر مخصص
+- استُنسخت 6 مستودعات مرجع (research/github-refs/): motion-primitives (قراءة magnetic/scroll-progress/text-effect كاملة)، react-bits، magicui، space-portfolio، play-nextjs، portfolio-2025
+- التدقيق وثّق 9 نقاط ضعف في research/DESIGN_v3.md ثم وثيقة اتجاه v3
+- مكونات جديدة: magnetic.tsx (نوابض framer-motion، مؤشر دقيق فقط)، scroll-progress.tsx (origin-right RTL)، word-reveal.tsx (قناع كلمة-بكلمة آمن للتشكيل)، knowledge-orbit.tsx (SVG خالص: 3 حلقات متعاكسة + عقد متوهجة + ختم LogoMark عبر foreignObject)
+- ترقيات: reveal.tsx (--ease-expo + 3 تنويعات + reduced-motion)، navbar (+ScrollProgress)، page.tsx (هيرو غير متماثل + إحصائيات عملاقة text-5xl→7xl + معاينات بطاقات)، section-blocks (فهرس شبحي ghost-index + معاينة خدمات)، globals.css (حركات المدار + ghost-index + focus-visible ذهبي)
+- أداء: خفض الخطوط 16→11 ملفاً (Cairo بدون 400/600، Amiri بدون مائل، Plex Arabic بدون 300/600)
+- نظّف: eslint/tsconfig يستثنيان research/examples/reference-material/skills/download/upload/scripts
+- إصلاحات أثناء التحقق: set-state-in-effect في مكونين (نمط مؤقّت/rAF)، xmlns غير صالحة في foreignObject، union معقد في WordReveal، 404ات الاختبار كانت أخطاء slugs في URLs الاختبارية (المسارات سليمة)
+
+Stage Summary:
+- التحقق النهائي: lint نظيف، tsc نظيف، 10 مسارات + 6 صفحات أقسام = 200، صفر أخطاء طرفية، صفر تجاوز أفقي
+- 12 لقطة في download/v3-screenshots/ عبر 4 مقاسات (390/768/1280/1920) + سمتان + قائمة جوال
+- VLM-QA: جوال 9/10 وضوح، خدمات شبكة مثالية، فاتح 8.5/10 AAA، النهائي: توازن 9، تايبوغرافيا 9، صقل 9.5/10 "Ready for production"
+- كل الوظائف محفوظة (نموذج/واتساب/CV/بحث/preselect) — بلا مكتبات جديدة (framer-motion موجودة مسبقاً)

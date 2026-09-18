@@ -12,6 +12,7 @@ import {
   SheetTrigger,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { ScrollProgress } from "@/components/scroll-progress";
 import { cn } from "@/lib/utils";
 import { whatsappLink } from "@/lib/platform-data";
 
@@ -94,6 +95,8 @@ export function Navbar() {
         className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-l from-transparent via-gold/40 to-transparent"
         aria-hidden="true"
       />
+      {/* خط تقدم القراءة — شعرة ذهبية تنمو مع التمرير (v3) */}
+      <ScrollProgress />
       <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
         {/* الشعار */}
         <Link href="/" className="group flex items-center gap-2.5 transition-transform duration-300 hover:scale-[1.02]" aria-label="أم سارة — الرئيسية" data-cursor>

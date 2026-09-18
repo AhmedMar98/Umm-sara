@@ -9,15 +9,16 @@ import { FilmGrain } from "@/components/film-grain";
 import { CursorGlow } from "@/components/cursor-glow";
 import { SmoothScroll } from "@/components/smooth-scroll";
 
+/* v3 — خفض أوزان الخطوط (أداء LCP): 16 ملفاً → 11 ملفاً */
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
-  weight: ["400", "600", "700", "800", "900"],
+  weight: ["700", "800", "900"],
   variable: "--font-cairo",
 });
 
 const plexArabic = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "700"],
   variable: "--font-arabic",
 });
 
@@ -30,7 +31,6 @@ const plexMono = IBM_Plex_Mono({
 const amiri = Amiri({
   subsets: ["arabic", "latin"],
   weight: ["400", "700"],
-  style: ["normal", "italic"],
   variable: "--font-amiri",
 });
 

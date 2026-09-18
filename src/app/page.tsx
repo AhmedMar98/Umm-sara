@@ -14,6 +14,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ParticleField } from "@/components/particle-field";
 import { Reveal, StatCounter } from "@/components/reveal";
+import { WordReveal } from "@/components/word-reveal";
+import { Magnetic } from "@/components/magnetic";
+import { KnowledgeOrbit } from "@/components/knowledge-orbit";
 import {
   SectionHeading,
   CategoryCard,
@@ -53,7 +56,7 @@ const CORNER_META = [
 export default function HomePage() {
   return (
     <div className="flex flex-col">
-      {/* ================= Hero — مشهد سينمائي كامل ================= */}
+      {/* ================= Hero — انقسام تحريري غير متماثل (v3) ================= */}
       <section className="relative flex min-h-[92svh] flex-col overflow-hidden">
         {/* طبقات المشهد: جزيئات ثلاثية العمق → أورورا → شبكة → فيغنيت */}
         <ParticleField />
@@ -62,6 +65,14 @@ export default function HomePage() {
         <div className="aurora aurora-emerald bottom-[-12rem] left-1/3 h-[26rem] w-[26rem]" aria-hidden="true" />
         <div className="grid-overlay absolute inset-0" aria-hidden="true" />
         <div className="vignette absolute inset-0" aria-hidden="true" />
+
+        {/* المدار خلف النص على الجوال (طبقة خافتة) */}
+        <div
+          className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-20 lg:hidden"
+          aria-hidden="true"
+        >
+          <KnowledgeOrbit className="h-[130vw] max-h-[36rem] w-[130vw] max-w-[36rem]" />
+        </div>
 
         {/* بيانات الأركان التقنية */}
         {CORNER_META.map((m) => (
@@ -79,85 +90,105 @@ export default function HomePage() {
           </span>
         ))}
 
-        <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-4 py-28 text-center sm:px-6">
-          <Reveal>
-            <Badge
-              variant="outline"
-              className="mb-8 gap-2 rounded-full border-gold/35 bg-gold-soft px-4 py-1.5 text-xs font-medium text-gold backdrop-blur-sm"
-            >
-              <Sparkles className="size-3.5" />
-              منصة سعودية للخدمات الأكاديمية والبحثية
-            </Badge>
-          </Reveal>
-
-          <Reveal delay={120}>
-            <h1 className="font-display text-[2.6rem] font-black leading-[1.2] tracking-tight sm:text-6xl md:text-7xl">
-              نحو تفوّقٍ أكاديمي
-              <br />
-              <span className="font-serif-accent gold-gradient-text text-glow pr-2 text-[3.2rem] font-bold leading-[1.35] sm:text-7xl md:text-[5.25rem]">
-                أشدُّ إشراقاً
-              </span>
-            </h1>
-          </Reveal>
-
-          <Reveal delay={240}>
-            <p className="mt-7 max-w-2xl text-balance text-sm leading-8 text-muted-foreground sm:text-base sm:leading-9">
-              في منصة أم سارة نرافقك في رحلتك الأكاديمية كاملة — من أول بحث
-              جامعي، إلى رسالة الماجستير والدكتوراه، إلى سيرتك الذاتية التي
-              تفتح لك أبواب المستقبل. فريق خبراء أكاديميين، معايير علمية صارمة،
-              والتزام تام بالشفافية.
-            </p>
-          </Reveal>
-
-          <Reveal delay={360}>
-            <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row">
-              <Button
-                asChild
-                size="lg"
-                className="shine h-12 rounded-full border border-gold/40 bg-gradient-to-l from-gold-bright to-gold px-8 text-base font-bold text-[#241a08] shadow-[0_10px_40px_-10px_rgba(197,160,89,0.55)] transition-transform duration-300 hover:scale-[1.03]"
-              >
-                <Link href="/services" data-cursor>
-                  ابدأ طلبك الآن
-                  <ArrowLeft className="size-5" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
+        <div className="relative z-10 mx-auto grid w-full max-w-6xl flex-1 items-center gap-10 px-4 py-28 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-6">
+          {/* العمود النصي — بداية القراءة في RTL */}
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-start">
+            <Reveal>
+              <Badge
                 variant="outline"
-                className="h-12 rounded-full border-primary/40 bg-transparent px-8 text-base font-bold text-primary backdrop-blur-sm transition-all duration-300 hover:border-primary hover:bg-glow/20 hover:scale-[1.03]"
+                className="mb-7 gap-2 rounded-full border-gold/35 bg-gold-soft px-4 py-1.5 text-xs font-medium text-gold backdrop-blur-sm"
               >
-                <Link href="/consultation" data-cursor>
-                  <CalendarClock className="size-5" />
-                  احجز استشارة مجانية
-                </Link>
-              </Button>
-            </div>
-          </Reveal>
+                <Sparkles className="size-3.5" />
+                منصة سعودية للخدمات الأكاديمية والبحثية
+              </Badge>
+            </Reveal>
 
-          <Reveal delay={480}>
-            <TrustRow className="mt-12 justify-center" />
-          </Reveal>
+            <h1 className="font-display text-[2.4rem] font-black leading-[1.25] tracking-tight sm:text-6xl lg:text-[4.2rem]">
+              <WordReveal
+                as="span"
+                text="نحو تفوّقٍ أكاديمي"
+                className="block"
+                delay={150}
+              />
+              <WordReveal
+                as="span"
+                text="أشدُّ إشراقاً"
+                className="gold-gradient-text text-glow font-serif-accent mt-2 block pr-1 text-[3rem] font-bold leading-[1.4] sm:text-7xl lg:text-[5.4rem]"
+                delay={420}
+              />
+            </h1>
 
-          <Reveal delay={560}>
-            <div className="mt-10 flex items-center gap-2 rounded-full border border-border bg-card/50 px-4 py-2 text-xs text-muted-foreground backdrop-blur">
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-soft-pulse rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex size-2 rounded-full bg-primary" />
-              </span>
-              متاحون الآن للرد على استفساراتك — متوسط زمن الرد أقل من 10 دقائق
-            </div>
-          </Reveal>
+            <Reveal delay={560}>
+              <p className="mt-6 max-w-xl text-balance text-sm leading-8 text-muted-foreground sm:text-base sm:leading-9">
+                في منصة أم سارة نرافقك في رحلتك الأكاديمية كاملة — من أول بحث
+                جامعي، إلى رسالة الماجستير والدكتوراه، إلى سيرتك الذاتية التي
+                تفتح لك أبواب المستقبل. فريق خبراء أكاديميين، معايير علمية
+                صارمة، والتزام تام بالشفافية.
+              </p>
+            </Reveal>
+
+            <Reveal delay={680}>
+              <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row lg:items-start">
+                <Magnetic intensity={0.32} range={80}>
+                  <Button
+                    asChild
+                    size="lg"
+                    className="shine h-12 rounded-full border border-gold/40 bg-gradient-to-l from-gold-bright to-gold px-8 text-base font-bold text-[#241a08] shadow-[0_10px_40px_-10px_rgba(197,160,89,0.55)]"
+                  >
+                    <Link href="/services" data-cursor>
+                      ابدأ طلبك الآن
+                      <ArrowLeft className="size-5" />
+                    </Link>
+                  </Button>
+                </Magnetic>
+                <Magnetic intensity={0.32} range={80}>
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="outline"
+                    className="h-12 rounded-full border-primary/40 bg-transparent px-8 text-base font-bold text-primary backdrop-blur-sm transition-colors hover:border-primary hover:bg-glow/20"
+                  >
+                    <Link href="/consultation" data-cursor>
+                      <CalendarClock className="size-5" />
+                      احجز استشارة مجانية
+                    </Link>
+                  </Button>
+                </Magnetic>
+              </div>
+            </Reveal>
+
+            <Reveal delay={800}>
+              <TrustRow className="mt-10 justify-center lg:justify-start" />
+            </Reveal>
+
+            <Reveal delay={920}>
+              <div className="mt-8 flex items-center gap-2 rounded-full border border-border bg-card/50 px-4 py-2 text-xs text-muted-foreground backdrop-blur">
+                <span className="relative flex size-2">
+                  <span className="absolute inline-flex size-full animate-soft-pulse rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex size-2 rounded-full bg-primary" />
+                </span>
+                متاحون الآن للرد على استفساراتك — متوسط زمن الرد أقل من 10 دقائق
+              </div>
+            </Reveal>
+          </div>
+
+          {/* العمود البصري — مدار المعرفة */}
+          <div className="relative hidden items-center justify-center lg:flex" aria-hidden="true">
+            {/* هالة ضوئية خلف المدار — كتلة بصرية إضافية */}
+            <div className="absolute h-[26rem] w-[26rem] rounded-full bg-primary/[0.13] blur-[110px]" />
+            <div className="absolute h-[18rem] w-[18rem] rounded-full bg-gold/[0.08] blur-[90px]" />
+            <KnowledgeOrbit className="relative h-[min(34rem,44vw)] w-[min(34rem,44vw)]" />
+          </div>
         </div>
 
         {/* تلميح التمرير */}
-        <div className="relative mx-auto mb-5 hidden flex-col items-center gap-2 text-muted-foreground/60 md:flex" aria-hidden="true">
+        <div className="relative z-10 mx-auto mb-5 hidden flex-col items-center gap-2 text-muted-foreground/60 md:flex" aria-hidden="true">
           <span className="mono-chip text-[9px]">SCROLL</span>
           <span className="animate-scroll-hint block h-6 w-px bg-gradient-to-b from-gold/70 to-transparent" />
         </div>
 
         {/* شريط الخدمات المتدفق */}
-        <div className="marquee-mask relative border-y border-border bg-card/30 py-3.5 backdrop-blur-sm">
+        <div className="marquee-mask relative z-10 border-y border-border bg-card/30 py-3.5 backdrop-blur-sm">
           <div className="animate-marquee flex w-max flex-row-reverse items-center gap-8 whitespace-nowrap will-change-transform">
             {[...MARQUEE_WORDS, ...MARQUEE_WORDS].map((word, i) => (
               <span key={i} className="flex items-center gap-8 text-sm text-muted-foreground">
@@ -169,9 +200,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= الإحصائيات — أعمدة بخطوط شعرية ================= */}
-      <section className="border-b border-border">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-y-10 px-4 py-14 sm:px-6 lg:grid-cols-4">
+      {/* ================= الإحصائيات — نطاق الأرقام العملاقة ================= */}
+      <section className="border-b border-border bg-card/30">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-y-12 px-4 py-16 sm:px-6 lg:grid-cols-4">
           {STATS.map((s, i) => (
             <StatCounter
               key={s.label}
@@ -190,7 +221,7 @@ export default function HomePage() {
 
       {/* ================= الأقسام الستة ================= */}
       <section id="services" className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
-        <Reveal>
+        <Reveal variant="blur">
           <SectionHeading
             kicker="OUR SERVICES"
             index="01"
@@ -208,6 +239,7 @@ export default function HomePage() {
               tagline={c.tagline}
               description={c.description}
               subCount={c.subServices.length}
+              preview={`${c.subServices.slice(0, 3).map((s) => s.name).join(" · ")}${c.subServices.length > 3 ? " +" : ""}`}
               index={i + 1}
               delay={i * 80}
             />
@@ -218,7 +250,7 @@ export default function HomePage() {
       {/* ================= المنتجات المستقلة ================= */}
       <section className="border-y border-border bg-secondary/40">
         <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
-          <Reveal>
+          <Reveal variant="blur">
             <SectionHeading
               kicker="STANDALONE PRODUCTS"
               index="02"
@@ -270,7 +302,7 @@ export default function HomePage() {
 
       {/* ================= آلية العمل ================= */}
       <section className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
-        <Reveal>
+        <Reveal variant="blur">
           <SectionHeading
             kicker="HOW IT WORKS"
             index="03"
@@ -301,7 +333,7 @@ export default function HomePage() {
       {/* ================= آراء العملاء ================= */}
       <section className="border-y border-border bg-secondary/40">
         <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
-          <Reveal>
+          <Reveal variant="blur">
             <SectionHeading
               kicker="TESTIMONIALS"
               index="04"
@@ -354,26 +386,28 @@ export default function HomePage() {
               وسعر عادل قبل أن تبدأ.
             </p>
             <div className="relative mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button
-                asChild
-                size="lg"
-                className="shine h-12 rounded-full border border-gold/40 bg-gradient-to-l from-gold-bright to-gold px-8 text-base font-bold text-[#241a08] shadow-[0_10px_40px_-10px_rgba(197,160,89,0.55)] transition-transform duration-300 hover:scale-[1.03]"
-              >
-                <a
-                  href={whatsappLink("السلام عليكم، أريد مناقشة مشروعي الأكاديمي مع منصة أم سارة.")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-cursor
+              <Magnetic intensity={0.3} range={80}>
+                <Button
+                  asChild
+                  size="lg"
+                  className="shine h-12 rounded-full border border-gold/40 bg-gradient-to-l from-gold-bright to-gold px-8 text-base font-bold text-[#241a08] shadow-[0_10px_40px_-10px_rgba(197,160,89,0.55)]"
                 >
-                  <MessageCircle className="size-5" />
-                  تواصل عبر واتساب
-                </a>
-              </Button>
+                  <a
+                    href={whatsappLink("السلام عليكم، أريد مناقشة مشروعي الأكاديمي مع منصة أم سارة.")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor
+                  >
+                    <MessageCircle className="size-5" />
+                    تواصل عبر واتساب
+                  </a>
+                </Button>
+              </Magnetic>
               <Button
                 asChild
                 size="lg"
                 variant="outline"
-                className="h-12 rounded-full border-primary/40 bg-transparent px-8 text-base font-bold text-primary transition-all duration-300 hover:border-primary hover:bg-glow/20 hover:scale-[1.03]"
+                className="h-12 rounded-full border-primary/40 bg-transparent px-8 text-base font-bold text-primary transition-colors hover:border-primary hover:bg-glow/20"
               >
                 <Link href="/consultation">احجز استشارة مجانية</Link>
               </Button>
