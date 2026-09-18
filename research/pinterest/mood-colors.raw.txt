@@ -1,0 +1,68 @@
+🚀 Initializing Z-AI SDK...
+🔎 Searching images: "emerald green gold color palette elegant luxury branding"
+✅ Got 8 images
+{
+  "success": true,
+  "query": "emerald green gold color palette elegant luxury branding",
+  "count": 8,
+  "ranked": false,
+  "captioned_count": 0,
+  "results": [
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/6310050a5279.jpg",
+      "caption": "",
+      "source": "PresentationGO",
+      "original_width": "1280px",
+      "original_height": "720px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/3b40e2eb0929.png",
+      "caption": "",
+      "source": "Blend",
+      "original_width": "1536px",
+      "original_height": "1024px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/96589f8295ce.jpg",
+      "caption": "",
+      "source": "Gabrielle Scarlett",
+      "original_width": "1000px",
+      "original_height": "1500px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/f43c655530b5.jpg",
+      "caption": "",
+      "source": "Paper Heart Design Co.",
+      "original_width": "1500px",
+      "original_height": "1500px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/8a2414fd4f12.jpg",
+      "caption": "",
+      "source": "Siteculture",
+      "original_width": "1500px",
+      "original_height": "2250px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/23917ba42afb.jpg",
+      "caption": "",
+      "source": "CreativeBooster",
+      "original_width": "2400px",
+      "original_height": "2023px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/4e1fa1d90711.jpg",
+      "caption": "",
+      "source": "Dreamstime",
+      "original_width": "1600px",
+      "original_height": "990px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/59900290ba25.jpeg",
+      "caption": "",
+      "source": "Piktochart",
+      "original_width": "1920px",
+      "original_height": "1080px"
+    }
+  ]
+}

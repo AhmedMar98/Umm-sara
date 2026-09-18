@@ -1,0 +1,68 @@
+🚀 Initializing Z-AI SDK...
+🔎 Searching images: "modern dark UI UX interface design landing page hero section trends"
+✅ Got 8 images
+{
+  "success": true,
+  "query": "modern dark UI UX interface design landing page hero section trends",
+  "count": 8,
+  "ranked": false,
+  "captioned_count": 0,
+  "results": [
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/9d6260450c49.png",
+      "caption": "",
+      "source": "Figma",
+      "original_width": "2880px",
+      "original_height": "1820px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/b8189e75c4cc.png",
+      "caption": "",
+      "source": "Figma",
+      "original_width": "2880px",
+      "original_height": "1820px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/0d70a81b23e2.jpg",
+      "caption": "",
+      "source": "BairesDev",
+      "original_width": "1920px",
+      "original_height": "1080px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/ac82d1be3daf.png",
+      "caption": "",
+      "source": "Justinmind",
+      "original_width": "1500px",
+      "original_height": "1000px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/f28043d18639.png",
+      "caption": "",
+      "source": "Medium",
+      "original_width": "2000px",
+      "original_height": "1500px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/0c1e78076391.png",
+      "caption": "",
+      "source": "DesignerUp",
+      "original_width": "3484px",
+      "original_height": "2376px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/42ddee730684.png",
+      "caption": "",
+      "source": "UX Planet",
+      "original_width": "1400px",
+      "original_height": "705px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/30755c51b206.png",
+      "caption": "",
+      "source": "Justinmind",
+      "original_width": "1500px",
+      "original_height": "1100px"
+    }
+  ]
+}

@@ -47,15 +47,17 @@ export function Reveal({
   );
 }
 
-/** عدّاد رقمي متحرك يعمل عند الظهور */
+/** عدّاد رقمي متحرك يعمل عند الظهور — أرقام عملاقة بخط display (درس aspen) */
 export function StatCounter({
   value,
   suffix = "",
   label,
+  className,
 }: {
   value: number;
   suffix?: string;
   label: string;
+  className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [display, setDisplay] = useState(0);
@@ -87,10 +89,10 @@ export function StatCounter({
   }, [value]);
 
   return (
-    <div ref={ref} className="flex flex-col items-center gap-1 text-center">
-      <span className="font-mono text-3xl font-semibold tracking-tight text-primary sm:text-4xl" dir="ltr">
-        {display.toLocaleString("en-US")}
-        <span className="text-gold">{suffix}</span>
+    <div ref={ref} className={cn("flex flex-col items-center gap-1.5 text-center", className)}>
+      <span className="font-display text-4xl font-extrabold tracking-tight sm:text-5xl" dir="ltr">
+        <span className="gold-gradient-text">{display.toLocaleString("en-US")}</span>
+        <span className="text-gold-bright">{suffix}</span>
       </span>
       <span className="text-xs text-muted-foreground sm:text-sm">{label}</span>
     </div>

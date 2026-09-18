@@ -25,13 +25,16 @@ export const ICONS: Record<string, LucideIcon> = {
   "search-check": SearchCheck,
 };
 
+/** عنوان قسم — فهرس رقمي mono (درس aspen/locomotive) + خط شعري ذهبي */
 export function SectionHeading({
   kicker,
+  index,
   title,
   description,
   center = true,
 }: {
   kicker?: string;
+  index?: string;
   title: string;
   description?: string;
   center?: boolean;
@@ -39,7 +42,9 @@ export function SectionHeading({
   return (
     <div className={cn("max-w-2xl", center && "mx-auto text-center")}>
       {kicker && (
-        <p className="mb-3 font-mono text-xs font-medium uppercase tracking-[0.25em] text-primary" dir="ltr">
+        <p className="mono-chip mb-4 flex items-center justify-center gap-3 text-[10px] font-medium text-primary" dir="ltr">
+          {index && <span className="text-gold/70">{index}</span>}
+          <span className="h-px w-8 bg-gold/40" aria-hidden="true" />
           {kicker}
         </p>
       )}
@@ -55,6 +60,7 @@ export function SectionHeading({
   );
 }
 
+/** بطاقة قسم — فهرس رقمي + خط شعري ذهبي + لمعان سفحي + ميلان خفيف */
 export function CategoryCard({
   name,
   slug,
@@ -62,6 +68,7 @@ export function CategoryCard({
   tagline,
   description,
   subCount,
+  index,
   delay = 0,
 }: {
   name: string;
@@ -70,6 +77,7 @@ export function CategoryCard({
   tagline: string;
   description: string;
   subCount: number;
+  index?: number;
   delay?: number;
 }) {
   const Icon = ICONS[icon] ?? GraduationCap;
@@ -77,26 +85,26 @@ export function CategoryCard({
     <Reveal delay={delay}>
       <Link
         href={`/services/${slug}`}
-        className="group flex h-full flex-col rounded-2xl border border-border bg-card p-6 card-glow transition-all duration-300 hover:-translate-y-1"
+        className="hairline-top shine group relative flex h-full flex-col rounded-xl border border-border bg-card p-6 card-glow tilt"
       >
         <div className="flex items-start justify-between">
-          <span className="flex size-12 items-center justify-center rounded-xl bg-accent text-primary transition-transform duration-300 group-hover:scale-110">
+          <span className="flex size-12 items-center justify-center rounded-xl border border-gold/20 bg-gold-soft text-gold transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
             <Icon className="size-6" strokeWidth={1.8} />
           </span>
-          <span className="font-mono text-[10px] tracking-widest text-muted-foreground" dir="ltr">
-            {String(subCount).padStart(2, "0")} SVC
+          <span className="mono-chip text-[9px] text-muted-foreground" dir="ltr">
+            {index ? `${String(index).padStart(2, "0")}/06` : `${String(subCount).padStart(2, "0")} SVC`}
           </span>
         </div>
-        <h3 className="mt-5 font-display text-lg font-bold transition-colors group-hover:text-primary">
+        <h3 className="mt-5 font-display text-lg font-bold transition-colors duration-300 group-hover:text-gold">
           {name}
         </h3>
-        <p className="mt-1 text-xs font-medium text-gold">{tagline}</p>
+        <p className="font-serif-accent mt-1 text-base text-gold/90">{tagline}</p>
         <p className="mt-3 flex-1 text-sm leading-7 text-muted-foreground">
           {description}
         </p>
         <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
           استكشف القسم
-          <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-1" />
+          <ArrowLeft className="size-4 transition-transform duration-500 group-hover:-translate-x-1.5" />
         </span>
       </Link>
     </Reveal>

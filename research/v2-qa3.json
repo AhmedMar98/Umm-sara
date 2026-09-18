@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "NO. None of the numbers or labels in the 4-item stats grid are clipped, cut off, or overflowing their cells. All four numbers (1,200+, 4,500+, 40+, 98%) and their corresponding Arabic labels (مشمولين ضمن برنامج, إباد وتدريب متخصصين, معدل نجاح واضح, نسبة رضا العملاء) are fully visible and properly contained within their respective grid areas with adequate spacing.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1789741332,
+  "id": "202609182222090a7e9340bf7c4caf",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "202609182222090a7e9340bf7c4caf",
+  "usage": {
+    "completion_tokens": 99,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 446,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 545
+  }
+}

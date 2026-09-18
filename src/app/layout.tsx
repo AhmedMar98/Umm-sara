@@ -1,10 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Cairo, IBM_Plex_Sans_Arabic, IBM_Plex_Mono } from "next/font/google";
+import { Cairo, IBM_Plex_Sans_Arabic, IBM_Plex_Mono, Amiri } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { FilmGrain } from "@/components/film-grain";
+import { CursorGlow } from "@/components/cursor-glow";
+import { SmoothScroll } from "@/components/smooth-scroll";
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
@@ -22,6 +25,13 @@ const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-plex-mono",
+});
+
+const amiri = Amiri({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-amiri",
 });
 
 export const metadata: Metadata = {
@@ -52,8 +62,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#050807" },
-    { media: "(prefers-color-scheme: light)", color: "#f6faf7" },
+    { media: "(prefers-color-scheme: dark)", color: "#080e0b" },
+    { media: "(prefers-color-scheme: light)", color: "#f7f4ec" },
   ],
 };
 
@@ -65,9 +75,12 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <body
-        className={`${cairo.variable} ${plexArabic.variable} ${plexMono.variable} antialiased bg-background text-foreground min-h-screen flex flex-col`}
+        className={`${cairo.variable} ${plexArabic.variable} ${plexMono.variable} ${amiri.variable} antialiased bg-background text-foreground min-h-screen flex flex-col`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <SmoothScroll />
+          <CursorGlow />
+          <FilmGrain />
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />

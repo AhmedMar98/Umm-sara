@@ -5,16 +5,21 @@ import { CATEGORIES, whatsappLink, PLATFORM_NAME } from "@/lib/platform-data";
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-border bg-background">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <footer className="relative mt-auto border-t border-border bg-background">
+      {/* توهج ختامي خفيف أعلى الفوتر */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-glow/10 to-transparent"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <div className="grid gap-10 md:grid-cols-12">
           {/* العلامة */}
           <div className="md:col-span-5">
             <div className="flex items-center gap-2.5">
               <LogoMark />
               <div className="leading-none">
-                <p className="font-display text-xl font-black">{PLATFORM_NAME}</p>
-                <p className="font-mono text-[10px] tracking-widest text-muted-foreground">
+                <p className="font-serif-accent text-2xl">{PLATFORM_NAME}</p>
+                <p className="mono-chip text-[8px] text-muted-foreground">
                   ACADEMIC · RESEARCH
                 </p>
               </div>
@@ -76,8 +81,8 @@ export function Footer() {
               <li><Link href="/about" className="transition-colors hover:text-primary">من نحن</Link></li>
               <li><Link href="/contact" className="transition-colors hover:text-primary">تواصل معنا</Link></li>
             </ul>
-            <div className="mt-6 rounded-xl border border-border bg-card p-4">
-              <p className="text-sm font-semibold">جاهز لتبدأ؟</p>
+            <div className="frame-inset mt-6 rounded-xl border border-border bg-card p-4">
+              <p className="font-display text-sm font-semibold">جاهز لتبدأ؟</p>
               <p className="mt-1 text-xs leading-6 text-muted-foreground">
                 استشارتك الأولى مجانية — أخبرنا عن مشروعك ونقترح المسار الأمثل.
               </p>
@@ -91,9 +96,9 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-gold/10 pt-6 text-xs text-muted-foreground sm:flex-row">
           <p>© {new Date().getFullYear()} منصة {PLATFORM_NAME} — جميع الحقوق محفوظة.</p>
-          <p className="font-mono tracking-wide" dir="ltr">
+          <p className="mono-chip text-[9px]" dir="ltr">
             MADE IN KSA · NEXT.JS · SUPABASE
           </p>
         </div>

@@ -50,15 +50,16 @@ export function LogoMark({ size = 38 }: { size?: number }) {
         height="16.2"
         rx="4"
         transform="rotate(45 24 12.5)"
-        stroke="#d6b25e"
+        stroke="#c5a059"
         strokeWidth="1.6"
         opacity="0.85"
       />
-      <circle cx="24" cy="24" r="3.4" fill="#10b981" />
+      <circle cx="24" cy="24" r="3.4" fill="#2ed39a" />
       <defs>
         <linearGradient id="g1" x1="8" y1="8" x2="40" y2="40">
-          <stop stopColor="#34d399" />
-          <stop offset="1" stopColor="#d6b25e" />
+          <stop stopColor="#e8d48b" />
+          <stop offset="0.5" stopColor="#c5a059" />
+          <stop offset="1" stopColor="#2ed39a" />
         </linearGradient>
       </defs>
     </svg>
@@ -87,22 +88,27 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/78 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
+    <header className="sticky top-0 z-50 w-full border-b border-gold/10 bg-background/70 backdrop-blur-xl">
+      {/* خط شعري ذهبي أسفل الشريط (نمط الفخامة الهادئة) */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-l from-transparent via-gold/40 to-transparent"
+        aria-hidden="true"
+      />
+      <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
         {/* الشعار */}
-        <Link href="/" className="flex items-center gap-2.5" aria-label="أم سارة — الرئيسية">
+        <Link href="/" className="group flex items-center gap-2.5 transition-transform duration-300 hover:scale-[1.02]" aria-label="أم سارة — الرئيسية" data-cursor>
           <LogoMark />
           <span className="flex flex-col leading-none">
-            <span className="font-display text-xl font-black tracking-tight">
+            <span className="font-serif-accent text-2xl text-foreground">
               أم سارة
             </span>
-            <span className="font-mono text-[10px] text-muted-foreground tracking-widest">
+            <span className="mono-chip text-[8px] text-muted-foreground">
               ACADEMIC · RESEARCH
             </span>
           </span>
         </Link>
 
-        {/* روابط سطح المكتب */}
+        {/* روابط سطح المكتب — كشف خط سفلي عند التحويم */}
         <nav
           aria-label="التنقل الرئيسي"
           className="hidden items-center gap-1 lg:flex"
@@ -112,13 +118,22 @@ export function Navbar() {
               key={l.href}
               href={l.href}
               className={cn(
-                "rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
+                "group relative rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-300 hover:text-gold",
                 pathname === l.href
-                  ? "text-primary"
+                  ? "text-gold"
                   : "text-muted-foreground"
               )}
             >
               {l.label}
+              <span
+                className={cn(
+                  "absolute inset-x-3 -bottom-0.5 h-px origin-center bg-gradient-to-l from-transparent via-gold to-transparent transition-transform duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]",
+                  pathname === l.href
+                    ? "scale-x-100"
+                    : "scale-x-0 group-hover:scale-x-100"
+                )}
+                aria-hidden="true"
+              />
             </Link>
           ))}
         </nav>

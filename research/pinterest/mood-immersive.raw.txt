@@ -1,0 +1,68 @@
+🚀 Initializing Z-AI SDK...
+🔎 Searching images: "immersive website dark background particles glow WebGL hero"
+✅ Got 8 images
+{
+  "success": true,
+  "query": "immersive website dark background particles glow WebGL hero",
+  "count": 8,
+  "ranked": false,
+  "captioned_count": 0,
+  "results": [
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/2be97d16a908.jpg",
+      "caption": "",
+      "source": "Framer",
+      "original_width": "1600px",
+      "original_height": "1200px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/2ea581eea252.jpg",
+      "caption": "",
+      "source": "Simplified Media",
+      "original_width": "1344px",
+      "original_height": "768px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/9c9ff2941852.jpg",
+      "caption": "",
+      "source": "www.babylonjs.com",
+      "original_width": "1920px",
+      "original_height": "1080px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/2f30e887d4d7.jpg",
+      "caption": "",
+      "source": "Draftly",
+      "original_width": "2200px",
+      "original_height": "1228px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/fecea338ef02.jpg",
+      "caption": "",
+      "source": "Lightswind UI",
+      "original_width": "1200px",
+      "original_height": "708px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/98954629621a.png",
+      "caption": "",
+      "source": "DESIGN.md APP",
+      "original_width": "1280px",
+      "original_height": "720px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7fd9081ad04b.png",
+      "caption": "",
+      "source": "Wix.com",
+      "original_width": "1200px",
+      "original_height": "900px"
+    },
+    {
+      "original_url": "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/95d23d1417fb.png",
+      "caption": "",
+      "source": "DESIGN.md APP",
+      "original_width": "1280px",
+      "original_height": "720px"
+    }
+  ]
+}
