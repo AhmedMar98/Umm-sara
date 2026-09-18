@@ -13,7 +13,7 @@
 
 | المكوّن | التقنية | مكان النشر |
 |---|---|---|
-| الواجهة + مسارات API | Next.js 16.1 (Turbopack) + TypeScript | Render (خدمة Node) |
+| الواجهة + مسارات API | Next.js 16.1 (Turbopack) + TypeScript + three.js/R3F (مشهد اللؤلؤة) | Render (خدمة Node) |
 | الخدمة البرمجية | FastAPI (Python) | Render (خدمة Docker) |
 | قاعدة البيانات | PostgreSQL + RLS | Supabase |
 
@@ -62,20 +62,31 @@ git commit -m "v4: brand system + product showcase + motion language"
 
 | الأمر | النتيجة المقاسة |
 |---|---|
-| `npm ci` | 838 حزمة — يعتمد على `package-lock.json` (موجود في الجذر) |
+| `npm ci --legacy-peer-deps` | 838 حزمة + three — يعتمد على `package-lock.json` (موجود في الجذر) |
 | `npm run build` | `next build` بنجاح: 18 مساراً (14 ثابت + 4 ديناميكي) ثم نسخ `static/` و`public/` داخل `.next/standalone/` |
 | `npm run start` | `node .next/standalone/server.js` — استجابة 200 على الصفحات الرئيسية والخدمات وباني السيرة |
+
+> **لماذا `--legacy-peer-deps` إلزامي؟** سببان موثقان من سجل الأخطاء الفعلي:
+> 1. `@lexical/yjs` (من سلسلة `@mdxeditor/editor`) يصرّح بـ peer على `yjs` لا يستورده التطبيق إطلاقاً — npm 11 يفرض بناءه في «الشجرة المثالية» فيفشل `npm ci` العادي بخطأ EUSAGE (مفقود: yjs).
+> 2. `@react-three/fiber@9.7` يحمل peerOptional (expo-gl → expo → react-native) تسحب react-dom@19.3 الذي يصطدم بسقف fiber نفسه `react <19.3`.
+>
+> العلم يثبّت الشجرة المقفلة الحرفية — وهي شجرة متحقق منها فعلياً: بناء نظيف، صفر expo في الشجرة، تشغيل مثبت. مررنا بالتجربة أن بدونه يفشل البناء فشلاً حتمياً.
 
 - **Node 20.19.0** مثبت في `render.yaml` (Next 16 يتطلب ≥ 20.9).
 - جذر Turbopack مُثبَّت صراحةً في `next.config.ts` (يمنع استنتاج الجذر عند تعدد ملفات القفل).
 - كل الخطوط (Amiri / Cairo / IBM Plex Arabic / IBM Plex Mono) **مدمجة ذاتياً عبر `next/font`** — لا طلبات خارجية لأي CDN خطوط وقت التشغيل.
 - حزم وقت التشغيل الحرجة مضمّنة في الـ bundle: `lenis` (التمرير السلس) و`framer-motion` (لغة الحركة).
 
-## أصول العلامة (v4)
+## أصول العلامة (v4) والمشهد السينمائي (v5)
 
 - `public/favicon.svg` و `public/logo.svg` — شعار «قوس المعرفة واللؤلؤة» بصيغة SVG (خفيف وقابل للتكبير بلا فقدان).
 - الشعار داخل الواجهة (الشريط، الفوتر، مركز مدار المعرفة) مُرسم كـ SVG inline عبر `src/components/brand/` — لا صور نقطية إطلاقاً.
 - حركة شعار الدخول (`logo-construct`) تعمل تلقائياً مع احترام `prefers-reduced-motion`.
+- **v5 — مشهد اللؤلؤة ثلاثي الأبعاد** (`src/components/brand/pearl-scene.tsx`): قوس ذهبي + لؤلؤة بشيدر iridescent + مدارات عقد متوهجة.
+  - يعمل بـ three.js + @react-three/fiber فقط (لا GSAP — framer-motion+lenis يغطيان الحركة).
+  - يُحمّل lazy في chunk منفصل بعد اكتمال بناء الشعار SVG — لا يمس LCP.
+  - مسارات الحماية: لا WebGL/مسعّر برمجي → fallback لمدار SVG · `prefers-reduced-motion` → لا يُحمّل إطلاقاً · جوال → جزيئات مخففة + DPR≤1.5 · خارج الشاشة → تجميد كامل (frameloop=never).
+  - مفتاح فحص `?force3d=1` يتجاوز رفض المسعّرات البرمجية فقط (بيئات CI/headless) — لا يمس بوابة reduced-motion.
 
 ## الخطوة 3 — التحقق بعد النشر
 

@@ -486,6 +486,13 @@
 }
 .animate-scroll-hint { animation: scroll-hint 2.2s var(--ease-quart) infinite; }
 
+/* v5 — دخول مشهد اللؤلؤة (تقاطع مع مدار المعرفة) */
+@keyframes scene-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-scene-in { animation: scene-in 1.6s var(--ease-expo) both; }
+
 /* تقليل الحركة — احترام تفضيل المستخدم */
 @media (prefers-reduced-motion: reduce) {
   .film-grain { animation: none; }
@@ -493,6 +500,7 @@
   .animate-marquee { animation: none; }
   .gold-gradient-text { animation: none; }
   .animate-scroll-hint { animation: none; }
+  .animate-scene-in { animation: none; opacity: 1; }
   .orbit-spin-slow, .orbit-spin-rev, .orbit-spin-fast { animation: none !important; }
   .orbit-node { animation: none !important; }
   .knowledge-orbit { animation: none !important; }

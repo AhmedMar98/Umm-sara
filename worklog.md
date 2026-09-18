@@ -1,6 +1,33 @@
 # Worklog — Multi-Agent Shared Log
 
 ---
+Task ID: 7
+Agent: main (Super Z)
+Task: المرحلة v5 — تنظيف Markdown + تدقيق + بحث موثق (GitHub/Gitee/Drive/Framer) + مشهد اللؤلؤة ثلاثي الأبعاد (three.js/R3F) داخل نظام هوية v4
+
+Work Log:
+- تفكيك نقدي لتوجيه المستخدم (ازدواج مراجع، تعارض مكدس 3D مع قواعد الأداء، ادعاءات GPT غير موثقة) ثم إعادة كتابته كتوجيه حاكم مضغوط نُفذ حرفياً
+- تنظيف Markdown: حُذف 13 ملفاً بعد فحص المحتوى (DESIGN_v2/v3 + 6 تحليلات مراجع + 5 تقارير QA + download/README قديم) — بقي: DEPLOYMENT.md + worklog.md + services-data.md (بيانات المستخدم المصدرية) + أرشيف المستخدم القديم كاملاً (لا يُمس)
+- البحث الموثق: استنساخ المستودعات الأربعة (mcarbonell/web-templates, elijah-farrell/Awwwards-Portfolio, shellcat-com/formwork, tsogjavklann/awwwards-3d) + نزّل مجلد Drive (5 ملفات zip مرآة للمستودعات) + GitHub API (HamishMW ★3536، fireship ★1666، awwwards 2311 مستودعاً) + Gitee API 403 (معدل IP) فعُوّض بـ web-search (مشروع gitee واحد موثق) + فحص Framer (Elements/Conicorn حقيقيان، framer.link خلف تسجيل دخول) + ادعاءات «Satori Web» و«2026 Portfolio» و«Aether» تعذر التحقق → أُعلنت مستبعدة
+- قراءة أكواد المراجع فعلياً: minimal.html (534 سطراً: damp-state، RoomEnvironment/PMREM، إضاءة ثلاثية، رفض SwiftShader، post-processing chain)، Planet.jsx (نمط R3F+useGSAP)، PROCEDURAL_GEOMETRY.md («الهندسة الإجرائية أولاً»)، formwork («27 قالباً MIT بلا build» مؤكد من الميتا)
+- وثيقة الاتجاه: research/DESIGN_v5.md (5 مراجع رئيسة + ميزانية تقنية + قائمة سلبية لما لا يُمس)
+- المكتبات: three@0.186 + @react-three/fiber@9.7 فقط (GSAP مستبعد بقرار موثق: ازدواج نظام حركة مع framer-motion+lenis) — تثبيت نظيف بلا سلسلة expo بعد حذف node_modules القديم (كان bun بـ react 19.3) وreinstall من package-lock (react 19.2.3 داخل نطاق fiber) وحذف bun.lock نهائياً
+- مشهد اللؤلؤة (src/components/brand/pearl-scene.tsx): قوس torus مزدوج (ذهبي + زمردي داخلي) يُرسم تدريجياً بـ drawRange (يحاكي بناء الشعار) + لؤلؤة بشيدر fresnel iridescent (ذهبي↔زمردي) + specular ناعم + تنفس + مدارا عقد متوهجة (شيدر twinkle حتمي mulberry32) + غبار قشرة كروية + هالة بديل bloom + كاشدة صادى الشعار؛ كاميرا doll-in 8.8→6.15 + parallax مؤشر + انجراف تمريري — كل الحركة بنمط damp المستقل عن الإطارات من awwwards-3d
+- hero-visual.tsx: بوابة تحسين تدريجي — مدار SVG يظهر أولاً دائماً ثم تقاطع 1.4s مع المشهد بعد 2.2s؛ كشف WebGL برفض SwiftShader/llvmpipe؛ reduced-motion → لا يُحمّل الـ 3D إطلاقاً؛ IO تجميد خارج الشاشة؛ key=theme لإعادة البناء عند التبديل؛ ?force3d=1 مفتاح فحص (يتجاوز رفض المسعّر البرمجي فقط)
+- معارك الجودة أثناء التنفيذ: مترجم React صارم — 3 جولات إعادة هيكلة: lazy-ref ثم البناء التصريحي الكامل (مواد عبر args من useMemo، تحوير عبر مراجع الميش في useFrame فقط) — النتيجة: بنية تصريحية متوافقة مع المترجم بلا أي تعطيل قواعد
+- VLM-QA جولتان: الأولى (8.5/8/8.5/7) كشفت اقتصاص قمة القوس بعد التمرير + خفوت اللؤلؤة جوالاً → خُفّض انجراف الكاميرا (z 0.85→0.45، y 0.22→0.08) + طبقة الجوال 40% + مزيج قزحي 0.42→0.48 → الثانية: 9/10 desktop + PASS اقتصاص + PASS وضوح → ضبط نهائي 35%
+- اكتشاف نشر حرج: npm ci العادي يفشل بخطأ EUSAGE (مفقود yjs) — الجذر الموثق: @lexical/yjs من @mdxeditor يصرح بـ peer غير مستخدم + سلسلة peerOptional لـ fiber تسحب react-dom 19.3 فوق سقفها → buildCommand أصبح `npm ci --legacy-peer-deps && npm run build` (render.yaml + render-sim.sh + DEPLOYMENT.md موثقة بالسبب)
+- محاكاة Render كاملة نجحت: npm ci --legacy-peer-deps (exit 0) → build (18 مساراً) → خادم إنتاج 200 على / و/services وcv-builder + علامات v4 محفوظة (logo-construct/tablist/أم سارة) + chunk شيدر المشهد (uEmerald) مثبت في static chunks (lazy-split ناجح) + favicon/logo 200
+- التحقق النهائي: tsc نظيف + eslint صفر أخطاء على src كاملاً + build نظيف مرتين + 7 لقطات في download/v5-screenshots/
+
+Stage Summary:
+- v5 مطبقة فعلياً داخل المشروع: طبقة سينمائية 3D حقيقية (three/R3F) مدموجة في هوية v4 بلا أي Frankenstein — الشعار يُبنى SVG ثم «يستيقظ» ثلاثي الأبعاد
+- الوظائف كلها محفوظة (لا تغيير في أي مسار/نموذج/منطق) — فقط page.tsx عمودان بصريان + globals.css حركة scene-in
+- مخرجات البحث: research/DESIGN_v5.md + research/vlm-qa-v5.md + مستودعات github-refs (4 جديدة) + zips Drive في reference-material/drive-v5/
+- تنظيف: 13 ملف md حذفاً + bun.lock حُذف (مصدر تعارض تعدد القفل سابقاً)
+- المتبقي للإنتاج: متغيرات Render/Supabase + رقم واتساب (كما المراحل السابقة — خارج هذه البيئة)
+
+---
 Task ID: 6
 Agent: main (Super Z)
 Task: تحقق من سؤال المستخدم «هل أنت متأكد أنك حدّثت النشر؟ بحسب التقرير النهائي — المرحلة v4» → تدقيق طبقة النشر فعلياً وإصلاحها

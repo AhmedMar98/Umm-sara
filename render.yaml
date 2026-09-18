@@ -11,7 +11,10 @@ services:
     runtime: node
     plan: starter
     region: frankfurt # الأقرب للسعودية ضمن خطط Render
-    buildCommand: npm ci && npm run build
+    # --legacy-peer-deps مطلوب: @lexical/yjs (من @mdxeditor) يصرح بـ peer على yjs
+    # لا يستخدمه التطبيق، وسلسلة peerOptional الخاصة بـ @react-three/fiber تجبر
+    # npm على بناء شجرة مثالية متضاربة. العلم يثبّت الشجرة المقفلة الحرفية.
+    buildCommand: npm ci --legacy-peer-deps && npm run build
     startCommand: npm run start
     healthCheckPath: /
     envVars:

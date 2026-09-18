@@ -13,7 +13,7 @@ import { ParticleField } from "@/components/particle-field";
 import { Reveal, StatCounter } from "@/components/reveal";
 import { WordReveal } from "@/components/word-reveal";
 import { Magnetic } from "@/components/magnetic";
-import { KnowledgeOrbit } from "@/components/knowledge-orbit";
+import { HeroVisual } from "@/components/hero-visual";
 import { ProductShowcase } from "@/components/product-showcase";
 import {
   SectionHeading,
@@ -63,12 +63,12 @@ export default function HomePage() {
         <div className="grid-overlay absolute inset-0" aria-hidden="true" />
         <div className="vignette absolute inset-0" aria-hidden="true" />
 
-        {/* المدار خلف النص على الجوال (طبقة خافتة) */}
+        {/* المرساة البصرية خلف النص على الجوال (مدار SVG ← مشهد اللؤلؤة 3D) */}
         <div
-          className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-20 lg:hidden"
+          className="pointer-events-none absolute inset-0 flex items-center justify-center lg:hidden"
           aria-hidden="true"
         >
-          <KnowledgeOrbit className="h-[130vw] max-h-[36rem] w-[130vw] max-w-[36rem]" />
+          <HeroVisual faint className="h-[130vw] max-h-[36rem] w-[130vw] max-w-[36rem]" />
         </div>
 
         {/* بيانات الأركان التقنية */}
@@ -169,12 +169,12 @@ export default function HomePage() {
             </Reveal>
           </div>
 
-          {/* العمود البصري — مدار المعرفة */}
+          {/* العمود البصري — مدار المعرفة ← مشهد اللؤلؤة السينمائي (v5) */}
           <div className="relative hidden items-center justify-center lg:flex" aria-hidden="true">
             {/* هالة ضوئية خلف المدار — كتلة بصرية إضافية */}
             <div className="absolute h-[26rem] w-[26rem] rounded-full bg-primary/[0.13] blur-[110px]" />
             <div className="absolute h-[18rem] w-[18rem] rounded-full bg-gold/[0.08] blur-[90px]" />
-            <KnowledgeOrbit className="relative h-[min(34rem,44vw)] w-[min(34rem,44vw)]" />
+            <HeroVisual className="h-[min(34rem,44vw)] w-[min(34rem,44vw)]" />
           </div>
         </div>
 
