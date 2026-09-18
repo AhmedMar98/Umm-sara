@@ -1,54 +1,42 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ============================================
+# مستثنيات مستودع النشر — منصة أم سارة
+# ما ليس هنا سيُرفع إلى GitHub/Render
+# ============================================
 
-# dependencies
-node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+# التبعيات والبناء
+node_modules/
+.next/
+render-sim/
+out/
 
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
+# الأسرار — لا تُرفع أبداً
+.env
+.env.*
 *.pem
+*.key
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
+# قواعد بيانات محلية
+db/
+*.db
+*.sqlite
 
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
-
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-local-*
-.claude
-.z-ai-config
+# سجلات
 *.log
-dev.log
-dev.out.log
-test
-prompt
+nohup.out
+tool-results/
+final_check.json
 
-server.log
-# Skills directory
-/skills/
+# مواد بحث داخلية (أكواد مواقع مرجعية — حقوق ملكية — لا تُنشر)
+research/
+reference-material/
+examples/
+
+# مخرجات قابلة لإعادة التوليد
+download/
+scripts/
+upload/
+skills/
+
+# نظام
+.DS_Store
+Thumbs.db

@@ -1,6 +1,31 @@
 # Worklog — Multi-Agent Shared Log
 
 ---
+Task ID: 6
+Agent: main (Super Z)
+Task: تحقق من سؤال المستخدم «هل أنت متأكد أنك حدّثت النشر؟ بحسب التقرير النهائي — المرحلة v4» → تدقيق طبقة النشر فعلياً وإصلاحها
+
+Work Log:
+- سؤال المستخدم كشف أن «النشر» لم يكن محدثاً فعلياً رغم نجاح بناء v4 محلياً — الفحص أثبت خللين حقيقيين كانا سيفشلان النشر على Render:
+  1) render.yaml يستخدم `npm ci` والمشروع فيه bun.lock فقط بلا package-lock.json → فشل البناء محتوم على Render
+  2) سكربت start يشغّل `bun .next/standalone/server.js` وbun غير متوفر على بيئة Node في Render → انهيار الخدمة عند الإقلاع
+- الإصلاح 1: توليد package-lock.json عبر `npm install --package-lock-only` (lockfileVersion 3، 939 حزمة، حلول متوافقة: next 16.1.3 / lenis 1.3.26 / react 19.2.3)
+- الإصلاح 2: start أصبح `node .next/standalone/server.js` (محايد لبيئة النشر)
+- الإصلاح 3 (مكشوف أثناء المحاكاة): تحذير استنتاج جذر مساحة العمل عند تعدد ملفات القفل → تثبيت `turbopack.root = path.resolve(__dirname)` في next.config.ts (توصية Next.js الرسمية نصاً)
+- محاكاة كاملة لمسار Render في نسخة معزولة (scripts/render-sim.sh → render-sim/): npm ci (838 حزمة، exit 0) → npm run build (18 مساراً، صفر تحذيرات بعد تثبيت الجذر) → node standalone على منفذ 3100 → HTTP 200 على / و/services وcv-builder
+- التحقق من v4 في HTML المُقدَّم من خادم الإنتاج: logo-construct ×4 + tablist (عرض المنتجات) + أم سارة ×17 + favicon.svg وlogo.svg برمز 200
+- إضافة .gitignore (كان مفقوداً كلياً — الرفع بدونه كان سينشر node_modules وresearch بأكواد المواقع المحفوظة الحقوق وreference-material بملفات المستخدم الخاصة)
+- تحديث render.yaml: NODE_VERSION من 20.11.1 إلى 20.19.0
+- إعادة كتابة DEPLOYMENT.md ليعكس v4: قائمة ما يُرفع للمستودع، جدول المسار المُثبت بالقياس، أصول العلامة (SVG)، الخطوط المدمجة ذاتياً عبر next/font، lenis مضمّن
+- إعادة تشغيل خادم المعاينة بالإعدادات الجديدة (200) وحذف render-sim (~1GB)
+
+Stage Summary:
+- الجواب الصادق لسؤال المستخدم: لا — البناء المحلي لـ v4 نجح لكن طبقة النشر لم تكن محدثة، وتم إصلاحها الآن وإثباتها بمحاكاة كاملة من npm ci حتى استجابة 200
+- الملفات المعدلة: package.json (start) + package-lock.json (جديد) + next.config.ts (turbopack.root) + render.yaml (Node 20.19.0) + DEPLOYMENT.md (إعادة كتابة v4) + .gitignore (جديد)
+- الأدلة: scripts/render-sim.log + scripts/render-sim-home.html (HTML الإنتاجي الفعلي)
+- المتبقي للإنتاج (خارج بيئة العمل هذه): متغيرات Supabase/واتساب على لوحة Render — لا يمكن إنشاؤها محلياً
+
+---
 Task ID: 2
 Agent: main (Super Z)
 Task: بناء منصة أم سارة كاملة (Next.js + Python + Supabase + Render) بعد اعتماد القرارات
