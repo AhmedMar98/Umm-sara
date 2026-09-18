@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { MessageCircle, Mail, Clock } from "lucide-react";
-import { LogoMark } from "@/components/navbar";
+import { LogoMark } from "@/components/brand/logo";
 import { CATEGORIES, whatsappLink, PLATFORM_NAME } from "@/lib/platform-data";
 
 export function Footer() {
@@ -13,14 +13,19 @@ export function Footer() {
       />
       <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <div className="grid gap-10 md:grid-cols-12">
-          {/* العلامة */}
+          {/* العلامة — تكوين أفقي بشعار القوس واللؤلؤة */}
           <div className="md:col-span-5">
-            <div className="flex items-center gap-2.5">
-              <LogoMark />
+            <div className="logo-hover-pulse flex items-center gap-2.5">
+              <span className="text-gold">
+                <LogoMark size={38} />
+              </span>
               <div className="leading-none">
                 <p className="font-serif-accent text-2xl">{PLATFORM_NAME}</p>
-                <p className="mono-chip text-[8px] text-muted-foreground">
-                  ACADEMIC · RESEARCH
+                <p
+                  className="font-serif-accent mt-1.5 text-[8px] font-medium tracking-[0.32em] text-muted-foreground"
+                  dir="ltr"
+                >
+                  UMM SARA
                 </p>
               </div>
             </div>

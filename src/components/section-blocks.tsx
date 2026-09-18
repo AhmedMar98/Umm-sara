@@ -60,7 +60,7 @@ export function SectionHeading({
   );
 }
 
-/** بطاقة قسم — v3: فهرس شبحي عملاق + خط شعري ذهبي + لمعان سفحي + معاينة خدمات */
+/** بطاقة قسم — v4: تشريح بطاقة منتج فاخر (مرجع العرض): رفع + توهج حدّ + فهرس يتلوّن */
 export function CategoryCard({
   name,
   slug,
@@ -87,16 +87,16 @@ export function CategoryCard({
     <Reveal delay={delay} variant="up">
       <Link
         href={`/services/${slug}`}
-        className="hairline-top shine group relative flex h-full flex-col rounded-xl border border-border bg-card p-6 card-glow tilt"
+        className="hairline-top shine card-lift group relative flex h-full flex-col rounded-xl border border-border bg-card p-6 card-glow hover:border-gold/30"
       >
-        {/* فهرس شبحي عملاق (درس التحريرية) */}
+        {/* فهرس شبحي عملاق — يتوشّح ذهبياً عند التحويم (انتقال CSS عام) */}
         {index && (
           <span className="ghost-index pointer-events-none absolute -top-4 end-5 text-[5.5rem]" dir="ltr">
             {String(index).padStart(2, "0")}
           </span>
         )}
         <div className="relative flex items-start justify-between">
-          <span className="flex size-12 items-center justify-center rounded-xl border border-gold/20 bg-gold-soft text-gold transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+          <span className="flex size-12 items-center justify-center rounded-xl border border-gold/20 bg-gold-soft text-gold transition-transform duration-500 [transition-timing-function:var(--ease-pearl)] group-hover:scale-110 group-hover:-rotate-6">
             <Icon className="size-6" strokeWidth={1.8} />
           </span>
           <span className="mono-chip text-[9px] text-muted-foreground" dir="ltr">
@@ -117,7 +117,7 @@ export function CategoryCard({
         )}
         <span className="relative mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
           استكشف القسم
-          <ArrowLeft className="size-4 transition-transform duration-500 group-hover:-translate-x-1.5" />
+          <ArrowLeft className="size-4 transition-transform duration-500 [transition-timing-function:var(--ease-swift)] group-hover:-translate-x-1.5" />
         </span>
       </Link>
     </Reveal>

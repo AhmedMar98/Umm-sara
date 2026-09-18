@@ -59,6 +59,9 @@
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-quart: cubic-bezier(0.76, 0, 0.24, 1);
   --ease-back: cubic-bezier(0.35, 1.75, 0.6, 1);
+  /* v4 — لغة الحركة الموحدة (مستخلصة من المراجع الستة) */
+  --ease-pearl: cubic-bezier(0.34, 1.4, 0.64, 1); /* حطّة تسقط ثم تستقر — اللؤلؤة (تجاوز لطيف 1.04x) */
+  --ease-swift: cubic-bezier(0.25, 1, 0.5, 1);   /* انزلاق المنتجات (مرجع عرض المنتجات) */
 }
 
 /* ---------- السمة الداكنة (الافتراضية) ---------- */
@@ -493,6 +496,23 @@
   .orbit-spin-slow, .orbit-spin-rev, .orbit-spin-fast { animation: none !important; }
   .orbit-node { animation: none !important; }
   .knowledge-orbit { animation: none !important; }
+  /* v4: بناء الشعار يظهر مكتملاً فوراً */
+  .logo-construct .logo-guide,
+  .logo-construct .logo-arch,
+  .logo-construct .logo-kashida {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .logo-construct .logo-pearl {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+  .logo-construct .logo-pearl-glow { animation: none; opacity: 0.35; }
+  /* v4: فيجوالات المنتجات ساكنة تماماً */
+  .ats-scan, .ats-line, .plag-radar, .plag-hit, .float-chip { animation: none !important; }
+  .plag-hit { opacity: 0.85; }
+  .ats-line { opacity: 0.9; }
   html { scroll-behavior: auto; }
 }
 
@@ -565,6 +585,154 @@
   outline: 2px solid rgba(197, 160, 89, 0.75);
   outline-offset: 3px;
   border-radius: 4px;
+}
+
+/* ============================================================
+   v4 — نظام بناء الشعار «قوس المعرفة واللؤلؤة»
+   تسلسل (مستلهم من مرجع حركة الشعار، معرّب: يمين→يسار):
+   دليل القياس يُرسم → القوس يُكتب كالكتابة → اللؤلؤة تحطّ → الكاشدة توقّع
+   ============================================================ */
+
+/* كل الحركات مقيدة داخل .logo-construct — النسخة الساكنة (LogoMark) لا تتحرك */
+
+/* 1) دليل القياس — شعرة خافتة تُرسم يميناً→يساراً أولاً ثم تتلاشى بعد وظيفتها */
+.logo-construct .logo-guide {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation:
+    logo-draw 0.6s var(--ease-expo) 0.05s both,
+    logo-guide-fade 0.4s ease 1.35s forwards;
+}
+/* 2) القوس — كتابة متصلة كالكاليجرافي: قدم يمنى → قمة → قدم يسرى */
+.logo-construct .logo-arch {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: logo-draw 0.75s var(--ease-expo) 0.3s both;
+}
+/* 3) اللؤلؤة — تسقط من الأعلى بحطّة لطيفة (تجاوز 1.04x) ثم تستقر */
+.logo-construct .logo-pearl {
+  transform: translateY(-12px) scale(0.3);
+  opacity: 0;
+  animation: logo-pearl-drop 0.55s var(--ease-pearl) 0.85s both;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+/* توهج اللؤلؤة — طبقة ضوء متأخرة (درس الطبقتين من المرجع) */
+.logo-construct .logo-pearl-glow {
+  opacity: 0;
+  animation: logo-bloom 0.45s var(--ease-expo) 1.15s both;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+/* 4) الكاشدة — خط التوقيع يكتسح يميناً→يساراً */
+.logo-construct .logo-kashida {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: logo-draw 0.5s var(--ease-expo) 1.25s both;
+}
+@keyframes logo-draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes logo-guide-fade {
+  to { opacity: 0; }
+}
+@keyframes logo-pearl-drop {
+  0%   { transform: translateY(-12px) scale(0.3); opacity: 0; }
+  60%  { opacity: 1; }
+  70%  { transform: translateY(0) scale(1.045); }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes logo-bloom {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 0.55; transform: scale(1); }
+}
+
+/* نبضة اللؤلؤة عند تحويم الشعار (ميكرو-تفاعل الشريط العلوي — للنسخة الساكنة) */
+.logo-hover-pulse:hover .logo-pearl {
+  animation: logo-pearl-pulse 0.9s var(--ease-pearl);
+}
+@keyframes logo-pearl-pulse {
+  0%, 100% { transform: scale(1); }
+  35% { transform: scale(1.18); }
+  60% { transform: scale(0.96); }
+}
+
+/* ============================================================
+   v4 — تفاعلات موحّدة (لغة الحركة المشتركة لكل الأزرار والبطاقات)
+   قواعد: transforms/opacity فقط · مدد قصيرة · تجاوز محسوب
+   ============================================================ */
+.btn-lift {
+  transition:
+    transform 0.25s var(--ease-swift),
+    box-shadow 0.25s var(--ease-swift),
+    background-color 0.25s var(--ease-swift),
+    border-color 0.25s var(--ease-swift);
+}
+.btn-lift:hover { transform: translateY(-2px); }
+.btn-lift:active { transform: translateY(0) scale(0.98); }
+
+.card-lift {
+  transition:
+    transform 0.45s var(--ease-swift),
+    border-color 0.45s var(--ease-swift),
+    box-shadow 0.45s var(--ease-swift);
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* ============================================================
+   v4 — فيجوالات المنتجات الحية (مجاز تجريدي بدل الصور الجاهزة)
+   ATS: شعاع مسح يمسح السيرة | RADAR: رادار فحص الأصالة
+   ============================================================ */
+
+/* شعاع مسح ATS — يجتاز الوثيقة من أعلى لأسفل */
+.ats-scan {
+  animation: ats-scan 2.8s var(--ease-quart) infinite;
+}
+@keyframes ats-scan {
+  0%   { transform: translateY(-8%); opacity: 0; }
+  8%   { opacity: 1; }
+  55%  { opacity: 0.85; }
+  92%  { opacity: 0; }
+  100% { transform: translateY(840%); opacity: 0; }
+}
+/* أسطر السيرة تُقبَل تدريجياً مع مرور الشعاع (تأكيد بصري) */
+.ats-line {
+  transform-origin: right center;
+  animation: ats-accept 2.8s var(--ease-quart) infinite;
+}
+@keyframes ats-accept {
+  0%, 24%  { opacity: 0.35; }
+  36%, 86% { opacity: 1; }
+  100%     { opacity: 0.35; }
+}
+
+/* رادار فحص الأصالة — مسح مخروطي دوّار */
+.plag-radar {
+  transform-origin: center;
+  animation: plag-spin 3.4s linear infinite;
+}
+@keyframes plag-spin {
+  to { transform: rotate(360deg); }
+}
+/* نبضات مطابقة النص — تظهر مع دوران الرادار */
+.plag-hit {
+  animation: plag-hit 3.4s ease-in-out infinite;
+}
+@keyframes plag-hit {
+  0%, 20%  { opacity: 0.25; transform: scale(0.92); }
+  32%, 60% { opacity: 1; transform: scale(1); }
+  78%, 100% { opacity: 0.25; transform: scale(0.92); }
+}
+/* رقائق عائمة (شرائح الثقة حول الفيجوال) */
+.float-chip {
+  animation: float-chip 5s ease-in-out infinite;
+}
+.float-chip-2 { animation-delay: -2.5s; }
+@keyframes float-chip {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 /* ===== الطباعة: معاينة السيرة فقط ===== */

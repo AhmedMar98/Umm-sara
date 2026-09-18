@@ -2,13 +2,10 @@ import Link from "next/link";
 import {
   ArrowLeft,
   Sparkles,
-  FileText,
-  SearchCheck,
   Star,
   Quote,
   MessageCircle,
   CalendarClock,
-  CheckCircle2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -17,6 +14,7 @@ import { Reveal, StatCounter } from "@/components/reveal";
 import { WordReveal } from "@/components/word-reveal";
 import { Magnetic } from "@/components/magnetic";
 import { KnowledgeOrbit } from "@/components/knowledge-orbit";
+import { ProductShowcase } from "@/components/product-showcase";
 import {
   SectionHeading,
   CategoryCard,
@@ -24,7 +22,6 @@ import {
 } from "@/components/section-blocks";
 import {
   CATEGORIES,
-  PRODUCTS,
   STATS,
   TESTIMONIALS,
   HOW_IT_WORKS,
@@ -247,7 +244,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= المنتجات المستقلة ================= */}
+      {/* ================= المنتجات المستقلة — مسرح عرض سينمائي (v4) ================= */}
       <section className="border-y border-border bg-secondary/40">
         <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
           <Reveal variant="blur">
@@ -255,48 +252,10 @@ export default function HomePage() {
               kicker="STANDALONE PRODUCTS"
               index="02"
               title="منتجان مستقلان داخل المنصة"
-              description="أداتان احترافيتان صممناهما ليعملا بمعزل عن باقي الخدمات — سرعة، بساطة، ونتيجة فورية."
+              description="أداتان احترافيتان صممناهما ليعملا بمعزل عن باقي الخدمات — سرعة، بساطة، ونتيجة فورية. بدّل بينهما وشاهدهما يعملان مباشرة."
             />
           </Reveal>
-          <div className="mt-14 grid gap-5 lg:grid-cols-2">
-            {PRODUCTS.map((p, i) => (
-              <Reveal key={p.slug} delay={i * 120}>
-                <div className="frame-inset shine flex h-full flex-col rounded-xl border border-border bg-card p-8 card-glow">
-                  <div className="flex items-center justify-between">
-                    <span className="flex size-14 items-center justify-center rounded-xl border border-gold/25 bg-gold-soft text-gold">
-                      {p.slug === "cv-builder" ? (
-                        <FileText className="size-7" strokeWidth={1.6} />
-                      ) : (
-                        <SearchCheck className="size-7" strokeWidth={1.6} />
-                      )}
-                    </span>
-                    <span className="mono-chip rounded-full bg-secondary px-3 py-1 text-[9px] text-gold" dir="ltr">
-                      {p.slug === "cv-builder" ? "ATS READY" : "QUALITY"}
-                    </span>
-                  </div>
-                  <h3 className="mt-6 font-display text-xl font-bold">{p.name}</h3>
-                  <p className="font-serif-accent mt-1.5 text-lg text-gold">{p.tagline}</p>
-                  <p className="mt-3 flex-1 text-sm leading-8 text-muted-foreground">
-                    {p.description}
-                  </p>
-                  <ul className="mt-5 grid grid-cols-2 gap-2.5">
-                    {p.points.map((pt) => (
-                      <li key={pt} className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <CheckCircle2 className="size-4 shrink-0 text-primary" />
-                        {pt}
-                      </li>
-                    ))}
-                  </ul>
-                  <Button asChild className="mt-7 h-11 rounded-lg font-bold">
-                    <Link href={p.slug === "cv-builder" ? "/cv-builder" : "/plagiarism-check"}>
-                      {p.cta}
-                      <ArrowLeft className="size-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <ProductShowcase />
         </div>
       </section>
 

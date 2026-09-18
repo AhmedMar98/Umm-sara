@@ -13,6 +13,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { ScrollProgress } from "@/components/scroll-progress";
+import { LogoMark } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
 import { whatsappLink } from "@/lib/platform-data";
 
@@ -24,48 +25,6 @@ const NAV_LINKS = [
   { href: "/about", label: "من نحن" },
   { href: "/contact", label: "تواصل معنا" },
 ];
-
-export function LogoMark({ size = 38 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 48 48"
-      fill="none"
-      aria-hidden="true"
-    >
-      <rect
-        x="24"
-        y="3"
-        width="29.4"
-        height="29.4"
-        rx="6"
-        transform="rotate(45 24 3)"
-        stroke="url(#g1)"
-        strokeWidth="2.4"
-      />
-      <rect
-        x="24"
-        y="12.5"
-        width="16.2"
-        height="16.2"
-        rx="4"
-        transform="rotate(45 24 12.5)"
-        stroke="#c5a059"
-        strokeWidth="1.6"
-        opacity="0.85"
-      />
-      <circle cx="24" cy="24" r="3.4" fill="#2ed39a" />
-      <defs>
-        <linearGradient id="g1" x1="8" y1="8" x2="40" y2="40">
-          <stop stopColor="#e8d48b" />
-          <stop offset="0.5" stopColor="#c5a059" />
-          <stop offset="1" stopColor="#2ed39a" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
 
 function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -98,15 +57,25 @@ export function Navbar() {
       {/* خط تقدم القراءة — شعرة ذهبية تنمو مع التمرير (v3) */}
       <ScrollProgress />
       <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
-        {/* الشعار */}
-        <Link href="/" className="group flex items-center gap-2.5 transition-transform duration-300 hover:scale-[1.02]" aria-label="أم سارة — الرئيسية" data-cursor>
-          <LogoMark />
+        {/* الشعار — نبضة لؤلؤة عند التحويم (v4) */}
+        <Link
+          href="/"
+          className="group btn-lift flex items-center gap-2.5 rounded-xl"
+          aria-label="أم سارة — الرئيسية"
+          data-cursor
+        >
+          <span className="logo-hover-pulse text-gold">
+            <LogoMark size={38} />
+          </span>
           <span className="flex flex-col leading-none">
             <span className="font-serif-accent text-2xl text-foreground">
               أم سارة
             </span>
-            <span className="mono-chip text-[8px] text-muted-foreground">
-              ACADEMIC · RESEARCH
+            <span
+              className="font-serif-accent mt-1.5 text-[8px] font-medium tracking-[0.32em] text-muted-foreground"
+              dir="ltr"
+            >
+              UMM SARA
             </span>
           </span>
         </Link>

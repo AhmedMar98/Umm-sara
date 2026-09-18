@@ -1,11 +1,11 @@
-import { LogoMark } from "@/components/navbar";
+import { LogoConstruction } from "@/components/brand/logo-construction";
 
 /**
  * مدار المعرفة — المرساة البصرية للهيرو (نمط الفيديوهات المرجعية:
  * مجاز تجريدي لـ «مسار المعالجة» بدل الصور الجاهزة).
  * SVG خالص + حركات CSS، دوران بطيء جداً متعاكس الحلقات،
- * عقد متوهجة ذهبية/زمردية، وختم المنصة في المركز.
- * prefers-reduced-motion: الحلقات ثابتة.
+ * عقد متوهجة ذهبية/زمردية، وقلب المدار: بناء الشعار الحي (v4).
+ * prefers-reduced-motion: الحلقات ثابتة والشعار يظهر مكتملاً.
  */
 export function KnowledgeOrbit({ className = "" }: { className?: string }) {
   return (
@@ -82,15 +82,14 @@ export function KnowledgeOrbit({ className = "" }: { className?: string }) {
           strokeLinecap="round"
         />
 
-        {/* الختم المركزي — إطار-داخل-إطار */}
+        {/* القلب المركزي — بناء الشعار الحي: يُرسم القوس وتحطّ اللؤلؤة عند التحميل */}
         <g>
           <circle cx="300" cy="300" r="86" fill="#0d1613" fillOpacity="0.7" />
           <circle cx="300" cy="300" r="86" stroke="#c5a059" strokeOpacity="0.45" strokeWidth="1" />
           <circle cx="300" cy="300" r="76" stroke="#c5a059" strokeOpacity="0.18" strokeWidth="1" />
-          {/* محتوى الختم يُرسم عبر foreignObject لاستخدام LogoMark مباشرة */}
-          <foreignObject x="252" y="252" width="96" height="96">
+          <foreignObject x="256" y="256" width="88" height="88">
             <div className="flex h-full w-full items-center justify-center">
-              <LogoMark size={52} />
+              <LogoConstruction size={56} />
             </div>
           </foreignObject>
         </g>
