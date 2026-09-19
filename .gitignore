@@ -36,6 +36,8 @@ download/*
 !download/baseline-v5/
 scripts/*
 !scripts/baseline-color-check.py
+upload/
+skills/
 
 # نظام
 .DS_Store
