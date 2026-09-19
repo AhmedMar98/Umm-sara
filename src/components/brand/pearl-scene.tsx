@@ -126,6 +126,12 @@ const PEARL_FRAG = /* glsl */ `
     vec3 H = normalize(L + V);
     float spec = pow(max(dot(N, H), 0.0), 42.0);
     col += spec * uGold * 1.15;
+    /* V10: specular ثانوي زمردي من جهة الملء — يققّر التحلل القزحي
+       على الجانب المظلل ويربط اللؤلؤة بلوحة القوس الداخلية */
+    vec3 L2 = normalize(vec3(-0.62, 0.22, 0.42));
+    vec3 H2 = normalize(L2 + V);
+    float spec2 = pow(max(dot(N, H2), 0.0), 26.0);
+    col += spec2 * uEmerald * 0.32;
     /* تنفس ضوئي خفيف */
     col *= 0.97 + 0.03 * sin(uTime * 0.9);
     gl_FragColor = vec4(col, 1.0);
@@ -381,11 +387,13 @@ function SceneContents({ palette, mobile }: { palette: Palette; mobile: boolean 
     const pearlP = easeOutBack(Math.max(0, Math.min(1, (d.intro - 0.18) / 0.82)));
 
     /* الكاميرا: دخول doll-in + parallax + انجراف تمريري خفيف
-       (v5.1: خُفّض عامل الانجراف — كان يقصّ قمة القوس عند التمرير) */
+       (v5.1: خُفّض عامل الانجراف — كان يقصّ قمة القوس عند التمرير)
+       (V10: تنفس مجهري ±0.05 بتردد 0.23Hz — إحساس "حي" بلا ضجيج) */
     const cam = state.camera;
     cam.position.x = d.px * 0.5 * e;
     cam.position.y = 0.34 + d.py * 0.32 - d.scroll * 0.08;
-    cam.position.z = THREE.MathUtils.lerp(8.8, 6.15, e) + d.scroll * 0.45;
+    cam.position.z =
+      THREE.MathUtils.lerp(8.8, 6.15, e) + d.scroll * 0.45 + Math.sin(t * 0.23) * 0.05 * e;
     cam.lookAt(0, -0.08, 0);
 
     /* الجذر: ميلان parallax + دوران تمريري */
@@ -394,10 +402,13 @@ function SceneContents({ palette, mobile }: { palette: Palette; mobile: boolean 
       root.current.rotation.x = d.py * 0.06;
     }
 
-    /* رسم القوس تدريجياً — يحاكي بناء الشعار (drawRange) */
+    /* رسم القوس تدريجياً — يحاكي بناء الشعار (drawRange)
+       (V10: نبض emissive متزامن مع تنفس اللؤلؤة 0.9Hz — وحدة ضوئية للهوية) */
     if (arc.current) {
       const total = arc.current.geometry.index?.count ?? 0;
       arc.current.geometry.setDrawRange(0, Math.floor(total * arcP));
+      const am = arc.current.material as THREE.MeshStandardMaterial;
+      am.emissiveIntensity = 0.5 + 0.14 * Math.sin(t * 0.9);
     }
     if (arcInner.current) {
       const total = arcInner.current.geometry.index?.count ?? 0;
@@ -555,6 +566,9 @@ export default function PearlScene({
         alpha: true,
         stencil: false,
         powerPreference: "high-performance",
+        /* V10: ACES Filmic — عمق معدني سينمائي للقوس الذهبي
+           (المواد المخصصة كلها shaderMaterial خام فلا تتأثر — ثابتة الهوية) */
+        toneMapping: THREE.ACESFilmicToneMapping,
       }}
       camera={{ fov: 38, near: 0.1, far: 60, position: [0, 0.34, 8.8] }}
       style={{ background: "transparent", pointerEvents: "none" }}

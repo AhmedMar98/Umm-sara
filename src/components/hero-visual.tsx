@@ -10,16 +10,37 @@
  *
  * fallback الكامل: prefers-reduced-motion أو WebGL غائب/برمجي أو فشل
  * التحميل → يبقى مدار المعرفة SVG نهائياً. لا يوجد مسار بلا مخرج.
+ *
+ * V10 — مرونة مستوى الإنتاج: SceneBoundary يلتقط أي فشل في تحميل/تشغيل
+ * المشهد (ChunkLoadError، فشل WebGL context، خطأ شيدر) ويرجع بهدوء إلى
+ * المدار SVG — الفشل لا يُسقط الصفحة أبداً (Failure → Controlled Fallback).
  */
 
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { Component, useEffect, useRef, useState, type ReactNode } from "react";
 import { useTheme } from "next-themes";
 import { KnowledgeOrbit } from "@/components/knowledge-orbit";
 
 const PearlScene = dynamic(() => import("@/components/brand/pearl-scene"), {
   ssr: false,
 });
+
+/** حاجز أخطاء مصغّر للمشهد: يلتقط ويعزل الفشل ويُبقي التطبيق صالحاً */
+class SceneBoundary extends Component<
+  { onCatch: () => void; children: ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  componentDidCatch() {
+    this.props.onCatch();
+  }
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
 
 /** كشف WebGL مع رفض المسعّرات البرمجية (نمط awwwards-3d) */
 function detectRealWebGL(): boolean {
@@ -104,19 +125,22 @@ export function HeroVisual({
         <KnowledgeOrbit className="h-full w-full" />
       </div>
 
-      {/* مشهد اللؤلؤة — طبقة ثلاثية الأبعاد فوق المدار */}
+      {/* مشهد اللؤلؤة — طبقة ثلاثية الأبعاد فوق المدار
+          (V10: داخل SceneBoundary — أي فشل يعيد المدار SVG بلا سقوط صفحة) */}
       {showScene && (
-        <div
-          className={`animate-scene-in absolute inset-0 ${
-            faint ? "opacity-35" : "opacity-100"
-          }`}
-        >
-          <PearlScene
-            theme={resolvedTheme === "light" ? "light" : "dark"}
-            mobile={mobile}
-            paused={paused}
-          />
-        </div>
+        <SceneBoundary onCatch={() => setSceneError(true)}>
+          <div
+            className={`animate-scene-in absolute inset-0 ${
+              faint ? "opacity-35" : "opacity-100"
+            }`}
+          >
+            <PearlScene
+              theme={resolvedTheme === "light" ? "light" : "dark"}
+              mobile={mobile}
+              paused={paused}
+            />
+          </div>
+        </SceneBoundary>
       )}
     </div>
   );

@@ -31,11 +31,13 @@ research/
 reference-material/
 examples/
 
-# مخرجات قابلة لإعادة التوليد — باستثناء أدلة خط الصفر المجمدة (استثناء مقصود وموثق في BASELINE_V5.md)
+# مخرجات قابلة لإعادة التوليد — باستثناء أدلة خط الصفر وأدلة موجات V10 الموثقة
 download/*
 !download/baseline-v5/
+!download/v10-*/
 scripts/*
 !scripts/baseline-color-check.py
+!scripts/v10-*.py
 upload/
 skills/
 

@@ -9,9 +9,7 @@ const nextConfig: NextConfig = {
     root: path.resolve(__dirname),
   },
   /* config options here */
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  /* V10: أزيل تجاهل أخطاء TS — tsc --noEmit = صفر أخطاء (مثبت 19-09). العلم كان يخفي أخطاء مستقبلية محتملة */
   reactStrictMode: false,
 };
 

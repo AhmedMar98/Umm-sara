@@ -93,14 +93,15 @@ export default function HomePage() {
             <Reveal>
               <Badge
                 variant="outline"
-                className="mb-7 gap-2 rounded-full border-gold/35 bg-gold-soft px-4 py-1.5 text-xs font-medium text-gold backdrop-blur-sm"
+                className="mb-7 gap-2 rounded-full border-gold/35 bg-gold-soft px-4 py-1.5 text-xs font-medium text-gold-bright backdrop-blur-sm"
               >
                 <Sparkles className="size-3.5" />
                 منصة سعودية للخدمات الأكاديمية والبحثية
               </Badge>
             </Reveal>
 
-            <h1 className="font-display text-[2.4rem] font-black leading-[1.25] tracking-tight sm:text-6xl lg:text-[4.2rem]">
+            {/* V10: بلا tracking — العربية سكربت متصل والتباعد يفكك الوصلات بصرياً */}
+            <h1 className="font-display text-[2.4rem] font-black leading-[1.25] sm:text-6xl lg:text-[4.2rem]">
               <WordReveal
                 as="span"
                 text="نحو تفوّقٍ أكاديمي"
