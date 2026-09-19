@@ -1,0 +1,15 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/about/page": "/about",
+  "/api/consultations/route": "/api/consultations",
+  "/api/orders/route": "/api/orders",
+  "/api/route": "/api",
+  "/consultation/page": "/consultation",
+  "/contact/page": "/contact",
+  "/cv-builder/page": "/cv-builder",
+  "/page": "/",
+  "/plagiarism-check/page": "/plagiarism-check",
+  "/services/[category]/page": "/services/[category]",
+  "/services/page": "/services"
+}
