@@ -219,7 +219,8 @@ export function ProductShowcase() {
       </div>
 
       {/* المسرح — هالة ديناميكية + بطاقة سينمائية */}
-      <div className="relative">
+      {/* V10: overflow-x-clip — هالة -inset-x-8 كانت تخلق تمريراً أفقياً 16px على الجوال */}
+      <div className="relative overflow-x-clip">
         {/* الهالة المحيطية — تتلوّن حسب المنتج */}
         <AnimatePresence mode="wait">
           <motion.div
