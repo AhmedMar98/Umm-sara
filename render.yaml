@@ -5,30 +5,28 @@
 #   → املأ المتغيرات السرية (sync: false) → Deploy
 # بعدها: كل push إلى main ينشر تلقائياً (autoDeploy: true)
 #
-# مُثبت بالمحاكاة الكاملة (2026-09-20، worklog Task 17):
-#   تثبيت نظيف NODE_ENV=production (devDeps مُقصاة، prisma/sharp سكربتات ناجحة)
-#   → بناء 22.4s (18/18 صفحة، فحص TS مفعّل)
-#   → خادم standalone يستجيب 200 + مسارات API تعمل بالتدهور الرشيق
+# لماذا Docker runtime؟ (مثبت بالقياس — worklog Task 18)
+#   البناء يستهلك ~1.8GB ذاكرة ذروة (npm ci 1842MB · build 1680MB)
+#   والخطة المجانية تقدم 512MB على runtime الأصلي → OOM حتمي.
+#   Docker يُبنى على بنّاة منفصلين بذاكرة أكبر، والتشغيل
+#   (خادم standalone) قِيست ذروته ~100MB فقط.
 # ============================================================
 
 services:
-  # ---------- الواجهة (Next.js) — الخدمة المفعّلة الوحيدة ----------
+  # ---------- الواجهة (Next.js عبر Docker) ----------
   - type: web
     name: umm-sarah-web
-    runtime: node
-    plan: starter
+    runtime: docker
+    plan: free # تنام بعد 15 دقيقة خمول وتصحو عند الزيارة
     region: frankfurt # الأقرب للسعودية ضمن مناطق Render
     branch: main
     autoDeploy: true # كل push إلى main = نشر تلقائي
-    # --legacy-peer-deps مطلوب: @lexical/yjs (من @mdxeditor) يصرح بـ peer على yjs
-    # لا يستخدمه التطبيق، وسلسلة peerOptional الخاصة بـ @react-three/fiber تجبر
-    # npm على بناء شجرة مثالية متضاربة. العلم يثبّت الشجرة المقفلة الحرفية.
-    buildCommand: npm ci --legacy-peer-deps && npm run build
-    startCommand: npm run start
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     healthCheckPath: /
     envVars:
       - key: NODE_VERSION
-        value: 20.19.0
+        value: "20" # node:20-alpine في Dockerfile هو المرجع الفعلي
       - key: NEXT_TELEMETRY_DISABLED
         value: "1"
       - key: SUPABASE_URL
@@ -36,7 +34,7 @@ services:
       - key: SUPABASE_SERVICE_ROLE_KEY
         sync: false # سري — من Supabase → Project Settings → API → service_role
       - key: NEXT_PUBLIC_SUPABASE_URL
-        sync: false # احتياط الكود إن غاب SUPABASE_URL (نفس Project URL)
+        sync: false # احتياط الكود (نفس Project URL)
       - key: NEXT_PUBLIC_WHATSAPP_NUMBER
         sync: false # مثال: 966501234567 — يُدمج وقت البناء؛ اضبطه قبل أول نشر
 
@@ -47,7 +45,7 @@ services:
   # - type: web
   #   name: umm-sarah-api
   #   runtime: docker
-  #   plan: starter
+  #   plan: free
   #   region: frankfurt
   #   autoDeploy: true
   #   dockerfilePath: ./api-service/Dockerfile
