@@ -370,3 +370,20 @@ Stage Summary:
 - التلقائية الكاملة جاهزة وموثقة: Render Blueprint بنقرة واحدة + autoDeploy + GitHub Action للمخطط + دليل متغيرات مرجعي
 - الدليل الأقوى في المشروع حتى الآن على نجاح نشر Render: محاكاة تثبيت نظيف كاملة من git archive حتى استجابة الخادم المستقل — نُفذت بظروف Render الحرفية
 - المتبقي على المستخدم (مرة واحدة): إنشاء مشروع Supabase وتشغيل المخطط (أو سر SUPABASE_DB_URL) + Render → New → Blueprint وملء 4 متغيرات → ثم الدورة تلقائية بالكامل
+
+---
+Task ID: 18
+Agent: main (Super Z)
+Task: التنفيذ الآلي الكامل للنشر الحقيقي — توجيه المستخدم: «سوي كل شي من نفسك وابغى كل شي تلقائي» بعد تسليم مفاتيح Supabase و Render
+
+Work Log:
+- اختبار قدرة مسبق (بدليل): كتابة/حذف سر GitHub عبر API ناجحة (سر تجريبي أُنشئ وحُذف بلا أثر) — scripts/gh-secret-capability-test.py
+- Supabase عبر Management API (توكن المستخدم): مشروع موجود مسبقاً tmxjdxfechwqfweuvxul (طوكيو، ACTIVE_HEALTHY) · schema.sql طُبّق مباشرة => HTTP 201 · التحقق بالاستعلام: 6 جداول + seed (6 أقسام + 33 خدمة فرعية + 3 آراء) + 4 سياسات قراءة عامة + RLS مفعّل على 6/6 جداول
+- اختبار رابط الاتصال قبل كتابته: psycopg2 اتصال مباشر ناجح عبر Session pooler بكلمة مرور المستخدم — categories=6 مقروءة وأعمدة orders كاملة
+- كتابة سر SUPABASE_DB_URL في GitHub عبر API (مشفّراً SealedBox) => HTTP 201 ثم تشغيل Action يدوي (dispatch) => نجاح كامل (run 35503777466: completed/success) — التلقائية تعمل من طرف إلى طرف والمخطط idempotent أثبت نفسه
+- Render عبر API (مفتاح المستخدم): المالك مساحة فريق My Workspace (tea-d9nbisvqj5pc73eile10) · خدمة موجودة مسبقاً: link-intel-web (خطة free، أُنشئت 03-09) · ثلاث محاولات إنشاء umm-sarah-web: 400 (ownerID) ثم 400 (serviceDetails) ثم 400 (envSpecificDetails) — بنية الـ API صُححت تدريجياً · 402 Payment information is required على خطة starter ثم أيضاً على free
+
+Stage Summary:
+- المكتمل والمُثبت: قاعدة بيانات Supabase حية بكامل جداولها وبياناتها وسياساتها + سر GitHub صحيح مكتوب + Action أخضر + مفاتيح API جاهزة (service_role محفوظ في /tmp/sb-keys.json) + سكربت إنشاء Render جاهز ومصحح بنيوياً (بقي تنفيذه)
+- العقبة الوحيدة المتبقية (خارج قدرتي بنيوياً): Render يرفض إنشاء أي خدمة جديدة بلا معلومات دفع (سياسة الحساب — حتى الخطة المجانية) — الخيارات الموثقة للمستخدم: (أ) إضافة بطاقة في dashboard.render.com/billing (بطاقة على الملف؛ الخطة free لا تخصم شيئاً) ثم أنفذ الباقي فوراً، (ب) أو إدارة link-intel-web (إيقافه إن لم يعد بحاجة إليه لتحرير مقعد المجاني)
+- أمان: كل المفاتيح التي ظهرت في المحادثة (ghp/sbp/rnd/كلمة مرور القاعدة) يُنصح بتدويرها بعد اكتمال الإطلاق

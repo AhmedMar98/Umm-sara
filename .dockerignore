@@ -1,0 +1,35 @@
+# سياق بناء Docker — العناصر غير اللازمة للتشغيل (تُصغّر السياق كثيراً)
+node_modules
+.next
+.git
+.gitignore
+
+# أدلة أدلة التحقق الثقيلة (لا حاجة لها داخل الصورة)
+download
+docs
+tests
+scripts
+
+# مواد مرجعية وبيئية
+research
+reference-material
+examples
+upload
+api-service
+supabase
+db
+*.db
+*.log
+.env
+.env.*
+render.yaml
+Dockerfile
+.dockerignore
+Caddyfile
+tool-results
+.render-sim
+.verify-clone
+worklog.md
+BASELINE_V5.md
+DEPLOYMENT.md
+README.md
