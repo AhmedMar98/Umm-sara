@@ -387,3 +387,21 @@ Stage Summary:
 - المكتمل والمُثبت: قاعدة بيانات Supabase حية بكامل جداولها وبياناتها وسياساتها + سر GitHub صحيح مكتوب + Action أخضر + مفاتيح API جاهزة (service_role محفوظ في /tmp/sb-keys.json) + سكربت إنشاء Render جاهز ومصحح بنيوياً (بقي تنفيذه)
 - العقبة الوحيدة المتبقية (خارج قدرتي بنيوياً): Render يرفض إنشاء أي خدمة جديدة بلا معلومات دفع (سياسة الحساب — حتى الخطة المجانية) — الخيارات الموثقة للمستخدم: (أ) إضافة بطاقة في dashboard.render.com/billing (بطاقة على الملف؛ الخطة free لا تخصم شيئاً) ثم أنفذ الباقي فوراً، (ب) أو إدارة link-intel-web (إيقافه إن لم يعد بحاجة إليه لتحرير مقعد المجاني)
 - أمان: كل المفاتيح التي ظهرت في المحادثة (ghp/sbp/rnd/كلمة مرور القاعدة) يُنصح بتدويرها بعد اكتمال الإطلاق
+
+---
+Task ID: 19
+Agent: main (Super Z)
+Task: العودة إلى Node الأصلية على Render — توجيه المستخدم: «على أي أساس تختار Docker وأنا طلبت Render؟ إن لم يصلح Render أريد حل سحابي جذري يطابق Supabase»
+
+Work Log:
+- كشف التشخيص الخاطئ للجزء السابق من الجلسة: ادعاء OOM (بناء 1.8GB > 512MB) انهار أمام السجلات الفعلية من Render — جلب السجلات عبر `GET /v1/logs?ownerId&resource` (المعامل الصحيح اكتُشف تجريبياً بعد 400×3)
+- الدليل الحاسم من سجلات نشر 10:17 (كوميت 264bb56 على runtime Node): `npm ci` = 843 حزمة في 29 ث · `next build` = 18/18 صفحة في ~60 ث · «Build successful» · «✓ Ready in 612ms» على المنفذ 10000 — البناء Node يعمل على الخطة المجانية بلا أي OOM
+- سبب الفشل الحقيقي المثبت: «==> Timed Out» بعد 14 دقيقة جاهزية — الفحص الصحي على `/healthz` (قيمة الخدمة القديمة المعاد توظيفها link-intel-web) والمسار غير موجود في التطبيق → 404 دائم → مهلة → update_failed · بعد الفشل حاول Render إرجاع النسخة القديمة (alembic/uvicorn على Python) فانهارت على قاعدة بيانات ميتة (35.227.164.209 SSL closed)
+- الخلل البنيوي في سكربتات PATCH السابقة (render-repurpose/render-switch-docker): كانت تضع healthCheckPath داخل `envSpecificDetails` فلا يُطبَّق أبداً — استجابة GET تُظهر الحقل في مستوى `serviceDetails`
+- إلغاء نشر Docker العالق (dep-danrgtm8n08c73b904jg => canceled) — قرار المستخدم الصريح برفض مسار Docker
+- `scripts/render-switch-node.py`: PATCH => 200 — runtime: node · **healthCheckPath: /** (المستوى الصحيح، مُتحقق بالـ GET) · buildCommand/startCommand مثبتان · PUT env-vars => 200 بالمفاتيح الستة (NODE_VERSION 20.19.0 + Supabase ×3 + WhatsApp + telemetry)
+- إصلاح المستودع: إزالة Dockerfile و.dockerignore · مسار جديد `src/app/healthz/route.ts` (ضمانة قياسية — الفحص ينجح أياً كان المسار المضبوط) · render.yaml أعيدت إلى Node/free مع توثيق التشخيص الصحيح في الترويسة
+
+Stage Summary:
+- الخدمة umm-sarah-web (srv-dacm997avr4c73fobhjg، الرابط الثابت https://link-intel-web.onrender.com — slug الخدمة الأصلية لا يتغير على Render) مضبوطة بالكامل على Node بفحص صحي صحيح — بانتظار النشر عبر autoDeploy عند الدفع
+- الدرس الموثق: ادعاء «مثبت بالقياس» محلياً (OOM) لم يكن دليلاً على ما يحدث على منصة Render فعلياً — السجلات من المنصة نفسها هي الحكم الوحيد
