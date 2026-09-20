@@ -25,20 +25,24 @@ export const ICONS: Record<string, LucideIcon> = {
   "search-check": SearchCheck,
 };
 
-/** عنوان قسم — فهرس رقمي mono (درس aspen/locomotive) + خط شعري ذهبي */
+/** عنوان قسم — فهرس رقمي mono (درس aspen/locomotive) + خط شعري ذهبي
+ *  V10: as="h1" لعنوان الصفحة الرئيسي (كل صفحة h1 واحد — قاعدة النظام) */
 export function SectionHeading({
   kicker,
   index,
   title,
   description,
   center = true,
+  as = "h2",
 }: {
   kicker?: string;
   index?: string;
   title: string;
   description?: string;
   center?: boolean;
+  as?: "h1" | "h2";
 }) {
+  const Heading = as;
   return (
     <div className={cn("max-w-2xl", center && "mx-auto text-center")}>
       {kicker && (
@@ -48,9 +52,17 @@ export function SectionHeading({
           {kicker}
         </p>
       )}
-      <h2 className="font-display text-2xl font-extrabold leading-snug tracking-tight sm:text-3xl md:text-4xl">
+      {/* V10: بلا tracking — العربية سكربت متصل والتباعد يفكك الوصلات بصرياً */}
+      <Heading
+        className={cn(
+          "font-display",
+          as === "h1"
+            ? "text-3xl font-black sm:text-4xl" /* مطابق لمقياس h1 الداخلي الموحد */
+            : "text-2xl font-extrabold leading-snug sm:text-3xl md:text-4xl"
+        )}
+      >
         {title}
-      </h2>
+      </Heading>
       {description && (
         <p className="mt-4 text-sm leading-8 text-muted-foreground sm:text-base">
           {description}

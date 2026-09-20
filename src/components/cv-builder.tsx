@@ -138,7 +138,7 @@ export function CVBuilder() {
         <p className="mb-3 font-mono text-xs uppercase tracking-[0.25em] text-primary" dir="ltr">
           CV BUILDER · ATS READY
         </p>
-        <h1 className="font-display text-3xl font-black tracking-tight sm:text-4xl">
+        <h1 className="font-display text-3xl font-black sm:text-4xl">
           بنّاء السيرة الذاتية
         </h1>
         <p className="mt-4 text-sm leading-8 text-muted-foreground">
@@ -340,12 +340,13 @@ function CVPreview({ data }: { data: CVData }) {
               <path d="M8 10h8M8 13.5h8M8 17h5" />
             </svg>
           </div>
-          <h1 className="mt-4 font-bold leading-snug">{data.fullName || "اسمك الكامل"}</h1>
+          {/* V10: اسم المعاينة p لا h1 — المعاينة وثيقة داخل الصفحة والصفحة لها h1 واحد */}
+          <p className="mt-4 font-bold leading-snug">{data.fullName || "اسمك الكامل"}</p>
           <p className="mt-1 text-xs text-emerald-300">{data.title || "المسمى المهني"}</p>
           {contact && <p className="mt-4 text-[10.5px] leading-5 text-emerald-100/90" dir="ltr">{contact}</p>}
           {data.skills && (
             <>
-              <h2 className="mt-6 text-[11px] font-bold uppercase tracking-widest text-emerald-300">المهارات</h2>
+              <h2 className="mt-6 text-[11px] font-bold uppercase text-emerald-300">المهارات</h2>
               <div className="mt-2 space-y-1.5">
                 {data.skills.split(/[·\n]/).filter((s) => s.trim()).map((s, i) => (
                   <p key={i} className="flex items-center gap-1.5 text-[11px] text-emerald-50">
@@ -358,7 +359,7 @@ function CVPreview({ data }: { data: CVData }) {
           )}
           {data.languages && (
             <>
-              <h2 className="mt-6 text-[11px] font-bold uppercase tracking-widest text-emerald-300">اللغات</h2>
+              <h2 className="mt-6 text-[11px] font-bold uppercase text-emerald-300">اللغات</h2>
               <Lines text={data.languages} />
             </>
           )}
@@ -366,19 +367,19 @@ function CVPreview({ data }: { data: CVData }) {
         <div className="flex-1 p-6">
           {data.summary && (
             <section>
-              <h2 className="text-[11px] font-bold uppercase tracking-widest text-emerald-800">النبذة التعريفية</h2>
+              <h2 className="text-[11px] font-bold uppercase text-emerald-800">النبذة التعريفية</h2>
               <p className="mt-2 text-[11.5px] leading-6 text-gray-700">{data.summary}</p>
             </section>
           )}
           {data.education && (
             <section className="mt-5">
-              <h2 className="text-[11px] font-bold uppercase tracking-widest text-emerald-800">التعليم</h2>
+              <h2 className="text-[11px] font-bold uppercase text-emerald-800">التعليم</h2>
               <Lines text={data.education} />
             </section>
           )}
           {data.experience && (
             <section className="mt-5">
-              <h2 className="text-[11px] font-bold uppercase tracking-widest text-emerald-800">الخبرات والمشاريع</h2>
+              <h2 className="text-[11px] font-bold uppercase text-emerald-800">الخبرات والمشاريع</h2>
               <Lines text={data.experience} />
             </section>
           )}
@@ -394,7 +395,7 @@ function CVPreview({ data }: { data: CVData }) {
     return (
       <div className="min-h-[600px] p-8">
         <header className="border-b-2 border-amber-600 pb-4 text-center">
-          <h1 className="text-2xl font-bold tracking-wide">{data.fullName || "اسمك الكامل"}</h1>
+          <p className="text-2xl font-bold">{data.fullName || "اسمك الكامل"}</p>
           <p className="mt-1 text-sm font-medium text-amber-700">{data.title || "المسمى المهني"}</p>
           {contact && <p className="mt-2 text-[10.5px] text-gray-500" dir="ltr">{contact}</p>}
         </header>
@@ -418,7 +419,7 @@ function CVPreview({ data }: { data: CVData }) {
   /* ATS — بنية نصية مباشرة */
   return (
     <div className="min-h-[600px] p-8 font-mono">
-      <h1 className="text-lg font-bold">{data.fullName || "اسمك الكامل"}</h1>
+      <p className="text-lg font-bold">{data.fullName || "اسمك الكامل"}</p>
       <p className="mt-0.5 text-[11px] text-gray-600">{data.title || "المسمى المهني"}</p>
       {contact && <p className="mt-1 text-[10.5px] text-gray-600" dir="ltr">{contact}</p>}
       <hr className="my-4 border-gray-300" />

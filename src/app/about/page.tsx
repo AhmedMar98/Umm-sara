@@ -44,7 +44,7 @@ export default function AboutPage() {
           <p className="mb-3 font-mono text-xs uppercase tracking-[0.25em] text-primary" dir="ltr">
             ABOUT US
           </p>
-          <h1 className="font-display text-3xl font-black tracking-tight sm:text-4xl">
+          <h1 className="font-display text-3xl font-black sm:text-4xl">
             قصة منصة {PLATFORM_NAME}
           </h1>
           <p className="mt-5 max-w-3xl text-sm leading-9 text-muted-foreground sm:text-base">

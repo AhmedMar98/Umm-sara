@@ -37,7 +37,7 @@ download/*
 !download/v10-*/
 scripts/*
 !scripts/baseline-color-check.py
-!scripts/v10-*.py
+!scripts/v10-*
 upload/
 skills/
 
@@ -56,3 +56,6 @@ bun.lock
 # ملفات تديرها منصة الحاوية (خارج المشروع — لا معنى لتتبعها)
 # ملاحظة: ملف إعداد البروكسي تُديره المنصة بحماية خاصة — يبقى متتبعاً (غير مؤذٍ)
 .zscripts/
+
+# أثر توليد tsc — يتجدد مع كل فحص
+tsconfig.tsbuildinfo

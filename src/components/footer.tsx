@@ -56,7 +56,7 @@ export function Footer() {
 
           {/* الأقسام */}
           <nav className="md:col-span-3" aria-label="أقسام الخدمات">
-            <h3 className="mb-4 font-display text-sm font-bold tracking-wide text-foreground">
+            <h3 className="mb-4 font-display text-sm font-bold text-foreground">
               الأقسام
             </h3>
             <ul className="grid gap-2.5 text-sm text-muted-foreground">
@@ -75,7 +75,7 @@ export function Footer() {
 
           {/* روابط سريعة */}
           <nav className="md:col-span-4" aria-label="روابط سريعة">
-            <h3 className="mb-4 font-display text-sm font-bold tracking-wide text-foreground">
+            <h3 className="mb-4 font-display text-sm font-bold text-foreground">
               روابط سريعة
             </h3>
             <ul className="grid grid-cols-2 gap-2.5 text-sm text-muted-foreground">

@@ -72,7 +72,7 @@ export default function ConsultationPage() {
           <p className="mb-3 font-mono text-xs uppercase tracking-[0.25em] text-primary" dir="ltr">
             FREE CONSULTATION
           </p>
-          <h1 className="font-display text-3xl font-black tracking-tight sm:text-4xl">
+          <h1 className="font-display text-3xl font-black sm:text-4xl">
             احجز استشارتك المجانية
           </h1>
           <p className="mt-4 max-w-lg text-sm leading-8 text-muted-foreground sm:text-base">

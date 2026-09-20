@@ -38,7 +38,7 @@ export default function PlagiarismCheckPage() {
           <Badge variant="outline" className="mb-4 border-gold/40 bg-gold-soft text-gold">
             منتج مستقل · فحص ومراجعة وتحسين
           </Badge>
-          <h1 className="font-display text-3xl font-black tracking-tight sm:text-4xl">
+          <h1 className="font-display text-3xl font-black sm:text-4xl">
             فحص الأصالة الأكاديمية
           </h1>
           <p className="mt-4 max-w-2xl text-sm leading-8 text-muted-foreground sm:text-base">

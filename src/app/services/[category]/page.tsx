@@ -71,7 +71,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
               <Badge variant="outline" className="mb-2 border-gold/40 bg-gold-soft text-[11px] text-gold">
                 {cat.tagline}
               </Badge>
-              <h1 className="font-display text-3xl font-black tracking-tight sm:text-4xl">
+              <h1 className="font-display text-3xl font-black sm:text-4xl">
                 {cat.name}
               </h1>
             </div>

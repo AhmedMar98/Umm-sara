@@ -14,6 +14,7 @@ export default function ContactPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
       <SectionHeading
+        as="h1"
         kicker="CONTACT"
         title="يسعدنا سماعك"
         description="اختر الوسيلة الأنسب لك — نرد على واتساب عادة خلال دقائق، وعلى البريد خلال يوم عمل واحد."
