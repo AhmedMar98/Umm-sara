@@ -1,32 +1,37 @@
 # ============================================================
-# منصة أم سارة — Render Blueprint (نشر تلقائي كامل من المستودع)
+# منصة أم سارة — Render (نشر تلقائي كامل من المستودع)
 #
-# الطريقة (مرة واحدة): Render → New → Blueprint → اختر AhmedMar98/Umm-sara
-#   → املأ المتغيرات السرية (sync: false) → Deploy
-# بعدها: كل push إلى main ينشر تلقائياً (autoDeploy: true)
+# الحالة الفعلية (2026-09-20، worklog Task 19): الخدمة umm-sarah-web
+# منشورة ومتصلة بالمستودع عبر API على خطة free بمنطقة oregon —
+# هذا الملف وثيقة مرجعية للمواصفات (وخدمة بدء نظيف عبر Blueprint).
+# بعدها: كل push إلى main ينشر تلقائياً (autoDeploy: true).
 #
-# لماذا Docker runtime؟ (مثبت بالقياس — worklog Task 18)
-#   البناء يستهلك ~1.8GB ذاكرة ذروة (npm ci 1842MB · build 1680MB)
-#   والخطة المجانية تقدم 512MB على runtime الأصلي → OOM حتمي.
-#   Docker يُبنى على بنّاة منفصلين بذاكرة أكبر، والتشغيل
-#   (خادم standalone) قِيست ذروته ~100MB فقط.
+# Node runtime — مثبت بسجلات Render نفسها (Task 19):
+#   npm ci = 843 حزمة في 29 ثانية · next build = 18/18 صفحة في ~60 ثانية
+#   («✓ Ready in 612ms») — البناء يعمل على الخطة المجانية بلا أي OOM.
+#   فشل نشر 10:17 سببه الوحيد: healthCheckPath ظل /healthz (قيمة الخدمة
+#   القديمة المعاد توظيفها) والمسار لم يكن في التطبيق — عولج بضبطه
+#   في المستوى الصحيح (serviceDetails) + إضافة مسار /healthz في التطبيق.
 # ============================================================
 
 services:
-  # ---------- الواجهة (Next.js عبر Docker) ----------
+  # ---------- الواجهة (Next.js) — الخدمة الوحيدة المفعلة ----------
   - type: web
     name: umm-sarah-web
-    runtime: docker
-    plan: free # تنام بعد 15 دقيقة خمول وتصحو عند الزيارة
-    region: frankfurt # الأقرب للسعودية ضمن مناطق Render
+    runtime: node
+    plan: free # تنام بعد 15 دقيقة خمول وتصحو عند أول زيارة (إقلاع ~30-60 ث)
+    region: oregon # منطقة الخدمة الفعلية (تثبت عند الإنشاء)
     branch: main
     autoDeploy: true # كل push إلى main = نشر تلقائي
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
-    healthCheckPath: /
+    # --legacy-peer-deps مطلوب: يثبّت الشجرة المقفلة حرفياً — التوثيق الكامل
+    # لسبب التعارض (@lexical/yjs peer على yjs) في DEPLOYMENT.md
+    buildCommand: npm ci --legacy-peer-deps && npm run build
+    startCommand: npm run start
+    # / و /healthz كلاهما يعيد 200 من التطبيق — الفحصان صالحان
+    healthCheckPath: /healthz
     envVars:
       - key: NODE_VERSION
-        value: "20" # node:20-alpine في Dockerfile هو المرجع الفعلي
+        value: 20.19.0
       - key: NEXT_TELEMETRY_DISABLED
         value: "1"
       - key: SUPABASE_URL
@@ -46,7 +51,7 @@ services:
   #   name: umm-sarah-api
   #   runtime: docker
   #   plan: free
-  #   region: frankfurt
+  #   region: oregon
   #   autoDeploy: true
   #   dockerfilePath: ./api-service/Dockerfile
   #   dockerContext: ./api-service
