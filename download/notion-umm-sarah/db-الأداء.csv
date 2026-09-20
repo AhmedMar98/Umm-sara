@@ -1,0 +1,12 @@
+المقياس,القيمة,الميزانية,الحكم,المصدر
+زمن البناء (فحص TS مفعّل),24.3s,≤30s,PASS,scripts/v10-wave4-perf.sh
+عدد الصفحات المولدة,18,18,PASS,سجل البناء
+TTFB الرئيسية,30ms,≤300ms,PASS,قياس curl
+TTFB أبطأ مسار (قسم جامعية),112ms,≤300ms,PASS,قياس curl
+حجم HTML الرئيسية خام,181KB,≤190KB,PASS,قياس
+حجم HTML الرئيسية gzip,25.6KB,≤40KB,PASS,قياس
+JS أول تحميل (gzip),269KB,≤300KB,PASS,resource timing في متصفح
+CSS,26KB,≤50KB,PASS,resource timing
+chunk مشهد 3D,892KB خارج HTML الأولي,فصل إلزامي,PASS,فحص src في HTML
+خطوط محمّلة فعلياً,14 ملفاً / 472KB,ضمن قرار v3,PASS,resource timing
+التراجع عن خط الصفر v5,صفر في كل المقاييس القابلة للمقارنة,لا تراجع,PASS,مقارنة مباشرة

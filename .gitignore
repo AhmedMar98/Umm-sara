@@ -59,3 +59,7 @@ bun.lock
 
 # أثر توليد tsc — يتجدد مع كل فحص
 tsconfig.tsbuildinfo
+
+# حزمة توثيق Notion الجاهزة للاستيراد — تتبع لحمايتها من إعادة تدوير البيئة
+!download/notion-umm-sarah/
+!download/notion-umm-sarah.zip
