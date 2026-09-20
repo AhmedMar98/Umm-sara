@@ -2,10 +2,11 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Search, ArrowLeft, MessageCircle } from "lucide-react";
+import { Search, ArrowLeft, MessageCircle, ShoppingBasket } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Reveal } from "@/components/reveal";
 import { ICONS } from "@/components/section-blocks";
+import { AddToCartButton } from "@/components/add-to-cart";
 import type { Category } from "@/lib/platform-data";
 import { whatsappLink } from "@/lib/platform-data";
 
@@ -96,13 +97,23 @@ export function ServicesExplorer({ categories }: { categories: Category[] }) {
                 </div>
                 <ul className="flex flex-wrap gap-2.5 p-6">
                   {c.subServices.map((s) => (
-                    <li key={s.slug}>
+                    <li key={s.slug} className="flex items-center gap-1.5">
                       <Link
                         href={`/services/${c.slug}?service=${s.slug}`}
                         className="inline-flex rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-muted-foreground transition-all hover:border-primary/40 hover:text-foreground"
                       >
                         {s.name}
                       </Link>
+                      {/* V10.1 — درس 3: إضافة سريعة للسلة بجانب كل خدمة في البحث */}
+                      <AddToCartButton
+                        variant="chip"
+                        item={{
+                          name: s.name,
+                          category: c.name,
+                          categorySlug: c.slug,
+                          serviceSlug: s.slug,
+                        }}
+                      />
                     </li>
                   ))}
                 </ul>

@@ -8,6 +8,8 @@ import { Footer } from "@/components/footer";
 import { FilmGrain } from "@/components/film-grain";
 import { CursorGlow } from "@/components/cursor-glow";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { CartProvider } from "@/lib/cart";
+import { CookieConsent } from "@/components/cookie-consent";
 
 /* v3 — خفض أوزان الخطوط (أداء LCP): 16 ملفاً → 11 ملفاً */
 const cairo = Cairo({
@@ -78,13 +80,17 @@ export default function RootLayout({
         className={`${cairo.variable} ${plexArabic.variable} ${plexMono.variable} ${amiri.variable} antialiased bg-background text-foreground min-h-screen flex flex-col`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <SmoothScroll />
-          <CursorGlow />
-          <FilmGrain />
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <Toaster />
+          <CartProvider>
+            <SmoothScroll />
+            <CursorGlow />
+            <FilmGrain />
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <Toaster />
+            {/* V10.1 — الدرس 7: موافقة التخزين المحلي (بلا تتبع — النص يوضح ذلك بصدق) */}
+            <CookieConsent />
+          </CartProvider>
         </ThemeProvider>
       </body>
     </html>

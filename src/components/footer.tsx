@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { MessageCircle, Mail, Clock } from "lucide-react";
 import { LogoMark } from "@/components/brand/logo";
-import { CATEGORIES, whatsappLink, PLATFORM_NAME } from "@/lib/platform-data";
+import {
+  CATEGORIES,
+  whatsappLink,
+  PLATFORM_NAME,
+  WHATSAPP_DISPLAY,
+} from "@/lib/platform-data";
 
 export function Footer() {
   return (
@@ -41,7 +46,8 @@ export function Footer() {
                 className="inline-flex items-center gap-2 transition-colors hover:text-primary"
               >
                 <MessageCircle className="size-4 text-primary" />
-                <span dir="ltr" className="font-mono">+966 50 000 0000</span>
+                {/* V10.1 — درس 2: الرقم الرسمي من مصدر واحد (platform-data) */}
+                <span dir="ltr" className="font-mono">{WHATSAPP_DISPLAY}</span>
               </a>
               <span className="inline-flex items-center gap-2">
                 <Mail className="size-4 text-primary" />
@@ -80,6 +86,7 @@ export function Footer() {
             </h3>
             <ul className="grid grid-cols-2 gap-2.5 text-sm text-muted-foreground">
               <li><Link href="/services" className="transition-colors hover:text-primary">كل الخدمات</Link></li>
+              <li><Link href="/works" className="transition-colors hover:text-primary">معرض الأعمال</Link></li>
               <li><Link href="/cv-builder" className="transition-colors hover:text-primary">بنّاء السيرة</Link></li>
               <li><Link href="/plagiarism-check" className="transition-colors hover:text-primary">فحص الأصالة</Link></li>
               <li><Link href="/consultation" className="transition-colors hover:text-primary">حجز استشارة</Link></li>
@@ -103,6 +110,12 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-gold/10 pt-6 text-xs text-muted-foreground sm:flex-row">
           <p>© {new Date().getFullYear()} منصة {PLATFORM_NAME} — جميع الحقوق محفوظة.</p>
+          <div className="flex items-center gap-4">
+            {/* V10.1 — درس 7: روابط الالتزام النظامي */}
+            <Link href="/privacy" className="transition-colors hover:text-primary">سياسة الخصوصية</Link>
+            <span aria-hidden="true">·</span>
+            <Link href="/terms" className="transition-colors hover:text-primary">شروط الاستخدام</Link>
+          </div>
           <p className="mono-chip text-[9px]" dir="ltr">
             MADE IN KSA · NEXT.JS · SUPABASE
           </p>

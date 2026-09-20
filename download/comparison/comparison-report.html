@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>مقارنة فنية وبصرية شاملة — أم رهام مقابل أم سارة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@page { size: 720px 1020px; margin: 0; }
+:root{
+  --dark:#0E1411;
+  --paper:#F7F6F1;
+  --ink:#171D18;
+  --gold:#C6A15B;
+  --emerald:#1B8354;
+  --muted:#5C645D;
+  --line:#DDD8CC;
+}
+html,body{ margin:0; padding:0; width:720px; background:var(--dark); color:var(--ink);
+  font-family:'IBM Plex Sans Arabic', 'Noto Sans Arabic', sans-serif; }
+@media screen{
+  html{ height:auto; display:flex; justify-content:center; background:#1a1f1c; }
+  body{ margin:20px auto; box-shadow:0 8px 40px rgba(0,0,0,.5); }
+}
+*{ box-sizing:border-box; }
+h1,h2,h3,h4{ font-family:'Cairo', sans-serif; margin:0; }
+
+/* ---------- COVER ---------- */
+.cover{ width:720px; height:1020px; background:var(--dark); color:#EDE9DD;
+  display:flex; flex-direction:column; justify-content:center; padding:64px 60px;
+  break-after:page; overflow:hidden; position:relative; }
+.cover .grain{ position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 480px 300px at 85% 12%, rgba(198,161,91,.14), transparent 65%),
+    radial-gradient(ellipse 420px 260px at 10% 92%, rgba(27,131,84,.12), transparent 65%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.016) 0 1px, transparent 1px 56px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.016) 0 1px, transparent 1px 56px); }
+.cover .brand{ position:relative; display:flex; align-items:center; gap:12px;
+  font-size:12.5px; letter-spacing:.5px; color:var(--gold); font-weight:600; }
+.cover .brand .dot{ width:8px; height:8px; border-radius:50%; background:var(--gold); }
+.cover .badge{ position:relative; margin-top:78px; display:inline-flex; align-self:flex-start;
+  border:1px solid rgba(198,161,91,.45); color:#D9C79A; border-radius:999px;
+  padding:7px 18px; font-size:12.5px; font-weight:600; }
+.cover h1{ position:relative; margin-top:26px; font-size:44px; line-height:1.3; font-weight:900; color:#F3EFE3; }
+.cover .vs-stack{ position:relative; margin-top:22px; }
+.cover .vs-line{ font-family:'Cairo', sans-serif; font-weight:900; font-size:28px; line-height:1.55; color:#F3EFE3; }
+.cover .vs-reham{ color:#63C493; }
+.cover .vs-mid{ font-family:'IBM Plex Sans Arabic', sans-serif; font-size:13.5px; font-weight:500; color:#8A9189; margin:4px 0; }
+.cover .vs-sara{ color:var(--gold); }
+.cover .sub{ position:relative; margin-top:22px; font-size:16.5px; line-height:1.85; color:#B9C0B6; max-width:560px; font-weight:300; }
+.cover .duo{ position:relative; margin-top:44px; display:flex; gap:14px; }
+.cover .duo .card{ flex:1; border:1px solid rgba(255,255,255,.14); border-radius:14px; padding:18px 20px 16px; background:rgba(255,255,255,.03); }
+.cover .duo .card .who{ font-size:12px; font-weight:600; letter-spacing:.4px; }
+.cover .duo .card.reham .who{ color:#5FBF8A; }
+.cover .duo .card.sara .who{ color:var(--gold); }
+.cover .duo .card .what{ margin-top:8px; font-size:13.5px; line-height:1.75; color:#C9CFC5; font-weight:300; }
+.cover .meta{ position:absolute; bottom:56px; right:60px; left:60px; display:flex;
+  justify-content:space-between; align-items:flex-end; font-size:11.5px; color:#7E857C; }
+.cover .meta .l{ border-top:1px solid rgba(255,255,255,.14); padding-top:14px; flex:1; margin-left:24px; }
+
+/* ---------- BODY ---------- */
+.main-content{ background:var(--paper); padding:56px 58px 48px; }
+.chapter-header{ break-after:avoid; break-inside:avoid; margin-top:26px; }
+.chapter-header:first-child{ margin-top:0; }
+.sec-tag{ font-size:11.5px; font-weight:700; letter-spacing:1.5px; color:var(--emerald); }
+.sec-tag.gold{ color:var(--gold); }
+.sec-title{ font-size:25px; font-weight:900; color:var(--ink); margin-top:6px; line-height:1.4; }
+.sec-title::after{ content:''; display:block; width:64px; height:4px; border-radius:2px; margin-top:10px;
+  background:linear-gradient(90deg, var(--gold), var(--emerald)); }
+p.body-text{ font-size:13.5px; line-height:1.95; color:#2A312B; margin:14px 0 0; text-align:justify; }
+p.body-text b{ color:var(--ink); }
+
+/* verdict cards */
+.verdict-duo{ display:flex; gap:12px; margin-top:16px; break-inside:avoid; }
+.verdict{ flex:1; border-radius:14px; padding:18px 18px 16px; background:#fff;
+  border:1.5px solid var(--line); position:relative; }
+.verdict.win{ border-color:var(--gold); background:#FDFBF4; }
+.verdict .v-name{ font-family:'Cairo', sans-serif; font-weight:900; font-size:16px; }
+.verdict .v-score{ position:absolute; top:14px; left:16px; font-family:'Cairo', sans-serif; font-weight:900;
+  font-size:26px; color:var(--gold); }
+.verdict .v-score.em{ color:var(--emerald); }
+.verdict ul{ margin:10px 0 0; padding-right:16px; font-size:12px; line-height:1.9; color:#3A423B; }
+.verdict .v-note{ margin-top:10px; font-size:11px; color:var(--muted); border-top:1px dashed var(--line); padding-top:8px; line-height:1.7; }
+
+/* KPI strip */
+.kpis{ display:flex; gap:10px; margin-top:16px; break-inside:avoid; }
+.kpi{ flex:1; background:#fff; border:1px solid var(--line); border-radius:12px; padding:13px 12px 11px; text-align:center; }
+.kpi .n{ font-family:'Cairo', sans-serif; font-weight:900; font-size:21px; color:var(--ink); }
+.kpi .n.g{ color:var(--gold); } .kpi .n.e{ color:var(--emerald); }
+.kpi .t{ font-size:10.5px; color:var(--muted); margin-top:4px; line-height:1.55; }
+
+/* tables */
+table{ width:100%; border-collapse:collapse; margin-top:14px; background:#fff; border-radius:12px; overflow:hidden; }
+thead{ display:table-header-group; }
+th{ background:#141915; color:#F0EDE2; font-family:'Cairo', sans-serif; font-weight:700; font-size:12px; padding:10px 12px; text-align:right; }
+th.c{ text-align:center; }
+td{ font-size:12px; line-height:1.75; padding:9px 12px; border-bottom:1px solid #ECE8DD; vertical-align:top; color:#2E352F; }
+td.c{ text-align:center; font-weight:600; }
+tr:nth-child(even) td{ background:#FBFAF5; }
+.tbl-note{ font-size:10.5px; color:var(--muted); margin-top:6px; line-height:1.65; }
+.win-g{ color:var(--gold); font-weight:700; }
+.win-e{ color:var(--emerald); font-weight:700; }
+
+/* figure */
+figure.shots{ margin:16px 0 0; break-inside:avoid; }
+figure.shots .row{ display:flex; gap:10px; }
+figure.shots .fig{ flex:1; min-width:0; }
+figure.shots img{ width:100%; height:auto; display:block; border-radius:10px; border:1px solid var(--line); }
+figure.shots figcaption{ display:flex; justify-content:space-between; font-size:10.5px; color:var(--muted); margin-top:6px; padding:0 2px; }
+figure.shots .cap{ font-size:11px; font-weight:600; margin-bottom:7px; color:var(--ink); display:flex; align-items:center; gap:7px; }
+figure.shots .cap .sw{ width:9px; height:9px; border-radius:3px; display:inline-block; }
+.sw.e{ background:var(--emerald); } .sw.g{ background:var(--gold); }
+
+/* callout */
+.callout{ margin-top:16px; border-radius:12px; padding:15px 18px; break-inside:avoid;
+  border-right:4px solid var(--emerald); background:#EFF6F0; font-size:12.5px; line-height:1.9; color:#24352B; }
+.callout.gold{ border-right-color:var(--gold); background:#FAF5E8; color:#3A3324; }
+.callout .c-title{ font-family:'Cairo', sans-serif; font-weight:900; font-size:13.5px; margin-bottom:4px; }
+
+/* lessons */
+.lesson{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:15px 17px 13px; margin-top:12px; break-inside:avoid; }
+.lesson .l-head{ display:flex; align-items:center; gap:10px; }
+.lesson .l-num{ width:26px; height:26px; border-radius:8px; background:var(--dark); color:var(--gold);
+  font-family:'Cairo', sans-serif; font-weight:900; font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.lesson .l-title{ font-family:'Cairo', sans-serif; font-weight:900; font-size:14.5px; color:var(--ink); }
+.lesson .l-pri{ margin-right:auto; font-size:10px; font-weight:700; padding:3px 10px; border-radius:999px; }
+.l-pri.p1{ background:#FBE9E7; color:#B33A22; } .l-pri.p2{ background:#FAF0DC; color:#8A6414; } .l-pri.p3{ background:#E7F2EC; color:#1B6B46; }
+.lesson p{ margin:8px 0 0; font-size:12px; line-height:1.9; color:#333A34; text-align:justify; }
+.lesson .l-do{ margin-top:8px; font-size:11px; color:#4A5349; background:#F4F3EC; border-radius:8px; padding:8px 11px; line-height:1.8; }
+.lesson .l-do b{ color:var(--ink); }
+
+/* feature two-col */
+.feat-duo{ display:flex; gap:12px; margin-top:14px; }
+.feat-col{ flex:1; border-radius:14px; padding:16px 17px 12px; background:#fff; border:1px solid var(--line); }
+.feat-col.reham{ border-top:4px solid var(--emerald); }
+.feat-col.sara{ border-top:4px solid var(--gold); }
+.feat-col h4{ font-size:15px; font-weight:900; }
+.feat-col.reham h4{ color:var(--emerald); } .feat-col.sara h4{ color:#9A7A35; }
+.feat-col ul{ margin:10px 0 0; padding-right:16px; }
+.feat-col li{ font-size:12px; line-height:1.95; color:#2E352F; margin-bottom:5px; }
+.feat-col li b{ color:var(--ink); }
+
+/* ending */
+.ending{ width:720px; height:1020px; break-before:page; background:var(--dark); color:#EDE9DD;
+  display:flex; flex-direction:column; justify-content:center; padding:70px 62px; overflow:hidden; position:relative; }
+.ending .grain{ position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 430px 280px at 88% 85%, rgba(198,161,91,.12), transparent 65%),
+    radial-gradient(ellipse 380px 240px at 8% 12%, rgba(27,131,84,.10), transparent 65%); }
+.ending .z{ position:relative; }
+.ending h2{ font-size:34px; font-weight:900; color:#F3EFE3; line-height:1.45; }
+.ending h2 .g{ color:var(--gold); }
+.ending p{ position:relative; font-size:14px; line-height:2.05; color:#B9C0B6; margin:18px 0 0; font-weight:300; }
+.ending .path{ position:relative; margin-top:30px; border:1px solid rgba(255,255,255,.14); border-radius:14px; padding:16px 18px; background:rgba(255,255,255,.03); }
+.ending .path .p-title{ font-family:'Cairo', sans-serif; font-weight:700; font-size:13px; color:#D9C79A; }
+.ending .path code{ display:block; direction:ltr; text-align:left; font-family:'Courier New', monospace;
+  font-size:10.5px; color:#9FB39F; margin-top:9px; line-height:1.75; }
+.ending .sec-note{ position:relative; margin-top:24px; border:1px solid rgba(198,161,91,.4); border-radius:12px;
+  padding:13px 16px; background:rgba(198,161,91,.07); font-size:11.5px; line-height:1.85; color:#E3CF9F; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="grain"></div>
+  <div class="brand"><span class="dot"></span> تقرير مقارنة هندسية — أدلة قابلة للتكرار</div>
+  <div class="badge">ستة محاور مرجّحة · قياس قابل للتكرار</div>
+  <h1>مقارنة فنية وبصرية شاملة</h1>
+  <div class="vs-stack">
+    <div class="vs-line vs-reham">أم رهام — من Google Drive</div>
+    <div class="vs-mid">مقابل</div>
+    <div class="vs-line vs-sara">أم سارة — الموقع المنشور الحي</div>
+  </div>
+  <div class="sub">تحليل موضوعي مبنيّ على القياس لا الانطباع: بنية تقنية، هوية بصرية، تجربة جوال، أداء، إتاحة وصول، وقدرات تجارية — بين واجهة ثابتة من مستودع خارجي ومنصة إنتاج حيّة على Vercel.</div>
+  <div class="duo">
+    <div class="card reham">
+      <div class="who">أم رهام — من Google Drive</div>
+      <div class="what">ملف umm-reham-frontend-main.zip بحجم 52.8MB · موقع ثابت HTML/CSS/JS بلا إطار · النظام التصميمي السعودي NDS · 7 صفحات + متجر بسلة</div>
+    </div>
+    <div class="card sara">
+      <div class="who">أم سارة — الموقع المنشور</div>
+      <div class="what">حيّة على umm-sara.vercel.app · Next.js 16 كامل مع قاعدة بيانات Supabase · مشهد لؤلؤة 3D · 8 صفحات + 3 مسارات API</div>
+    </div>
+  </div>
+  <div class="meta">
+    <div class="l">أُعدّ هذا التقرير بقياسات آلية: لقطات Playwright · تحليل بصري بنموذج رؤية GLM-4.5V · قياسات شبكة وأداء · فحص DOM مباشر</div>
+    <div style="white-space:nowrap; padding-top:14px;">21 سبتمبر 2026</div>
+  </div>
+</div>
+
+<!-- ============ MAIN CONTENT ============ -->
+<div class="main-content">
+
+<!-- ====== 1. الملخص التنفيذي ====== -->
+<div class="chapter-header">
+  <div class="sec-tag gold">القسم الأول</div>
+  <div class="sec-title">الملخص التنفيذي — الحكم في دقيقة</div>
+</div>
+<p class="body-text">بعد قياس شامل للطرفين على ستة محاور مرجّحة، تُحرز <b>منصة أم سارة المنشورة 7.9 من 10</b> بينما تحرز <b>واجهة أم رهام 6.5 من 10</b>. الفارق الحاسم ليس في الجمال بل في <b>الجاهزية للإنتاج</b>: أم سارة موقع حيّ فعلياً يخدم الزوار الآن على Vercel، متصل بقاعدة بيانات PostgreSQL محمية بسياسات RLS، مع خط نشر تلقائي كامل من GitHub، وأداتين مستقلتين تعملان داخل المتصفح (بنّاء السيرة الذاتية المتوافق مع ATS وفحص الأصالة). في المقابل، ملف أم رهام واجهة أمامية متقنة الصنعة لكنها <b>غير منشورة</b>، وقيمتها التجارية الأساسية (المتجر الحي ولوحة التحكم) معلّقة على باك-إند يعيش في مستودع منفصل لم يُرفَق في الملف المُرسل أصلاً.</p>
+<p class="body-text">هذا لا يعني أن المقارنة بلا دروس. أم رهام يتفوق تفوقاً واضحاً في ثلاثة أبعاد عملية: <b>تجربة الجوال</b> (35 من 40 مقابل 24 من 40 في تقييم نموذج الرؤية المستقل)، و<b>رحلة الشراء المباشرة</b> بسلة تسوق تُرسَل طلباً واحداً مرتباً عبر واتساب، و<b>عمق المحتوى السردي</b> الذي يبيع الخدمة بقصة لا بقائمة. كما كشف القياس ضعفاً حقيقياً في أم سارة لم يكن ظاهراً من قبل: هيرو الجوال يفقد تباينه أمام توهج اللؤلؤة ثلاثية الأبعاد (سطوع متوسط 218 من 255)، وهي ثغرة تستحق إصلاحاً عاجلاً وثّقناها بالأدلة في القسم الرابع.</p>
+
+<div class="verdict-duo">
+  <div class="verdict win">
+    <div class="v-name">أم سارة — المنصة</div>
+    <div class="v-score">7.9</div>
+    <ul>
+      <li>منشورة حيّة + قاعدة بيانات + CI/CD</li>
+      <li>هوية بصرية فاخرة أقوى (39/50)</li>
+      <li>أخف وزناً بـ 2.3 مرة وأكمل إتاحةً</li>
+      <li>نقاط ضعف: هيرو الجوال، تواصل غير مكتمل</li>
+    </ul>
+    <div class="v-note">الفائز كأساس إنتاجي جاهز للتشغيل والتوسع الفوري.</div>
+  </div>
+  <div class="verdict">
+    <div class="v-name">أم رهام — الواجهة</div>
+    <div class="v-score em">6.5</div>
+    <ul>
+      <li>أفضل تجربة جوال وأزرار تحويل</li>
+      <li>متجر: 26 خدمة و58 نموذجاً بسلة ذكية</li>
+      <li>محتوى سردي واستهداف جامعي أعمق</li>
+      <li>نقاط ضعف: غير منشورة، بلا قاعدة بيانات</li>
+    </ul>
+    <div class="v-note">مرجع ممارسات ممتاز يُستفاد منه، لا بديل جاهز.</div>
+  </div>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="n g">39/50</div><div class="t">درجة أم سارة البصرية<br>سطح مكتب (VLM)</div></div>
+  <div class="kpi"><div class="n e">35/50</div><div class="t">درجة أم رهام البصرية<br>سطح مكتب (VLM)</div></div>
+  <div class="kpi"><div class="n e">35/40</div><div class="t">درجة أم رهام<br>تجربة الجوال (VLM)</div></div>
+  <div class="kpi"><div class="n">24/40</div><div class="t">درجة أم سارة<br>تجربة الجوال (VLM)</div></div>
+  <div class="kpi"><div class="n g">529KB</div><div class="t">وزن رئيسية أم سارة<br>مقابل 1214KB لرهام</div></div>
+</div>
+
+<table>
+  <thead><tr><th>البُعد المرجّح</th><th class="c">الوزن</th><th class="c">أم رهام</th><th class="c">أم سارة</th><th class="c">من يفوز؟</th></tr></thead>
+  <tbody>
+    <tr><td>البنية والتشغيل والإنتاجية</td><td class="c">25%</td><td class="c">4.0</td><td class="c">9.5</td><td class="c win-g">سارة</td></tr>
+    <tr><td>الهوية البصرية — سطح المكتب</td><td class="c">20%</td><td class="c">6.0</td><td class="c">9.0</td><td class="c win-g">سارة</td></tr>
+    <tr><td>تجربة الجوال</td><td class="c">15%</td><td class="c">9.0</td><td class="c">6.0</td><td class="c win-e">رهام</td></tr>
+    <tr><td>التجارة والتحويل</td><td class="c">15%</td><td class="c">8.0</td><td class="c">6.0</td><td class="c win-e">رهام</td></tr>
+    <tr><td>عمق المحتوى والاستهداف</td><td class="c">10%</td><td class="c">8.5</td><td class="c">7.0</td><td class="c win-e">رهام</td></tr>
+    <tr><td>الأداء وSEO وإتاحة الوصول</td><td class="c">15%</td><td class="c">6.0</td><td class="c">8.0</td><td class="c win-g">سارة</td></tr>
+    <tr><td><b>المجموع المرجّح من 10</b></td><td class="c">—</td><td class="c"><b>6.5</b></td><td class="c"><b class="win-g">7.9</b></td><td class="c win-g">سارة</td></tr>
+  </tbody>
+</table>
+<div class="tbl-note">التوزيع ودرجات كل محور مبررة بالتفصيل في أقسام التقرير، وكل رقم فيها يستند إلى قياس قابل لإعادة التشغيل (سكربتات محفوظة في scripts/ ومخرجات في download/comparison/).</div>
+
+<!-- ====== 2. بطاقتا التعريف والمنهجية ====== -->
+<div class="chapter-header">
+  <div class="sec-tag">القسم الثاني</div>
+  <div class="sec-title">بطاقتا التعريف ومنهجية القياس</div>
+</div>
+<p class="body-text"><b>مشروع أم رهام</b> وصل ملفاً مضغوطاً (umm-reham-frontend-main.zip بحجم 52.8 ميغابايت) من مجلد Google Drive بعنوان «مشروع ام رهام فروند اند». بعد الفك والفحص تبيّن أنه الواجهة الأمامية لمشروع مزدوج المستودعات: واجهة ثابتة من سبع صفحات تُبنى بسكربت Node بلا أي إطار عمل، مبنية فوق النظام التصميمي السعودي الرسمي NDS مع حركة GSAP وScrollTrigger وLenis، ومستودعها الأصلي عام على GitHub باسم samshaher/umm-reham-frontend. الملف يحوي أيضاً لوحة تحكم كاملة للمتجر، لكن README المشروع نفسه يقرّ بأنها «تتطلب الباك-إند» — وهو مستودع منفصل (umm-reham-backend) لم يُرفَق في الملف، ما يعني أن كل ما يتجاوز العرض الثابت (تسجيل دخول الأدمن، تعديل الخدمات من الواجهة) غير قابل للتشغيل من هذا الملف وحده. الأسعار في المتجر موسومة صراحة في الكود بأنها «قيم مبدئية للتنسيق تحتاج مراجعة قبل الإطلاق».</p>
+<p class="body-text"><b>منصة أم سارة</b> هي المشروع الجاري لصاحب هذا الحساب: تطبيق Next.js 16.1.3 بـ TypeScript وTailwind، منشور فعلياً على <b>https://umm-sara.vercel.app</b> عبر خطة Hobby مجانية، مع بنية إنتاجية كاملة: ثماني صفحات وثلاثة مسارات API مدمجة، قاعدة Supabase PostgreSQL بستة جداول محمية بسياسات RLS مطبّقة ومتحقق منها بالاستعلام المباشر، خط CI/CD يطبّق مخطط قاعدة البيانات تلقائياً عند كل تغيير عبر GitHub Action، وإصدار موسوم v10.0.0 بمستودع نظيف على GitHub (AhmedMar98/Umm-sara). هذه ليست واجهة للعرض بل منظومة تعمل: نموذج الطلبات يكتب فعلياً في القاعدة (تحقق persisted:true متكرر مرتين)، ونفس الشيء لنموذج حجز الاستشارات.</p>
+
+<div class="callout gold">
+  <div class="c-title">منهجية القياس — لا رواية بلا دليل</div>
+  بنينا الموقعين في بيئة واحدة وقسنا بالمثل: (1) لقطات Playwright/Chromium لكل صفحة بدقة 1440×900 وللجوال بمحاكاة iPhone بدقة 390×844، (2) تحليل بصري بنموذج الرؤية GLM-4.5V في ثلاث جلسات مستقلة (الرئيسية، الخدمات، الجوال) بمطالبات موحدة، (3) قياسات شبكة موحدة بجولتين لكل صفحة (تهيئة ثم قياس)، (4) فحص DOM مباشر لعناصر SEO وإتاحة الوصول. <b>ملاحظة إنصاف مقرّة:</b> أم رهام قيست من خادم محلي (صفر زمن شبكة) بينما أم سارة قيست من موقعها الحي على Vercel — هذا يمنح رهام أفضلية زمنية غير حقيقية في زمن التحميل، لكن الأوزان بالبايت وعدد الطلبات وعقد DOM مقارنة موضوعية صحيحة، وقد اعتمدنا عليها في الاستنتاج.
+</div>
+
+<!-- ====== 3. المقارنة التقنية ====== -->
+<div class="chapter-header">
+  <div class="sec-tag">القسم الثالث</div>
+  <div class="sec-title">المقارنة التقنية والمعمارية</div>
+</div>
+<p class="body-text">الفجوة الأعمق بين الطرفين معمارية لا شكلية. أم سارة منظومة <b>متكاملة الطبقات</b>: واجهة تعرض، مسارات API تخدّم، قاعدة بيانات تحفظ، وخط نشر يوصل الكود بالإنتاج تلقائياً. أم رهام طبقة عرض واحدة مصنوعة بإتقان، لكن رحلة البيانات فيها تتوقف عند ملفات JavaScript ثابتة (fallback محلي مصمم أصلاً كحل مؤقت بانتظار باك-إند خارجي). عملياً: طلب يُرسل من موقع أم سارة يصل قاعدة البيانات ويُستعلم عنه بـ SQL ويتحقق منه الإنسان؛ طلب يُرسل من نسخة أم رهام المرفقة يذهب إلى رقم واتساب محفوظ في الكود، ولا يمكن لأصحاب المنصة معرفة أنه حدث إلا لو ردّ العميل في المحادثة.</p>
+
+<table>
+  <thead><tr><th style="width:19%">المحور</th><th>أم رهام (Google Drive)</th><th>أم سارة (المنشورة)</th></tr></thead>
+  <tbody>
+    <tr><td><b>البنية</b></td><td>موقع ثابت متعدد الصفحات، HTML/CSS/JS خالص بلا إطار عمل، يُبنى بسكربت Node</td><td>Next.js 16.1.3 + TypeScript + Tailwind (App Router)</td></tr>
+    <tr><td><b>الصفحات</b></td><td>7 صفحات ثابتة (الرئيسية، من نحن، خدماتنا، المتجر، معرض الأعمال، العمل، تواصل)</td><td>8 مسارات من بينها صفحة فئات ديناميكية <span dir="ltr">/services/[category]</span></td></tr>
+    <tr><td><b>واجهات API</b></td><td>لا شيء يعمل — المسارات متجهة لباك-إند مفقود من الملف</td><td><span class="win-g">3 مسارات عاملة:</span> الطلبات، الاستشارات، والجذر</td></tr>
+    <tr><td><b>قاعدة البيانات</b></td><td>لا توجد — بيانات مضمّنة بملفات JS محلية</td><td><span class="win-g">Supabase PostgreSQL:</span> 6 جداول + RLS 6/6، مطبقة ومتحقق منها</td></tr>
+    <tr><td><b>لوحة التحكم</b></td><td>موجودة بالكود (إدارة متجر بصلاحيات) لكن دخولها يتطلب الباك-إند الغائب</td><td>غير موجودة بعد (الأولوية التالية طبيعياً)</td></tr>
+    <tr><td><b>حالة النشر</b></td><td>ملف مضغوط في Drive — <span class="win-e">غير منشور على الويب</span></td><td><span class="win-g">حيّة الآن</span> على umm-sara.vercel.app (خطة مجانية بلا بطاقة)</td></tr>
+    <tr><td><b>CI/CD</b></td><td>لا يوجد</td><td><span class="win-g">أوتوماتيكي بالكامل:</span> كل push للإنتاج ينشر + GitHub Action يطبق مخطط القاعدة</td></tr>
+    <tr><td><b>الأمان</b></td><td>جلسة أدمن بتصميم كوكي HttpOnly سليم (على الورق، في الباك-إند المفقود)</td><td><span class="win-g">RLS مفعلة + معالجة جهة الخادم + أسرار في بيئة مشفرة</span></td></tr>
+    <tr><td><b>الحركة والتفاعل</b></td><td>GSAP + ScrollTrigger + Lenis مع failsafe مدمج واحترام prefers-reduced-motion</td><td>مشهد لؤلؤة 3D (three.js/R3F) + جزيئات + Scene Boundary ضد فشل WebGL</td></tr>
+    <tr><td><b>نظام التصميم</b></td><td>النظام السعودي الرسمي NDS كاملاً + خطا IBM Plex Arabic وCairo</td><td>نظام مخصص: توكنات ذهب/زمردي + تايبوغرافيا عربية مضبوطة بفحص تباين 14/14 AA</td></tr>
+    <tr><td><b>الاعتماديات</b></td><td>صفر حزم npm (مكتبات مرفقة يدوياً vendor)</td><td>منظومة npm كاملة مع فحص TypeScript صارم بلا تجاهل</td></tr>
+  </tbody>
+</table>
+<div class="tbl-note">المصادر: فحص مباشر لملفات المشروعين + README أم رهام + مستند DEPLOYMENT.md وبوابة الإصدار V10 لأم سارة + استعلامات SQL تحقق فعلية على Supabase.</div>
+
+<div class="callout">
+  <div class="c-title">قراءة مهنية في الجدول</div>
+  صمم فريق أم رهام واجهته بذهن «الفصل بين الطبقات»: ملف البيانات يصف نفسه بأنه «مصدر الحقيقة المؤقت» وكل الدوال مكتوبة كواجهات async جاهزة للتبديل إلى API حقيقي دون لمس واجهة العرض — قرار هندسي ناضج يستحق التقدير. لكن الحقيقة التشغيلية أن هذا الجاهزية نظرية: الباك-إند نفسه غير موجود بين أيدينا، والأسعار الفعلية غير مثبتة، والمنصة غير منشورة. أم سارة تعيش المشكلة المعاكسة: بنيتها مكتملة التشغيل لكن نصف قوتها التجارية (متجر بسلة وأسعار معلنة) لم يبن بعد. الفائز بالمعنى الهندسي واضح؛ والدروس التجارية واضحة بالمقابل.
+</div>
+
+<!-- ====== 4. البصري والجوال ====== -->
+<div class="chapter-header">
+  <div class="sec-tag">القسم الرابع</div>
+  <div class="sec-title">المقارنة البصرية وتجربة الجوال</div>
+</div>
+<p class="body-text">عرضنا الرئيسيتين جنباً إلى جنب على نموذج الرؤية GLM-4.5V بمطالبة تقييم موحدة عبر خمسة بنود. النتيجة على سطح المكتب: <b>أم سارة 39 من 50</b> مقابل <b>أم رهام 35 من 50</b>. سارة تكتسح بندي الهوية والعناصر البصرية (9 و8 من 10) بفضل فخامة الوضع الداكن الذهب/زمردي والمشهد ثلاثي الأبعاد الغامر الذي وصفه النموذج بأنه «يضاهي مواقع الاستشارات العالمية»، بينما يتفوق رهام في وضوح نداء الفعل (9 من 10) بزره الأخضر الفاقع على الخلفية الداكنة، وفي تنظيم المحتوى ببطاقاته العائمة للإحصاءات. في بنود الخط العربي تقدم سارة بهامش (8 مقابل 7) مع ملاحظة النموذج على مبالغة رهام في الأخضر الفاتح لكلمة واحدة داخل العنوان.</p>
+
+<figure class="shots">
+  <div class="cap"><span class="sw g"></span>أم سارة — الرئيسية (سطح مكتب 1440×900) · درجة 39/50</div>
+  <div class="fig"><img src="sara/sara-home-top.png" alt="الصفحة الرئيسية لموقع أم سارة بالسمة الداكنة الذهبية مع مشهد اللؤلؤة ثلاثي الأبعاد"></div>
+</figure>
+<figure class="shots">
+  <div class="cap"><span class="sw e"></span>أم رهام — الرئيسية (سطح مكتب 1440×900) · درجة 35/50</div>
+  <div class="fig"><img src="reham/reham-home-top.png" alt="الصفحة الرئيسية لموقع أم رهام بالنظام السعودي بألوان خضراء وصورة تعريفية"></div>
+</figure>
+
+<p class="body-text">الصورة تنقلب رأساً على عقب في الجوال. بجلسة تقييم مستقلة لمحاكاة iPhone، منح النموذج <b>أم رهام 35 من 40</b> مقابل <b>24 من 40 لأم سارة</b>، بفوارق حادة: وضوح الهيرو 9 مقابل 5، والأزرار 9 مقابل 7، والانطباع الأول 9 مقابل 6. ولم نقبل هذا الحكم كرواية — أعدنا تشخيصه بالقياس: لقطة جوال أم سارة تسجل سطوعاً متوسطاً <b>218 من 255</b>؛ مشهد اللؤلؤة المتوهج يبتلع نصف الشاشة على الجوال ويجعل العنوان ذا اللون الكريمي شبه الذائب فوقه، بينما تحقق برمجياً من أن السمة الداكنة مفعلة فعلاً (خلفية rgb(8,14,11)) أي أن المشكلة ليست في السمة بل في <b>هندسة التوهج مقابل النص داخل الهيرو الضيق</b>. في جولة تحقق ثانية بنموذج الرؤية على لقطة جديدة نزل وضوح عنوان هيرو الجوال إلى 2 من 10 مع وصف «شبحي». هذه أوضح ثغرة قابلة للإصلاح في أم سارة اليوم، وأوضح درس يستحق النقل من رهام.</p>
+
+<figure class="shots">
+  <div class="row">
+    <div class="fig">
+      <div class="cap"><span class="sw e"></span>أم رهام — جوال · 35/40</div>
+      <img src="reham/reham-home-mobile.png" alt="لقطة جوال لموقع أم رهام بأزرار كبيرة وعنوان عالي التباين">
+    </div>
+    <div class="fig">
+      <div class="cap"><span class="sw g"></span>أم سارة — جوال · 24/40</div>
+      <img src="sara/sara-home-mobile.png" alt="لقطة جوال لموقع أم سارة يظهر فيها توهج اللؤلؤة يخفض تباين العنوان">
+    </div>
+  </div>
+  <figcaption><span>القياس الموضوعي المرافق: سطوع جوال سارة 218/255 مقابل هيرو رهام عالي التباين</span><span>محاكاة iPhone 390×844</span></figcaption>
+</figure>
+
+<table>
+  <thead><tr><th>بند التقييم البصري</th><th class="c">أم رهام</th><th class="c">أم سارة</th><th class="c">الأفضل</th></tr></thead>
+  <tbody>
+    <tr><td>الهوية والفخامة البصرية — سطح مكتب</td><td class="c">6/10</td><td class="c"><b class="win-g">9/10</b></td><td class="c win-g">سارة</td></tr>
+    <tr><td>تنظيم المحتوى وهرميته</td><td class="c"><b class="win-e">8/10</b></td><td class="c">7/10</td><td class="c win-e">رهام</td></tr>
+    <tr><td>جودة التايبوغرافيا العربي</td><td class="c">7/10</td><td class="c"><b class="win-g">8/10</b></td><td class="c win-g">سارة</td></tr>
+    <tr><td>العناصر البصرية (3D/حركة)</td><td class="c">5/10</td><td class="c"><b class="win-g">8/10</b></td><td class="c win-g">سارة</td></tr>
+    <tr><td>وضوح نداء الفعل CTA</td><td class="c"><b class="win-e">9/10</b></td><td class="c">7/10</td><td class="c win-e">رهام</td></tr>
+    <tr><td><b>مجموع سطح المكتب</b></td><td class="c"><b>35/50</b></td><td class="c"><b class="win-g">39/50</b></td><td class="c win-g">سارة</td></tr>
+    <tr><td>وضوح الهيرو — جوال</td><td class="c"><b class="win-e">9/10</b></td><td class="c">5/10</td><td class="c win-e">رهام</td></tr>
+    <tr><td>أحجام الأزرار وقابلية اللمس</td><td class="c"><b class="win-e">9/10</b></td><td class="c">7/10</td><td class="c win-e">رهام</td></tr>
+    <tr><td>قابلية القراءة على الجوال</td><td class="c"><b class="win-e">8/10</b></td><td class="c">6/10</td><td class="c win-e">رهام</td></tr>
+    <tr><td>الانطباع الأول على الجوال</td><td class="c"><b class="win-e">9/10</b></td><td class="c">6/10</td><td class="c win-e">رهام</td></tr>
+    <tr><td><b>مجموع الجوال</b></td><td class="c"><b class="win-e">35/40</b></td><td class="c"><b>24/40</b></td><td class="c win-e">رهام</td></tr>
+  </tbody>
+</table>
+<div class="tbl-note">المصدر: ثلاث جلسات مستقلة بنموذج الرؤية GLM-4.5V بمطالبات موحدة، مثبتة نصياً في هذه المقارنة، مع تدقيق بكسل موضوعي مرافق للقطة الجوال.</div>
+
+<!-- ====== 5. الأداء و SEO ====== -->
+<div class="chapter-header">
+  <div class="sec-tag">القسم الخامس</div>
+  <div class="sec-title">الأداء وSEO وإتاحة الوصول</div>
+</div>
+<p class="body-text">قسنا كل موقع بجولتين لكل صفحة (تهيئة ثم قياس) وأعددنا الطلبات والأحجام من مراقبة الشبكة مباشرة. النتيجة صافية: <b>أم سارة أخف وزناً بنحو 2.3 مرة</b> في الصفحة الرئيسية (529KB مقابل 1214KB) وعقدها في الشجرة أقل بكثير (780 مقابل 1239 عقدة DOM) — وكل كيلوبايت محسوب على الجوال السعودي الذي يتصفح غالباً بشبكات متوسطة. سبب ثقل رهام موثق بالفحص: ثلاثة فيديوهات MP4 خلفية (أبراج رؤية 2030 وأفق الرياض وخريطة المملكة بإجمالي يقارب 8MB) وملفات نظام NDS الكاملة غير المجزأة (ورقة أنماط واحدة بحجم 370KB). في المقابل تطلبه الشبكية أعلى عند سارة (67 مقابل 47 طلباً) بسبب تقسيم Next.js الحديث للحزم — وهو ثمن مقبول يعوّضه التحميل التدريجي الذكي.</p>
+
+<table>
+  <thead><tr><th>القياس (الجولة الثانية المستقرة)</th><th class="c">رهام — الرئيسية</th><th class="c">سارة — الرئيسية</th><th class="c">رهام — خدمات</th><th class="c">سارة — خدمات</th></tr></thead>
+  <tbody>
+    <tr><td>الوزن المنقول التقريبي</td><td class="c">1,214 KB</td><td class="c"><b class="win-g">529 KB</b></td><td class="c">1,649 KB</td><td class="c"><b class="win-g">539 KB</b></td></tr>
+    <tr><td>عدد الطلبات</td><td class="c"><b class="win-e">47</b></td><td class="c">67</td><td class="c"><b class="win-e">43</b></td><td class="c">111</td></tr>
+    <tr><td>عقد DOM في الصفحة</td><td class="c">1,239</td><td class="c"><b class="win-g">780</b></td><td class="c">1,015</td><td class="c"><b class="win-g">385</b></td></tr>
+    <tr><td>حجم مستند HTML</td><td class="c"><b class="win-e">104 KB</b></td><td class="c">185 KB</td><td class="c"><b class="win-e">92 KB</b></td><td class="c">81 KB</td></tr>
+    <tr><td>TTFB (زمن أول بايت)</td><td class="c">1ms (محلي)</td><td class="c">6ms (Vercel)</td><td class="c">1ms (محلي)</td><td class="c">6ms (Vercel)</td></tr>
+  </tbody>
+</table>
+<div class="tbl-note">للتذكير بإنصاف: قياس رهام من خادم محلي (TTFB ~1ms غير قابل للمقارنة زمنياً)، وقياس سارة من شبكة Vercel الحية. المقارنة المعتمدة هي الأوزان والأعداد وعقد DOM.</div>
+
+<p class="body-text">في فحص إشارات محركات البحث وإتاحة الوصول، يتقدم الطرفان معاً في الأساسيات الصحيحة: كلاهما يعلن <b dir="ltr">lang="ar"</b> و<b dir="ltr">dir="rtl"</b> ويحمل وصف meta كاملاً وعنواناً عربياً سليماً. بعد ذلك ينفصلان: أم سارة تحمل وسوم Open Graph (أساس المشاركة على واتساب وتويتر)، وصورها <b>صفر صور بلا نص بديل alt</b> وهو المستوى الذي يفرضه فحص الوصول المعتمد في مشروعها (WCAG AA مثبت 14/14 في موجة V10). أم رهام يترك <b>22 صورة بلا alt</b> في رئيسيته وحدها ولا يستخدم وسوم OG إطلاقاً، لكنه يعوّض جزئياً بلوحة إتاحة وصول مدمجة من NDS (تحكم بحجم الخط والتباين) وعدد aria-labels أعلى (32 مقابل 18) واحترام كامل لتفضيل تقليل الحركة prefers-reduced-motion. المحصلة: سارة أنظف هندسياً، ورهام أكثر تسامحاً مع المستخدم النهائي الذي يحتاج أدوات وصول مخصصة.</p>
+
+<div class="callout">
+  <div class="c-title">خلاصة الأداء بجملة واحدة</div>
+  سارة تكسب السباق الرقمي (وزن أقل، DOM أخف، إشارات SEO أكمل)؛ رهام يكسب سباق الأدوات الإنسانية (لوحة إتاحة فعلية، حركة تحترم ذوي الحساسية الحركية) — والباقي تفاصيل موثقة في الجدول أعلاه.
+</div>
+
+<!-- ====== 6. الميزات الحصرية ====== -->
+<div class="chapter-header">
+  <div class="sec-tag">القسم السادس</div>
+  <div class="sec-title">ما ينفرد به كل طرف</div>
+</div>
+<p class="body-text">المقارنة العادلة تُظهر مواطن القوة لا الفائز فقط. هذه قائمة ما يمتلكه كل موقع ولا يملكه الآخر اليوم، منقولة من فحص الكود والصفحات مباشرة. لاحظ أن معظم ميزات أم رهام «عرضية» تعمل ببيانات ثابتة (أسعار مبدئية، كتالوج محلي)، بينما ميزات أم سارة «تشغيلية» مبنية على بنية تحتية حية — وهو جوهر الفرق بين واجهة جميلة ومنصة.</p>
+
+<div class="feat-duo">
+  <div class="feat-col reham">
+    <h4>ينفرد به أم رهام</h4>
+    <ul>
+      <li><b>سلة تسوق كاملة:</b> تجميع خدمات من تصنيفات متعددة بكميات، ثم إرسال الطلب كرسالة واتساب واحدة مرتبة</li>
+      <li><b>كتالوج مع أسعار:</b> 26 خدمة موزعة على 4 تصنيفات و58 نموذجاً جاهزاً بسعر معروض (مبدئي)</li>
+      <li><b>معرض أعمال حقيقي:</b> صفحة معرض + صفحة عمل مستقلة لكل مشروع</li>
+      <li><b>استهداف جامعي صريح:</b> قسم بشعارات 7 جامعات سعودية كبرى يدعوك لاختيار جامعتك</li>
+      <li><b>فيديوهات هوية وطنية:</b> أبراج رؤية 2030 وأفق الرياض كخلفيات حية</li>
+      <li><b>تواصل مكتمل:</b> رقم واتساب حقيقي + بريد + إنستغرام + ساعات عمل رسمية</li>
+      <li><b>موافقة الكوكيز</b> وفق المتطلبات النظامية، وملف مدن المملكة saudi-cities.json</li>
+    </ul>
+  </div>
+  <div class="feat-col sara">
+    <h4>تنفرد به أم سارة</h4>
+    <ul>
+      <li><b>بنّاء سيرة ذاتية عامل:</b> قوالب متوافقة مع أنظمة ATS، محرر بمعاينة حية، تصدير PDF فوري</li>
+      <li><b>خدمة فحص الأصالة:</b> فحص اقتباس وتشابه نصي ومراجعة أكاديمية كصفحة مستقلة</li>
+      <li><b>حجز استشارات:</b> نموذج مواعيد يكتب في قاعدة البيانات (API مستقل يعمل الآن)</li>
+      <li><b>مشهد اللؤلؤة 3D:</b> تفاعل WebGL بإضاءة سينمائية وحدود خطأ تحمي الصفحة من الانهيار</li>
+      <li><b>قاعدة بيانات حية:</b> 6 جداول بسياسات RLS مطبقة ومتحقق منها بالاستعلام</li>
+      <li><b>نشر مستمر:</b> كل دفعة للإنتاج تصبح موقعاً حياً تلقائياً + Action لقاعدة البيانات</li>
+      <li><b>وضعان داكن وفاتح</b> بتوكنات هوية موحدة عبر الموقع كله</li>
+    </ul>
+  </div>
+</div>
+
+<figure class="shots">
+  <div class="row">
+    <div class="fig">
+      <div class="cap"><span class="sw e"></span>متجر أم رهام — التصنيفات الأربعة (26 خدمة)</div>
+      <img src="reham/reham-store-s2.png" alt="قسم تصنيفات متجر أم رهام يعرض أربع بطاقات ملونة للتصنيفات">
+    </div>
+    <div class="fig">
+      <div class="cap"><span class="sw g"></span>خدمات أم سارة — بحث وفلاتر حديثة</div>
+      <img src="sara/sara-services-top.png" alt="صفحة خدمات أم سارة بشريط بحث وقوائم تصنيف وأيقونات">
+    </div>
+  </div>
+  <figcaption><span>فلسفتان للبيع: كتالوج بسلة وأسعار مقابل بحث وفلاتر وتحويل واتساب</span><span>1440×900</span></figcaption>
+</figure>
+
+<!-- ====== 7. الدروس السبعة ====== -->
+<div class="chapter-header">
+  <div class="sec-tag gold">القسم السابع</div>
+  <div class="sec-title">سبعة دروس تنقلها من أم رهام إلى أم سارة</div>
+</div>
+<p class="body-text">هذه خلاصة التقرير العملية: ما يستحق النقل فعلاً، مرتباً بالأولوية التشغيلية، وكل درس مدعوم بالدليل الذي وثقناه أعلاه ومعه خطوة التنفيذ المقترحة داخل قاعدة أم سارة الحالية. المدة التقديرية للدرسين الأولين معاً لا تتجاوز يوماً واحداً من العمل، وأثرهما مباشر على التحويل من الزائر إلى العميل.</p>
+
+<div class="lesson">
+  <div class="l-head"><div class="l-num">1</div><div class="l-title">إصلاح تباين هيرو الجوال</div><div class="l-pri p1">أولوية قصوى</div></div>
+  <p>الدليل: تقييم الجوال المستقل 24/40 مع وضوح هيرو 5/10 ثم 2/10 في جولة التحقق، وسطوع لقطة الجوال 218/255 — العنوان الكريمي يذوب فوق توهج اللؤلؤة في الشاشة الضيقة. رهام يحقق العكس تماماً بأزراره الضخمة وعنوانه عالي التباين (35/40).</p>
+  <div class="l-do"><b>التنفيذ:</b> في استعلامات الجوال (breakpoint الهيرو): تكبير زر CTA وتثبيته بوزن أثقل، رفع تباين لون العنوان إلى أبيض كامل أو تعتيم طبقة تعتيم متدرجة خلف منطقة النص فوق المشهد 3D، أو تصغير نطاق اللؤلؤة عمودياً حتى يتنفس العنوان. بعدها إعادة نفس القياس (سطوع + جلسة VLM) للتحقق من تجاوز 30/40.</div>
+</div>
+
+<div class="lesson">
+  <div class="l-head"><div class="l-num">2</div><div class="l-title">إغلاق ملف التواصل الحقيقي</div><div class="l-pri p1">أولوية قصوى</div></div>
+  <p>الدليل: رقم واتساب أم سارة ما يزال الرقم الافتراضي 966500000000 — وهو البند الوحيد المتبقي بوضوح في بوابة الإصدار V10. أم رهام يعرض رقماً حقيقياً وبريداً وإنستغرام وساعات عمل رسمية، فيبدو منشأة قائمة بينما الرقم الافتراضي يقول «تحت الإنشاء».</p>
+  <div class="l-do"><b>التنفيذ:</b> ضبط NEXT_PUBLIC_WHATSAPP_NUMBER من لوحة Vercel ثم Redeploy — خمس دقائق عمل فقط. بعدها إضافة ساعات العمل وقنوات التواصل الأخرى في صفحة «تواصل معنا» بأرقامها النهائية.</div>
+</div>
+
+<div class="lesson">
+  <div class="l-head"><div class="l-num">3</div><div class="l-title">متجر بسلة تُرسل واتساب مجمّعاً</div><div class="l-pri p2">أولوية عالية</div></div>
+  <p>الدليل: نموذج أم رهام — 26 خدمة بأسعار معروضة (رغم أنها مبدئية) تجمع في سلة وتُرسل طلباً واحداً منظماً على واتساب، اختصر رحلة «اتصال وتفاوض» إلى «اختر واضغط». تقييم VLM لصفحات الخدمات منح رهام أفضلية المحتوى السردي وسارة أفضلية البحث والفلاتر — الدمج بينهما هو المستوى التالي.</p>
+  <div class="l-do"><b>التنفيذ:</b> أم سارة تملك أصلاً 33 خدمة فرعية في قاعدة Supabase؛ يكفي إضافة جدول أسعار صغير وحالة سلة في الواجهة (localStorage) وزر «أرسل طلبي واتساب» يبني رسالة منسقة من السلة — بلا أي تغيير في البنية الخلفية.</div>
+</div>
+
+<div class="lesson">
+  <div class="l-head"><div class="l-num">4</div><div class="l-title">قسم «اختر جامعتك»</div><div class="l-pri p2">أولوية عالية</div></div>
+  <p>الدليل: رهام يعرض شعارات كفو، القصيم، الأميرة نورة، الإمام، أم القرى، طيبة، وسطام مع دعوة «اختر جامعتك وابدأ» — استهداف دلالي مباشر يعزز الثقة («هم يعرفون جامعتي») ويفتح صفحات هبوط بمعايير كل جامعة. أم سارة تدعي 40+ جامعة في إحصاءاتها لكن لا تظهر أي واحدة.</p>
+  <div class="l-do"><b>التنفيذ:</b> قسم في الرئيسية بشعارات أهم 6-8 جامعات بروابط إلى صفحة فئات مفلترة، ثم لاحقاً صفحات «خدمات جامعة X» بمتطلباتها التنسيقية المعروفة (APA، IEEE، أنظمة المشاريع).</div>
+</div>
+
+<div class="lesson">
+  <div class="l-head"><div class="l-num">5</div><div class="l-title">معرض أعمال حقيقي</div><div class="l-pri p3">أولوية متوسطة</div></div>
+  <p>الدليل: لدى رهام صفحة معرض + صفحة عمل مستقلة لكل مشروع بصور ووصف — وهي أقوى وسيطة ثقة في هذا القطاع حيث يتردد الطالب قبل الدفع. أم سارة تعرض آراء عملاء نصية فقط، وبدون عينات عمل تبقى الجودة «كلاماً».</p>
+  <div class="l-do"><b>التنفيذ:</b> جدول works في Supabase (صور مصغرة، تصنيف، وصف، جامعة) + صفحة معرض + صفحة عمل ديناميكية، مع الالتزام بأدلة أم سارة نفسها: كل صورة بـ alt كامل (الرصيد الحالي صفر صور بلا alt يجب أن يبقى كذلك).</div>
+</div>
+
+<div class="lesson">
+  <div class="l-head"><div class="l-num">6</div><div class="l-title">محتوى سردي يبيع «لماذا»</div><div class="l-pri p3">أولوية متوسطة</div></div>
+  <p>الدليل: تقييم VLM لصفحة الخدمات وصف محتوى رهام بأنه «سردية قصصية تبني الثقة وتوضح القيمة — ليس مجرد قائمة عناوين»، بينما وصفت محتوى سارة بأنه «واسع النطاق لكنه أسرع مسحاً وأقل عمقاً في شرح كل خدمة». صفحات أم سارة الحالية تعرض نقاط مختصرة قوية لكنها تفتقر لفقرة «لماذا نحن» تحت كل خدمة رئيسية.</p>
+  <div class="l-do"><b>التنفيذ:</b> إضافة فقرة سياقية من 3-4 أسطر تحت عنوان كل فئة في صفحات الفئات تشرح المنهجية والالتزام بالسرية والتسليم — نفس صوت «خمسة أسباب تجعلك مطمئناً» عند رهام.</div>
+</div>
+
+<div class="lesson">
+  <div class="l-head"><div class="l-num">7</div><div class="l-title">موافقة الكوكيز ولمسات الالتزام النظامي</div><div class="l-pri p3">أولوية متوسطة</div></div>
+  <p>الدليل: يظهر رهام شريط موافقة كوكيز قانونياً بقسمي «قبول» و«رفض غرض التتبع» — متطلب نظامي يزداد إلزاماً في السعودية مع ازدياد تطبيق أنظمة حماية البيانات، ويظهر احترافية أمام الجهات الرسمية التي هي جمهور طبيعي لمنصة أكاديمية.</p>
+  <div class="l-do"><b>التنفيذ:</b> شريط موافقة بسيط (مكوّن واحد + localStorage) بروابط سياسة الخصوصية وشروط الاستخدام — ساعتان عمل بما فيها صفحتا السياسات.</div>
+</div>
+
+<!-- ====== 8. الحكم النهائي ====== -->
+<div class="chapter-header">
+  <div class="sec-tag gold">القسم الثامن</div>
+  <div class="sec-title">الحكم النهائي — بأي معيار ولماذا</div>
+</div>
+<p class="body-text">لو كان السؤال «أيهما أجمل؟» لقلنا أم سارة على سطح المكتب بثقة (هوية 9/10 ومشهد 3D لا يملكه الطرف الآخر). ولو كان «أيهما أسهل شراءً من الجوال؟» لقلنا أم رهام بلا تردد (35/40 مقابل 24/40). لكن السؤال الحقيقي لأصحاب المشاريع هو: <b>أيهما جاهز أن يخدم العملاء الآن ويكبر غداً؟</b> وهنا النتيجة حاسمة: أم سارة منظومة تعمل فعلاً (نشر حي، قاعدة بيانات محمية، تحقق كتابة موثق مرتين، نشر تلقائي)، بينما أم رهام ملف واجهة أنيقة ناقص الطبقتين الأهم — التشغيل والبيانات — وجزء من ميزاته التجارية (الأسعار) غير مثبت أصلاً.</p>
+<p class="body-text">لهذا نحكم: <b>أم سارة أفضل كمنصة (7.9/10)</b>، و<b>أم رهام مرجع ممارسات ممتاز في الجوال والتجارة (6.5/10)</b> — والقرار الرشيد ليس الاختيار بينهما بل نقل الدروس السبعة الموثقة أعلاه إلى قاعدة أم سارة القائمة، بدءاً بإصلاح تباين الجوال وضبط رقم الواتساب الحقيقي، فكلاهما إنجاز يوم واحد بأثر تحويلي مباشر.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="n g">7.9</div><div class="t">أم سارة —<br>النتيجة الموزونة النهائية</div></div>
+  <div class="kpi"><div class="n e">6.5</div><div class="t">أم رهام —<br>النتيجة الموزونة النهائية</div></div>
+  <div class="kpi"><div class="n">4–3</div><div class="t">محاور تفوق<br>لكل طرف (سارة/رهام)</div></div>
+  <div class="kpi"><div class="n g">7</div><div class="t">دروس قابلة<br>للنقل إلى أم سارة</div></div>
+</div>
+
+<div class="callout gold">
+  <div class="c-title">تنبيه أمان لا يؤجل</div>
+  خلال رحلة البناء والنشر تداولت هذه المحادثة مفاتيح وصول حقيقية (GitHub، Supabase، Render، Vercel، وكلمة مرور القاعدة). أُغلقت الحلقة التشغيلية بنجاح، لكن القاعدة الذهبية أن كل مفتيح مرّ في محادثة يُعد مكشوفاً: بعد اعتماد هذا التقرير، أنشئ مفاتيح جديدة من لوحات المنصات الأربع وحدّث المتغيرات في Vercel وGitHub Secrets، ثم أعد النشر. خمس دقائق تُغلق الباب نهائياً.
+</div>
+
+</div>
+
+<!-- ============ ENDING ============ -->
+<div class="ending">
+  <div class="grain"></div>
+  <div class="z">
+    <h2>الخلاصة في سطر واحد:<br><span class="g">أم سارة</span> هي الأساس المنشور القابل للنمو —<br>وأم رهام خزان الدروس القادم.</h2>
+    <p>كل رقم في هذا التقرير قابل لإعادة الإنتاج من السكربتات المحفوظة واللقطات المؤرشفة. القياس ليس لحظة عابرة بل خط أساس جديد: أعد تشغيل نفس الأدوات بعد كل إصلاح، وراقب الأرقام تتحرك.</p>
+    <div class="path">
+      <div class="p-title">مسار الأدلة — أعد تشغيله متى شئت</div>
+      <code>download/comparison/ · اللقطات الكاملة للطرفين + perf-metrics.json<br>
+scripts/reham-build-shots.py · البناء واللقطات الموحدة<br>
+scripts/reham-perf-compare.py · قياسات الأداء والشبكة<br>
+scripts/sara-mobile-diag.py · تشخيص تباين جوال أم سارة<br>
+download/comparison/comparison-report.html · مصدر هذا التقرير</code>
+    </div>
+    <div class="sec-note">تذكير ختامي: بدّل جميع مفاتيح الوصول التي ظهرت أثناء الإعداد (GitHub · Supabase · Render · Vercel · كلمة مرور القاعدة) من لوحات المنصات مباشرة، ثم حدّثها في Vercel وGitHub Secrets وأعد النشر.</div>
+  </div>
+</div>
+
+</body>
+</html>

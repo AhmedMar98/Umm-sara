@@ -1,0 +1,198 @@
+{
+  "reham-home": {
+    "url": "http://localhost:8090/index.html",
+    "requests": 47,
+    "approx_bytes": 1243165,
+    "load_s": 0.29,
+    "vitals": {
+      "ttfb": 1,
+      "domContentLoaded": 121,
+      "loadEvent": 283,
+      "fcp": 184,
+      "lcp": null,
+      "transferSize": 0,
+      "domNodes": 1239,
+      "htmlKB": 104,
+      "title": "الرئيسية | أم رهام — منصة تعليمية واستشارية",
+      "hasMetaDesc": true,
+      "hasOgTags": false,
+      "hasCanonical": false,
+      "hasH1": true,
+      "langAttr": "ar",
+      "dirAttr": "rtl",
+      "imgsNoAlt": 22,
+      "ariaLabels": 32
+    },
+    "types": {
+      "document": 1,
+      "stylesheet": 10,
+      "image": 6,
+      "script": 15,
+      "font": 11,
+      "fetch": 3,
+      "media": 1
+    }
+  },
+  "sara-home": {
+    "url": "https://umm-sara.vercel.app/",
+    "requests": 67,
+    "approx_bytes": 542101,
+    "load_s": 0.21,
+    "vitals": {
+      "ttfb": 7,
+      "domContentLoaded": 74,
+      "loadEvent": 203,
+      "fcp": 532,
+      "lcp": null,
+      "transferSize": 300,
+      "domNodes": 780,
+      "htmlKB": 185,
+      "title": "أم سارة | منصة الخدمات الأكاديمية والبحثية",
+      "hasMetaDesc": true,
+      "hasOgTags": true,
+      "hasCanonical": false,
+      "hasH1": true,
+      "langAttr": "ar",
+      "dirAttr": "rtl",
+      "imgsNoAlt": 0,
+      "ariaLabels": 18
+    },
+    "types": {
+      "font": 14,
+      "script": 22,
+      "stylesheet": 2,
+      "document": 1,
+      "fetch": 28
+    }
+  },
+  "reham-services": {
+    "url": "http://localhost:8090/services.html",
+    "requests": 43,
+    "approx_bytes": 1688736,
+    "load_s": 0.12,
+    "vitals": {
+      "ttfb": 1,
+      "domContentLoaded": 109,
+      "loadEvent": 119,
+      "fcp": 120,
+      "lcp": null,
+      "transferSize": 0,
+      "domNodes": 1015,
+      "htmlKB": 92,
+      "title": "خدماتنا | أم رهام — منصة تعليمية واستشارية",
+      "hasMetaDesc": true,
+      "hasOgTags": false,
+      "hasCanonical": false,
+      "hasH1": true,
+      "langAttr": "ar",
+      "dirAttr": "rtl",
+      "imgsNoAlt": 4,
+      "ariaLabels": 31
+    },
+    "types": {
+      "document": 1,
+      "stylesheet": 11,
+      "script": 13,
+      "image": 6,
+      "font": 11,
+      "fetch": 1
+    }
+  },
+  "sara-services": {
+    "url": "https://umm-sara.vercel.app/services",
+    "requests": 111,
+    "approx_bytes": 551981,
+    "load_s": 0.18,
+    "vitals": {
+      "ttfb": 6,
+      "domContentLoaded": 32,
+      "loadEvent": 180,
+      "fcp": 196,
+      "lcp": null,
+      "transferSize": 300,
+      "domNodes": 385,
+      "htmlKB": 81,
+      "title": "الخدمات | أم سارة",
+      "hasMetaDesc": true,
+      "hasOgTags": true,
+      "hasCanonical": false,
+      "hasH1": true,
+      "langAttr": "ar",
+      "dirAttr": "rtl",
+      "imgsNoAlt": 0,
+      "ariaLabels": 10
+    },
+    "types": {
+      "font": 14,
+      "script": 22,
+      "document": 1,
+      "stylesheet": 2,
+      "fetch": 72
+    }
+  },
+  "reham-store": {
+    "url": "http://localhost:8090/store.html",
+    "requests": 45,
+    "approx_bytes": 1210948,
+    "load_s": 0.09,
+    "vitals": {
+      "ttfb": 1,
+      "domContentLoaded": 73,
+      "loadEvent": 74,
+      "fcp": 92,
+      "lcp": null,
+      "transferSize": 0,
+      "domNodes": 1266,
+      "htmlKB": 101,
+      "title": "المتجر | أم رهام — منصة تعليمية واستشارية",
+      "hasMetaDesc": true,
+      "hasOgTags": false,
+      "hasCanonical": false,
+      "hasH1": true,
+      "langAttr": "ar",
+      "dirAttr": "rtl",
+      "imgsNoAlt": 5,
+      "ariaLabels": 37
+    },
+    "types": {
+      "document": 1,
+      "stylesheet": 10,
+      "image": 7,
+      "script": 14,
+      "font": 11,
+      "fetch": 2
+    }
+  },
+  "sara-cvbuilder": {
+    "url": "https://umm-sara.vercel.app/cv-builder",
+    "requests": 67,
+    "approx_bytes": 574171,
+    "load_s": 0.13,
+    "vitals": {
+      "ttfb": 6,
+      "domContentLoaded": 26,
+      "loadEvent": 129,
+      "fcp": 128,
+      "lcp": null,
+      "transferSize": 300,
+      "domNodes": 293,
+      "htmlKB": 70,
+      "title": "بنّاء السيرة الذاتية | أم سارة",
+      "hasMetaDesc": true,
+      "hasOgTags": true,
+      "hasCanonical": false,
+      "hasH1": true,
+      "langAttr": "ar",
+      "dirAttr": "rtl",
+      "imgsNoAlt": 0,
+      "ariaLabels": 9
+    },
+    "types": {
+      "font": 14,
+      "script": 22,
+      "document": 1,
+      "stylesheet": 2,
+      "fetch": 28
+    }
+  }
+}

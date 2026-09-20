@@ -75,7 +75,7 @@ tests/              اختبارات التشغيل البنيوية
 
 ## النشر
 
-دليل النشر التشغيلي الكامل (Render + Supabase): [`DEPLOYMENT.md`](DEPLOYMENT.md) — والتهيئة جاهزة في `render.yaml` و`supabase/schema.sql`.
+دليل النشر التشغيلي الكامل (Vercel + Supabase): [`DEPLOYMENT.md`](DEPLOYMENT.md) — **المنصة حيّة: <https://umm-sara.vercel.app>** (كل push إلى `main` ينشر تلقائياً)، والمخطط في `supabase/schema.sql`.
 
 ## الترخيص
 

@@ -109,7 +109,10 @@ export function HeroVisual({
   }, [mode]);
 
   const showScene = mode === "scene3d" && !sceneError;
-  /* v5.1: على الجوال تبقى طبقة SVG عند 20% (كما v4) بينما طبقة 3D أوضح (40%) */
+  /* v5.1: على الجوال تبقى طبقة SVG عند 20% (كما v4) بينما طبقة 3D أوضح
+     V10.1 — درس 1 (مقارنة أم رهام): خفض طبقة الجوال 35% → 26% حتى يتنفس
+     العنوان الكريمي فوق التوهج، مع الحفاظ على حضور المشهد (القياس بعد
+     التنفيذ موثق في سكربت التحقق) */
   const svgOpacity = showScene ? "opacity-0" : faint ? "opacity-20" : "opacity-100";
 
   return (
@@ -131,7 +134,7 @@ export function HeroVisual({
         <SceneBoundary onCatch={() => setSceneError(true)}>
           <div
             className={`animate-scene-in absolute inset-0 ${
-              faint ? "opacity-35" : "opacity-100"
+              faint ? "opacity-26" : "opacity-100"
             }`}
           >
             <PearlScene

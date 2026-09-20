@@ -91,6 +91,27 @@ create table if not exists public.testimonials (
   created_at timestamptz default now()
 );
 
+-- ---------- معرض الأعمال (V10.1 — الدرس 5 من مقارنة أم رهام) ----------
+-- البنية جاهزة لاستبدال النماذج التوضيحية بأعمال حقيقية موثقة —
+-- الواجهة تقرأ من مصدر البيانات الثابت أولاً (نمط الأقسام نفسه)،
+-- وهذا الجدول هو المسار الإداري المستقبلي (لوحة تحكم/API)
+create table if not exists public.works (
+  id            serial primary key,
+  slug          varchar(200) not null unique,
+  title         varchar(240) not null,
+  category_slug varchar(160) not null,
+  university    varchar(160),
+  summary       text,
+  description   text,
+  deliverables  text,
+  tags          text,
+  duration      varchar(80),
+  is_sample     boolean default true,
+  is_visible    boolean default true,
+  sort_order    int default 0,
+  created_at    timestamptz default now()
+);
+
 -- ---------- فهارس ----------
 create index if not exists idx_services_category on public.services(category_id);
 create index if not exists idx_services_active on public.services(is_active) where is_active;
@@ -98,6 +119,8 @@ create index if not exists idx_subcategories_category on public.subcategories(ca
 create index if not exists idx_orders_status on public.orders(status);
 create index if not exists idx_orders_created on public.orders(created_at desc);
 create index if not exists idx_consultations_status on public.consultations(status);
+create index if not exists idx_works_category on public.works(category_slug);
+create index if not exists idx_works_visible on public.works(is_visible, sort_order);
 
 -- ============================================================
 -- البيانات الأولية (Seed) — من services-data.md
@@ -160,6 +183,18 @@ insert into public.testimonials (name, role, text, rating) values
   ('د. سالم الشمري', 'باحث دكتوراه — تربية', 'التدقيق اللغوي وتنسيق المراجع APA وفّر عليّ أسابيع من المراجعة اليدوية. التزام تام بالمواعيد.', 5)
 on conflict do nothing;
 
+-- نماذج معرض الأعمال التوضيحية (مطابقة لمصدر البيانات الثابت في الكود —
+-- is_sample=true صراحة: نزاهة العرض أمام الزوار، والاستبدال بأعمال حقيقية
+-- يكون بتحديث هذا الـ seed ومصدر الكود معاً)
+insert into public.works (slug, title, category_slug, university, summary, duration, is_sample, sort_order) values
+  ('mba-research-proposal', 'خطة بحث ماجستير — إدارة الأعمال', 'graduate-services', 'جامعة الملك سعود', 'صياغة مشكلة البحث والفرضيات والإطار النظري وفق توصيات لجنة الدراسات العليا، بمراجع APA محدثة.', 'أسبوعان', true, 1),
+  ('cs-graduation-project', 'مشروع تخرج برمجي — علوم الحاسب', 'programming-and-tech', 'جامعة الإمام محمد بن سعود', 'تطبيق ويب متكامل بمكدس حديث مع توثيق فني كامل واختبارات، جاهز لعرض يوم المناقشة.', '6 أسابيع', true, 2),
+  ('spss-thesis-analysis', 'تحليل إحصائي لرسالة ماجستير — SPSS', 'statistics-and-data-analysis', 'جامعة أم القرى', 'تفريغ 380 استبانة وتحليل وصفي واستدلالي كامل مع كتابة فصلي النتائج والمناقشة بصياغة أكاديمية.', '3 أسابيع', true, 3),
+  ('engineering-report-formatting', 'تدقيق وتنسيق تقرير هندسي — 60 صفحة', 'university-services', 'جامعة القصيم', 'تدقيق لغوي شامل وتنسيق مراجع IEEE وتوحيد الأشكال والجداول وفق دليل الكلية.', '5 أيام', true, 4),
+  ('scientific-poster-design', 'ملصق علمي لمؤتمر طبي', 'design-and-support', 'جامعة طيبة', 'تصميم Scientific Poster بمعايير المؤتمرات: هرمية قراءة واضحة ورسوم بيانية مُبسطة للنتائج.', '4 أيام', true, 5),
+  ('phd-literature-review', 'مراجعة منهجية للأدبيات — دكتوراه تربية', 'graduate-services', 'جامعة الأميرة نورة', 'مراجعة منهجية PRISMA لـ 48 دراسة مع مصفوفة تركيب ومحاور نقدية جاهزة لفصل الأدبيات.', '3 أسابيع', true, 6)
+on conflict (slug) do nothing;
+
 -- ============================================================
 -- أمان على مستوى الصفوف (RLS)
 -- الطلبات والاستشارات: كتابة عامة عبر service_role فقط (من مسارات API
@@ -171,6 +206,7 @@ alter table public.services enable row level security;
 alter table public.categories enable row level security;
 alter table public.subcategories enable row level security;
 alter table public.testimonials enable row level security;
+alter table public.works enable row level security;
 
 -- قراءة عامة للمحتوى (الخدمات والأقسام والآراء) عبر المفتاح المجهول
 -- (drop قبل كل create: يجعل الملف كله قابلاً لإعادة التشغيل بأمان —
@@ -183,3 +219,5 @@ drop policy if exists "public read services" on public.services;
 create policy "public read services" on public.services for select using (is_active = true);
 drop policy if exists "public read testimonials" on public.testimonials;
 create policy "public read testimonials" on public.testimonials for select using (is_visible = true);
+drop policy if exists "public read works" on public.works;
+create policy "public read works" on public.works for select using (is_visible = true);

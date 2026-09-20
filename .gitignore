@@ -40,6 +40,11 @@ download/*
 scripts/*
 !scripts/baseline-color-check.py
 !scripts/v10-*
+!scripts/vercel-*.py
+!scripts/verify-live.py
+!download/comparison/
+!scripts/reham-*.py
+!scripts/sara-mobile-diag.py
 upload/
 skills/
 
