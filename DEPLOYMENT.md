@@ -1,32 +1,32 @@
-# دليل نشر منصة أم سارة — Render + Supabase
+# دليل نشر منصة أم سارة — Vercel + Supabase
 
 دليل تشغيلي كامل: من المستودع إلى موقع حي على الويب.
-**آخر تحديث: التلقائية الكاملة (2026-09-20)** — المستودع منشور على GitHub · `render.yaml` Blueprint جاهز بنقرة واحدة (`autoDeploy: true`) · GitHub Action جاهز لتطبيق مخطط Supabase تلقائياً · مسار البناء مُثبت بمحاكاة تثبيت نظيف كاملة (npm ci بظروف Render → بناء 22.4s بـ 18/18 صفحة → خادم standalone يستجيب 200).
+**آخر تحديث: الإطلاق الحي (2026-09-20)** — المنصة **حيّة رسمياً على Vercel**: <https://umm-sara.vercel.app> (خطة Hobby مجانية — بلا بطاقة ولا رسوم) · كل push إلى `main` ينشر تلقائياً · GitHub Action يطبّق مخطط Supabase تلقائياً · مسار Render موثّق مغلقاً (توجيه عام معطوب من طرف المنصة نفسها — worklog Task 19).
 
 ## خريطة التلقائية (ماذا يحدث بعد أول إعداد)
 
 ```
-كل push إلى main ──┬─→ Render (Blueprint, autoDeploy: true)
-                    │     بناء + نشر تلقائي للواجهة — بلا أي تدخل
+كل push إلى main ──┬─→ Vercel (Git Integration)
+                    │     بناء + نشر تلقائي للإنتاج — بلا أي تدخل
                     └─→ GitHub Action (إن مُسّ supabase/** )
                           تطبيق schema.sql على Supabase — بلا أي تدخل
 ```
 
-الإعداد الأولي مرة واحدة فقط: (1) تشغيل المخطط على Supabase (يدوي أو بسر واحد)، (2) Render → New → Blueprint وملء 4 متغيرات سرية. بعدها الدورة كاملة تلقائية.
+الإعداد الأولي **منجز بالكامل** (2026-09-20): قاعدة Supabase حية بالمخطط والبذور · مشروع Vercel `umm-sara` مربوط بالمستودع ومنشور (متغيرات البيئة 5/5 عبر API) · سر `SUPABASE_DB_URL` في GitHub Secrets. الدورة الآن تلقائية بالكامل من طرف إلى طرف.
 
 ## البنية
 
 ```
-[المستخدم] → Next.js على Render (umm-sarah-web)
+[المستخدم] → Next.js على Vercel (umm-sara — https://umm-sara.vercel.app)
                   └── API Routes → Supabase PostgreSQL (طلبات/استشارات)
 
-FastAPI على Render (umm-sarah-api) — معطّلة مؤقتاً (PDF فيها TODO — انظر render.yaml)
+FastAPI (api-service/) — معطّلة مؤقتاً (PDF فيها TODO)
 ```
 
 | المكوّن | التقنية | مكان النشر |
 |---|---|---|
-| الواجهة + مسارات API | Next.js 16.1 (Turbopack) + TypeScript + three.js/R3F (مشهد اللؤلؤة) | Render (خدمة Node — المفعّلة الوحيدة) |
-| الخدمة البرمجية | FastAPI (Python) | Render (Docker) — **معطّلة مؤقتاً** في `render.yaml` |
+| الواجهة + مسارات API | Next.js 16.1 (Turbopack) + TypeScript + three.js/R3F (مشهد اللؤلؤة) | **Vercel — الإنتاج الحي** |
+| الخدمة البرمجية | FastAPI (Python) | معطّلة مؤقتاً (غير منشورة — انظر `api-service/`) |
 | قاعدة البيانات | PostgreSQL + RLS | Supabase |
 
 ## المستودع على GitHub
@@ -47,7 +47,7 @@ git checkout release-v10 && git merge main --squash && git commit && git push or
 
 **المستثنى من التتبع تلقائياً** (`.gitignore`): `node_modules/` و`.next/` و`research/` (أكواد مرجعية محفوظة الحقوق) و`reference-material/` و`upload/` وملفات `.env` وقواعد البيانات المحلية. **الشجرة المتعقبة = كود التطبيق + أدلة التحقق** (`download/` لقطات القياس، `scripts/` سكربتات الفحص القابلة لإعادة التشغيل).
 
-> **تنبيه أمان**: إن كانت لديك ملفات `.env` محلية فهي لن تُرفع (مستثناة). أسرار الإنتاج تُدخل من لوحة Render مباشرة كما في الخطوة 2.
+> **تنبيه أمان**: إن كانت لديك ملفات `.env` محلية فهي لن تُرفع (مستثناة). أسرار الإنتاج مضبوطة في متغيرات البيئة المشفّرة لمشروع Vercel.
 
 ## الخطوة 1 — تجهيز Supabase (10 دقائق)
 
@@ -60,27 +60,24 @@ git checkout release-v10 && git merge main --squash && git commit && git push or
    - `Project URL` → متغير `SUPABASE_URL`
    - `service_role` (سري!) → متغير `SUPABASE_SERVICE_ROLE_KEY`
 
-## الخطوة 2 — النشر على Render (5 دقائق)
+## الخطوة 2 — النشر على Vercel (منجز — للتوثيق)
 
-1. المستودع منشور أصلاً على GitHub: `AhmedMar98/Umm-sara` (فرع `main`).
-2. في [Render](https://render.com): **New → Blueprint** واختر المستودع — سيقرأ `render.yaml` وينشئ خدمة الويب تلقائياً.
-3. عند طلب المتغيرات السرية (`sync: false`) أدخل قيم Supabase من الخطوة 1:
-   - `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` → الإدراج الفعلي للطلبات
-   - `NEXT_PUBLIC_SUPABASE_URL` → احتياط الكود (نفس Project URL)
-   - `NEXT_PUBLIC_WHATSAPP_NUMBER` → رقمك بصيغة دولية بلا `+` (مثال: `966501234567`) — يُدمج وقت البناء فاضبطه قبل أول نشر
-4. اضغط Deploy — وبعدها كل push إلى `main` ينشر تلقائياً (`autoDeploy: true`).
+1. المستودع منشور على GitHub: `AhmedMar98/Umm-sara` (فرع `main`).
+2. المشروع `umm-sara` على [Vercel](https://vercel.com) مربوط بالمستودع عبر Git Integration — **منشور وحي**: <https://umm-sara.vercel.app>
+3. متغيرات البيئة الخمسة مضبوطة عبر API لكل من production وpreview: `SUPABASE_URL` · `SUPABASE_SERVICE_ROLE_KEY` (مشفّر) · `NEXT_PUBLIC_SUPABASE_URL` · `NEXT_PUBLIC_WHATSAPP_NUMBER` · `NEXT_TELEMETRY_DISABLED`.
+4. كل push إلى `main` ينشر تلقائياً على الإنتاج (Git Integration).
 
-> **ملاحظة**: `NEXT_PUBLIC_WHATSAPP_NUMBER` غير مضبوط = الرقم الافتراضي 966500000000 يُدمج في الحزمة. ضع رقمك الحقيقي قبل أول بناء.
+> **ملاحظة**: `NEXT_PUBLIC_WHATSAPP_NUMBER` الحالي `966500000000` (قيمة افتراضية) — ضع رقمك الحقيقي لدمجه في البناء: حدّث المتغير من لوحة Vercel ثم أعد النشر (Deployments → Redeploy).
 
-## ما يحدث على Render أثناء البناء (تم التحقق منه فعلياً)
+## ما يحدث أثناء البناء (تم التحقق منه فعلياً على المنصة)
 
-المسار المُثبت بمحاكاة كاملة على نسخة نظيفة من الكود (Task 17 — 2026-09-20: `git archive` → `NODE_ENV=production npm ci --legacy-peer-deps` → بناء → تشغيل standalone):
+المسار مُثبت مرتين: محاكاة تثبيت نظيف كاملة (Task 17) ثم **بناء حقيقي على Vercel نفسها في الإطلاق الحي** (Task 20: تجميع 17.4s + 18/18 صفحة + فحص TS مفعّل):
 
 | الأمر | النتيجة المقاسة |
 |---|---|
-| `npm ci --legacy-peer-deps` | تثبيت نظيف بظروف Render (devDeps مُقصاة) — سكربتات prisma (توليد العميل) وsharp (الثلنات الأصلية) نجحت جميعها |
-| `npm run build` | `next build` بنجاح: 18 مساراً (14 ثابت + 4 ديناميكي) في 22.4s بفحص TS مفعّل، ثم نسخ `static/` و`public/` داخل `.next/standalone/` |
-| `npm run start` | `node .next/standalone/server.js` — جاهز في 62ms، استجابة 200 على الرئيسية + مسارات API تعمل (التدهور الرشيق بلا متغيرات مُثبت) |
+| `npm ci --legacy-peer-deps` | تثبيت نظيف — سكربتات prisma (توليد العميل) وsharp (الثلاثيات الأصلية) نجحت جميعها |
+| `npm run build` | `next build` بنجاح: 18 مساراً — تجميع 17.4s + توليد 18/18 صفحة بفحص TS مفعّل |
+| الإخراج | على Vercel: Build Output API تلقائياً — ثوابت على CDN + دوال API على Serverless |
 
 > **لماذا `--legacy-peer-deps` إلزامي؟** سببان موثقان من سجل الأخطاء الفعلي:
 > 1. `@lexical/yjs` (من سلسلة `@mdxeditor/editor`) يصرّح بـ peer على `yjs` لا يستورده التطبيق إطلاقاً — npm 11 يفرض بناءه في «الشجرة المثالية» فيفشل `npm ci` العادي بخطأ EUSAGE (مفقود: yjs).
@@ -88,7 +85,7 @@ git checkout release-v10 && git merge main --squash && git commit && git push or
 >
 > العلم يثبّت الشجرة المقفلة الحرفية — وهي شجرة متحقق منها فعلياً: بناء نظيف، صفر expo في الشجرة، تشغيل مثبت. مررنا بالتجربة أن بدونه يفشل البناء فشلاً حتمياً.
 
-- **Node 20.19.0** مثبت في `render.yaml` (Next 16 يتطلب ≥ 20.9).
+- **Node**: Vercel تبني بـ Node 24.x افتراضياً (مُثبت في بناء الإطلاق) — Next 16 يتطلب ≥ 20.9.
 - جذر Turbopack مُثبَّت صراحةً في `next.config.ts` (يمنع استنتاج الجذر عند تعدد ملفات القفل).
 - كل الخطوط (Amiri / Cairo / IBM Plex Arabic / IBM Plex Mono) **مدمجة ذاتياً عبر `next/font`** — لا طلبات خارجية لأي CDN خطوط وقت التشغيل.
 - حزم وقت التشغيل الحرجة مضمّنة في الـ bundle: `lenis` (التمرير السلس) و`framer-motion` (لغة الحركة).
@@ -104,12 +101,11 @@ git checkout release-v10 && git merge main --squash && git commit && git push or
   - مسارات الحماية: لا WebGL/مسعّر برمجي → fallback لمدار SVG · `prefers-reduced-motion` → لا يُحمّل إطلاقاً · جوال → جزيئات مخففة + DPR≤1.5 · خارج الشاشة → تجميد كامل (frameloop=never).
   - مفتاح فحص `?force3d=1` يتجاوز رفض المسعّرات البرمجية فقط (بيئات CI/headless) — لا يمس بوابة reduced-motion.
 
-## الخطوة 3 — التحقق بعد النشر
+## الخطوة 3 — التحقق بعد النشر (منجز ومُثبت بالقياس)
 
-- افتح دومين `umm-sarah-web` — الصفحة الرئيسية تعمل والسمة الداكنة افتراضية مع شريط تقدم القراءة أعلى الشريط.
-- أرسل نموذج طلب تجريبي → تحقق من ظهور صف في `orders` داخل Supabase (Table Editor).
-- فحص إضافي (اختياري): `curl -o /dev/null -s -w "%{http_code}" <رابطك>` يرجع 200.
-- خدمة FastAPI معطّلة مؤقتاً — عند تفعيلها لاحقاً يصبح `https://umm-sarah-api.onrender.com/health` يرجع `{"status":"ok"}`.
+- <https://umm-sara.vercel.app> — 200 على الصفحات الثماني كلها بهوية «أم سارة» و`dir="rtl"` (سكربت `scripts/verify-live.py`).
+- POST تجريبي إلى `/api/orders` و`/api/consultations` أرجع `persisted:true` والصفوف ظهرت بالاستعلام المباشر في Supabase ثم حُذفت (worklog Task 20).
+- فحص الصحة: <https://umm-sara.vercel.app/healthz> يرجع `{"status":"ok","service":"umm-sara",...}`.
 
 ## متغيرات البيئة الكاملة
 
@@ -145,7 +141,7 @@ PostgREST بمفتاح `anon` — البنية جاهزة لذلك دون تغي
 
 ## الأمان
 
-- مفتاح `service_role` يبقى في متغيرات بيئة Render فقط — لا يُكوَّن أبداً في كود العميل.
+- مفتاح `service_role` يبقى في متغيرات بيئة Vercel المشفّرة فقط — لا يُكوَّن أبداً في كود العميل.
 - RLS مُفعّل على كل الجداول؛ الكتابة العامة تمر حصراً عبر API Routes (جهة الخادم).
 - `.env` مُستثنى من التتبع نهائياً (`.gitignore`)؛ `.env.example` مرجع بلا قيم حقيقية.
 - سر `SUPABASE_DB_URL` يعيش في GitHub Secrets فقط (مشفّر) — لا يظهر في السجلات.
