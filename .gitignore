@@ -45,6 +45,7 @@ scripts/*
 !download/comparison/
 !scripts/reham-*.py
 !scripts/sara-mobile-diag.py
+!scripts/modernity-*.py
 upload/
 skills/
 
