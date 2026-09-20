@@ -6,6 +6,11 @@ import {
   Quote,
   MessageCircle,
   CalendarClock,
+  GraduationCap,
+  MapPin,
+  ArrowUpLeft,
+  Layers,
+  Clock3,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -25,6 +30,8 @@ import {
   STATS,
   TESTIMONIALS,
   HOW_IT_WORKS,
+  UNIVERSITIES,
+  WORKS,
   whatsappLink,
 } from "@/lib/platform-data";
 
@@ -63,13 +70,23 @@ export default function HomePage() {
         <div className="grid-overlay absolute inset-0" aria-hidden="true" />
         <div className="vignette absolute inset-0" aria-hidden="true" />
 
-        {/* المرساة البصرية خلف النص على الجوال (مدار SVG ← مشهد اللؤلؤة 3D) */}
+        {/* المرساة البصرية خلف النص على الجوال (مدار SVG ← مشهد اللؤلؤة 3D)
+            V10.1 — درس 1 (مقارنة أم رهام): تقليص نطاق اللؤلؤة عمودياً قليلاً
+            (130vw→112vw) حتى يتنفس العنوان، مع حجاب تعتيم أسفل هذه الطبقة */}
         <div
           className="pointer-events-none absolute inset-0 flex items-center justify-center lg:hidden"
           aria-hidden="true"
         >
-          <HeroVisual faint className="h-[130vw] max-h-[36rem] w-[130vw] max-w-[36rem]" />
+          <HeroVisual faint className="h-[112vw] max-h-[32rem] w-[112vw] max-w-[32rem]" />
         </div>
+
+        {/* V10.1 — درس 1: حجاب تعتيم متدرج فوق المشهد وتحت النص (الجوال فقط)
+            يعتمد لون الخلفية الحاكم — يستعيد تباين العنوان الكريمي والذهبي
+            فوق توهج اللؤلؤة (قياس ما قبل الإصلاح: سطوع 218/255 ووضوح 2/10) */}
+        <div
+          className="hero-mobile-scrim pointer-events-none absolute inset-0 lg:hidden"
+          aria-hidden="true"
+        />
 
         {/* بيانات الأركان التقنية */}
         {CORNER_META.map((m) => (
@@ -117,7 +134,10 @@ export default function HomePage() {
             </h1>
 
             <Reveal delay={560}>
-              <p className="mt-6 max-w-xl text-balance text-sm leading-8 text-muted-foreground sm:text-base sm:leading-9">
+              {/* V10.1 — درس 1: الفقرة بلون أكثر حضوراً من muted (توصية جلسة
+                  التحقق بالنموذج البصري: العنوان والأزرار 9+/10 والفقرة كانت
+                  الوحيدة الأدنى وضوحاً فوق الحجاب) */}
+              <p className="mt-6 max-w-xl text-balance text-sm leading-8 text-foreground/80 sm:text-base sm:leading-9">
                 في منصة أم سارة نرافقك في رحلتك الأكاديمية كاملة — من أول بحث
                 جامعي، إلى رسالة الماجستير والدكتوراه، إلى سيرتك الذاتية التي
                 تفتح لك أبواب المستقبل. فريق خبراء أكاديميين، معايير علمية
@@ -125,13 +145,15 @@ export default function HomePage() {
               </p>
             </Reveal>
 
-            <Reveal delay={680}>
-              <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row lg:items-start">
-                <Magnetic intensity={0.32} range={80}>
+            <Reveal delay={680} className="w-full">
+              {/* V10.1 — درس 1: أزرار أضخم على الجوال (h-14 + عرض كامل)
+                  بوزن أثقل — انعكاس مباشر لأزرار أم رهام عالية التباين */}
+              <div className="mt-9 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center lg:items-start">
+                <Magnetic intensity={0.32} range={80} className="w-full sm:w-auto">
                   <Button
                     asChild
                     size="lg"
-                    className="shine h-12 rounded-full border border-gold/40 bg-gradient-to-l from-gold-bright to-gold px-8 text-base font-bold text-[#241a08] shadow-[0_10px_40px_-10px_rgba(197,160,89,0.55)]"
+                    className="shine h-14 w-full rounded-full border border-gold/40 bg-gradient-to-l from-gold-bright to-gold px-8 text-base font-black text-[#241a08] shadow-[0_10px_40px_-10px_rgba(197,160,89,0.55)] sm:h-12 sm:w-auto"
                   >
                     <Link href="/services" data-cursor>
                       ابدأ طلبك الآن
@@ -139,12 +161,12 @@ export default function HomePage() {
                     </Link>
                   </Button>
                 </Magnetic>
-                <Magnetic intensity={0.32} range={80}>
+                <Magnetic intensity={0.32} range={80} className="w-full sm:w-auto">
                   <Button
                     asChild
                     size="lg"
                     variant="outline"
-                    className="h-12 rounded-full border-primary/40 bg-transparent px-8 text-base font-bold text-primary backdrop-blur-sm transition-colors hover:border-primary hover:bg-glow/20"
+                    className="h-14 w-full rounded-full border-primary/50 bg-background/60 px-8 text-base font-black text-primary backdrop-blur-md transition-colors hover:border-primary hover:bg-glow/20 sm:h-12 sm:w-auto"
                   >
                     <Link href="/consultation" data-cursor>
                       <CalendarClock className="size-5" />
@@ -245,13 +267,66 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= المنتجات المستقلة — مسرح عرض سينمائي (v4) ================= */}
+      {/* ================= اختر جامعتك (V10.1 — الدرس 4) =================
+          استهداف دلالي مباشر: «هم يعرفون جامعتي» — بطاقات اسمية أنيقة
+          بروابط لصفحة الخدمات الجامعية بمعامل الجامعة (بلا شعارات رسمية:
+          علامات تجارية محمية — الرسالة تصل بالاسم والمدينة والتخصص) */}
       <section className="border-y border-border bg-secondary/40">
         <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
           <Reveal variant="blur">
             <SectionHeading
-              kicker="STANDALONE PRODUCTS"
+              kicker="YOUR UNIVERSITY"
               index="02"
+              title="اختر جامعتك وابدأ"
+              description="نخدم طلاب أكثر من 40 جامعة سعودية وخليجية ونعرف أنظمتها التنسيقية — هذه بعض أبرزها."
+            />
+          </Reveal>
+          <div className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-4">
+            {UNIVERSITIES.map((u, i) => (
+              <Reveal key={u.slug} delay={Math.min(i * 60, 300)} variant="up">
+                <Link
+                  href={`/services/university-services?university=${u.slug}`}
+                  className="hairline-top card-lift group flex h-full flex-col gap-2.5 rounded-xl border border-border bg-card p-5 card-glow hover:border-gold/30"
+                >
+                  <span className="flex size-11 items-center justify-center rounded-xl border border-gold/20 bg-gold-soft text-gold transition-transform duration-500 [transition-timing-function:var(--ease-pearl)] group-hover:scale-110 group-hover:-rotate-6">
+                    <GraduationCap className="size-5" strokeWidth={1.8} />
+                  </span>
+                  <span className="font-display text-sm font-bold leading-6 transition-colors duration-300 group-hover:text-gold">
+                    {u.name}
+                  </span>
+                  <span className="text-[11px] leading-5 text-muted-foreground">{u.note}</span>
+                  <span className="mt-auto flex items-center justify-between pt-2 text-[10px] text-muted-foreground/80">
+                    <span className="inline-flex items-center gap-1">
+                      <MapPin className="size-3" />
+                      {u.city}
+                    </span>
+                    <ArrowUpLeft className="size-3.5 text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={200}>
+            <div className="mt-5 text-center">
+              <Link
+                href="/services/university-services"
+                className="inline-flex items-center gap-2 rounded-full border border-dashed border-border bg-card/50 px-5 py-2.5 text-xs font-bold text-muted-foreground transition-all hover:border-gold/40 hover:text-gold"
+              >
+                <Layers className="size-4 text-gold" />
+                و +32 جامعة سعودية وخليجية أخرى — نعرف أنظمتها أيضاً
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ================= المنتجات المستقلة — مسرح عرض سينمائي (v4) ================= */}
+      <section className="">
+        <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <Reveal variant="blur">
+            <SectionHeading
+              kicker="STANDALONE PRODUCTS"
+              index="03"
               title="منتجان مستقلان داخل المنصة"
               description="أداتان احترافيتان صممناهما ليعملا بمعزل عن باقي الخدمات — سرعة، بساطة، ونتيجة فورية. بدّل بينهما وشاهدهما يعملان مباشرة."
             />
@@ -265,7 +340,7 @@ export default function HomePage() {
         <Reveal variant="blur">
           <SectionHeading
             kicker="HOW IT WORKS"
-            index="03"
+            index="04"
             title="ثلاث خطوات تفصلك عن إنجازك"
           />
         </Reveal>
@@ -296,7 +371,7 @@ export default function HomePage() {
           <Reveal variant="blur">
             <SectionHeading
               kicker="TESTIMONIALS"
-              index="04"
+              index="05"
               title="ماذا يقول عملاؤنا؟"
             />
           </Reveal>
@@ -321,6 +396,64 @@ export default function HomePage() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ================= من معرض الأعمال (V10.1 — الدرس 5) =================
+          أقوى وسيطة ثقة في القطاع: عيّنات توضيحية موسومة بصدق، تفتح
+          صفحة المعرض الكاملة لاستعراض البنية والتسليمات */}
+      <section className="border-y border-border bg-secondary/40">
+        <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+          <Reveal variant="blur">
+            <SectionHeading
+              kicker="PORTFOLIO"
+              index="06"
+              title="من معرض أعمالنا"
+              description="نماذج توضيحية لبنية عملنا وتسليماتنا في مختلف التخصصات — بنفس المنهجية التي ستُطبّق على طلبك."
+            />
+          </Reveal>
+          <div className="mt-14 grid gap-5 md:grid-cols-3">
+            {WORKS.slice(0, 3).map((w, i) => (
+              <Reveal key={w.slug} delay={i * 100}>
+                <Link
+                  href={`/works/${w.slug}`}
+                  className="hairline-top card-lift group flex h-full flex-col rounded-xl border border-border bg-card p-6 card-glow hover:border-gold/30"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <Badge variant="outline" className="border-primary/30 bg-accent text-[10px] text-primary">
+                      {w.category}
+                    </Badge>
+                    <span className="mono-chip text-[9px] text-muted-foreground" dir="ltr">
+                      SAMPLE
+                    </span>
+                  </div>
+                  <h3 className="mt-4 font-display text-base font-bold leading-7 transition-colors duration-300 group-hover:text-gold">
+                    {w.title}
+                  </h3>
+                  <p className="mt-2.5 flex-1 text-[13px] leading-6 text-muted-foreground">
+                    {w.summary}
+                  </p>
+                  <span className="mt-4 flex items-center justify-between border-t border-border/60 pt-3 text-[11px] text-muted-foreground">
+                    <span className="inline-flex items-center gap-1.5">
+                      <Clock3 className="size-3.5 text-gold" />
+                      {w.duration}
+                    </span>
+                    <span className="font-bold text-primary">التفاصيل ←</span>
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={150}>
+            <div className="mt-8 text-center">
+              <Button asChild variant="outline" className="rounded-full border-primary/40 font-bold text-primary hover:bg-glow/20 hover:text-primary">
+                <Link href="/works">
+                  <Layers className="size-4" />
+                  تصفح المعرض الكامل
+                </Link>
+              </Button>
+            </div>
+          </Reveal>
         </div>
       </section>
 

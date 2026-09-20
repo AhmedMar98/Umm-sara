@@ -3,7 +3,7 @@ import { MessageCircle, Mail, Clock, MapPin } from "lucide-react";
 import { SectionHeading } from "@/components/section-blocks";
 import { Reveal } from "@/components/reveal";
 import { OrderForm } from "@/components/order-form";
-import { whatsappLink } from "@/lib/platform-data";
+import { whatsappLink, WHATSAPP_DISPLAY } from "@/lib/platform-data";
 
 export const metadata: Metadata = {
   title: "تواصل معنا",
@@ -35,7 +35,7 @@ export default function ContactPage() {
             <p className="text-xs leading-6 text-muted-foreground">
               رد شبه فوري خلال ساعات العمل، وأفضل خيار للطلبات العاجلة.
             </p>
-            <p className="font-mono text-sm text-primary" dir="ltr">+966 50 000 0000</p>
+            <p className="font-mono text-sm text-primary" dir="ltr">{WHATSAPP_DISPLAY}</p>
           </a>
         </Reveal>
         <Reveal delay={90}>

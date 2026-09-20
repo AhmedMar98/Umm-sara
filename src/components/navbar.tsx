@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useTheme } from "next-themes";
-import { Moon, Sun, Menu, MessageCircle, CalendarClock } from "lucide-react";
+import { Moon, Sun, Menu, MessageCircle, CalendarClock, ShoppingBasket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -14,12 +14,15 @@ import {
 } from "@/components/ui/sheet";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { LogoMark } from "@/components/brand/logo";
+import { CartDrawer } from "@/components/cart-drawer";
 import { cn } from "@/lib/utils";
 import { whatsappLink } from "@/lib/platform-data";
+import { useCart } from "@/lib/cart";
 
 const NAV_LINKS = [
   { href: "/", label: "الرئيسية" },
   { href: "/services", label: "الخدمات" },
+  { href: "/works", label: "معرض الأعمال" },
   { href: "/cv-builder", label: "بنّاء السيرة" },
   { href: "/plagiarism-check", label: "فحص الأصالة" },
   { href: "/about", label: "من نحن" },
@@ -39,6 +42,30 @@ function ThemeToggle() {
     >
       <Sun className="size-[18px] hidden dark:block" />
       <Moon className="size-[18px] dark:hidden" />
+    </Button>
+  );
+}
+
+/** V10.1 — زر السلة بشارة عدد (الدرس 3): يظهر عند وجود عناصر فقط */
+function CartButton() {
+  const { count, setOpen, ready } = useCart();
+  if (!ready || count === 0) return null;
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={() => setOpen(true)}
+      aria-label={`عرض سلة الطلبات — ${count} ${count === 1 ? "خدمة" : "خدمات"}`}
+      className="relative rounded-full border-primary/40 text-primary hover:bg-accent hover:text-primary"
+    >
+      <ShoppingBasket className="size-[18px]" />
+      <span
+        className="absolute -top-1.5 -end-1.5 flex min-w-5 items-center justify-center rounded-full bg-gold px-1 text-[10px] font-black text-[#241a08] shadow-sm"
+        dir="ltr"
+        aria-hidden="true"
+      >
+        {count > 9 ? "9+" : count}
+      </span>
     </Button>
   );
 }
@@ -111,6 +138,7 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-1.5">
+          <CartButton />
           <ThemeToggle />
 
           <Button
@@ -185,6 +213,8 @@ export function Navbar() {
           </Sheet>
         </div>
       </div>
+      {/* V10.1 — درج السلة (الدرس 3): مثبت واحد على مستوى الشريط */}
+      <CartDrawer />
     </header>
   );
 }

@@ -1,16 +1,26 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CheckCircle2, ArrowLeft, CalendarClock } from "lucide-react";
+import { CheckCircle2, ArrowLeft, CalendarClock, ShieldCheck, RefreshCcw, MessageCircle, BadgeCheck, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CATEGORIES, PLATFORM_NAME } from "@/lib/platform-data";
+import { CATEGORIES, PLATFORM_NAME, universityBySlug, WHY_US } from "@/lib/platform-data";
 import { ICONS, TrustRow } from "@/components/section-blocks";
 import { OrderForm } from "@/components/order-form";
+import { AddToCartButton } from "@/components/add-to-cart";
+
+/* V10.1 — درس 6: أيقونات أسباب الطمأنينة (خمسة أسباب بصوت أم رهام) */
+const WHY_ICONS = {
+  "shield-check": ShieldCheck,
+  "calendar-clock": CalendarClock,
+  "refresh-ccw": RefreshCcw,
+  "message-circle": MessageCircle,
+  "badge-check": BadgeCheck,
+} as const;
 
 interface Props {
   params: Promise<{ category: string }>;
-  searchParams: Promise<{ service?: string }>;
+  searchParams: Promise<{ service?: string; university?: string }>;
 }
 
 export function generateStaticParams() {
@@ -29,17 +39,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CategoryPage({ params, searchParams }: Props) {
   const { category } = await params;
-  const { service } = await searchParams;
+  const { service, university } = await searchParams;
   const cat = CATEGORIES.find((c) => c.slug === category);
   if (!cat) notFound();
+
+  /* V10.1 — درس 4: معامل الجامعة من قسم «اختر جامعتك» في الرئيسية —
+     سياق دلالي («نعرف جامعتك») يظهر كشارة ويُدمج في عنوان الطلب */
+  const uni = universityBySlug(university);
 
   const Icon = ICONS[cat.icon];
   const preselected = service
     ? cat.subServices.find((s) => s.slug === service)?.name
     : undefined;
   const orderLabel = preselected
-    ? `${cat.name} — ${preselected}`
-    : cat.name;
+    ? `${cat.name} — ${preselected}${uni ? ` — طالب في ${uni.name}` : ""}`
+    : `${cat.name}${uni ? ` — طالب في ${uni.name}` : ""}`;
 
   const siblings = CATEGORIES.filter((c) => c.slug !== cat.slug);
 
@@ -68,10 +82,18 @@ export default async function CategoryPage({ params, searchParams }: Props) {
               </span>
             )}
             <div>
-              <Badge variant="outline" className="mb-2 border-gold/40 bg-gold-soft text-[11px] text-gold">
-                {cat.tagline}
-              </Badge>
-              <h1 className="font-display text-3xl font-black sm:text-4xl">
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge variant="outline" className="border-gold/40 bg-gold-soft text-[11px] text-gold">
+                  {cat.tagline}
+                </Badge>
+                {uni && (
+                  <Badge variant="outline" className="gap-1.5 border-primary/40 bg-accent text-[11px] text-primary">
+                    <GraduationCap className="size-3.5" />
+                    خدمات طلاب {uni.name}
+                  </Badge>
+                )}
+              </div>
+              <h1 className="mt-2 font-display text-3xl font-black sm:text-4xl">
                 {cat.name}
               </h1>
             </div>
@@ -79,6 +101,13 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
           <p className="mt-5 max-w-3xl text-sm leading-8 text-muted-foreground sm:text-base sm:leading-9">
             {cat.longDescription}
+            {uni && (
+              <span className="mt-2 block text-[13px] leading-7 text-muted-foreground/90">
+                طلاب {uni.name} ({uni.city}): نعرف أنظمة جامعتك التنسيقية
+                ومتطلبات الكليات فيها — اذكر تخصصك في نموذج الطلب وسيصل طلبك
+                إلى متخصص جرّب مثله في جامعتك.
+              </span>
+            )}
           </p>
           <TrustRow className="mt-6" />
         </div>
@@ -93,16 +122,22 @@ export default async function CategoryPage({ params, searchParams }: Props) {
               ({String(cat.subServices.length).padStart(2, "0")})
             </span>
           </h2>
-          <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
+          {/* V10.1 — درس 3: نقرة واحدة تضيف الخدمة إلى السلة — ثم أرسلها
+              كلها طلباً واحداً منظماً على واتساب من أي صفحة */}
+          <p className="mt-2 text-xs leading-6 text-muted-foreground">
+            اضغط «أضف» على ما يناسبك — ثم أرسل القائمة كاملة بضغطة واحدة من زر السلة أعلى الصفحة.
+          </p>
+          <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
             {cat.subServices.map((s) => (
               <li key={s.slug}>
-                <a
-                  href="#order-form"
-                  className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3.5 text-sm transition-all hover:border-primary/40 hover:bg-accent/50"
-                >
-                  <CheckCircle2 className="size-4 shrink-0 text-primary" />
-                  <span className="font-medium">{s.name}</span>
-                </a>
+                <AddToCartButton
+                  item={{
+                    name: s.name,
+                    category: cat.name,
+                    categorySlug: cat.slug,
+                    serviceSlug: s.slug,
+                  }}
+                />
               </li>
             ))}
           </ul>
@@ -116,6 +151,30 @@ export default async function CategoryPage({ params, searchParams }: Props) {
               </li>
             ))}
           </ul>
+
+          {/* V10.1 — درس 6: «خمسة أسباب تجعلك مطمئناً» — كتلة الثقة
+              المستفادة من أم رهام، بصوت أم سارة وبنظامها التصميمي */}
+          <div className="hairline-top mt-12 rounded-xl border border-gold/20 bg-gold-soft/30 p-6">
+            <h2 className="font-display text-lg font-bold">
+              خمسة أسباب تجعلك مطمئناً
+            </h2>
+            <ul className="mt-4 space-y-4">
+              {WHY_US.map((r) => {
+                const RIcon = WHY_ICONS[r.icon as keyof typeof WHY_ICONS];
+                return (
+                  <li key={r.title} className="flex items-start gap-3.5">
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-gold/30 bg-card text-gold">
+                      {RIcon && <RIcon className="size-4.5" strokeWidth={1.8} />}
+                    </span>
+                    <div>
+                      <p className="text-sm font-bold">{r.title}</p>
+                      <p className="mt-1 text-[13px] leading-6 text-muted-foreground">{r.text}</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
 
         {/* نموذج الطلب */}
