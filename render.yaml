@@ -1,0 +1,47 @@
+# ============================================================
+# منصة أم سارة — إعدادات النشر على Render
+# خدمتان: الواجهة (Next.js) + الخدمة البرمجية (FastAPI/Python)
+# قاعدة البيانات: Supabase (تُدار من لوحتها — ليست خدمة Render)
+# ============================================================
+
+services:
+  # ---------- الواجهة الرئيسية ----------
+  - type: web
+    name: umm-sarah-web
+    runtime: node
+    plan: starter
+    region: frankfurt # الأقرب للسعودية ضمن خطط Render
+    # --legacy-peer-deps مطلوب: @lexical/yjs (من @mdxeditor) يصرح بـ peer على yjs
+    # لا يستخدمه التطبيق، وسلسلة peerOptional الخاصة بـ @react-three/fiber تجبر
+    # npm على بناء شجرة مثالية متضاربة. العلم يثبّت الشجرة المقفلة الحرفية.
+    buildCommand: npm ci --legacy-peer-deps && npm run build
+    startCommand: npm run start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 20.19.0
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_WHATSAPP_NUMBER
+        sync: false # مثال: 966501234567
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false # سري — من Service Role في Supabase
+      - key: API_SERVICE_URL
+        value: https://umm-sarah-api.onrender.com
+
+  # ---------- الخدمة البرمجية (Python) ----------
+  - type: web
+    name: umm-sarah-api
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./api-service/Dockerfile
+    dockerContext: ./api-service
+    healthCheckPath: /health
+    envVars:
+      - key: ALLOWED_ORIGINS
+        sync: false # مثال: https://umm-sarah-web.onrender.com

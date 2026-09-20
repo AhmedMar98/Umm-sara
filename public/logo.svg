@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72" width="240" height="72" role="img" aria-label="Umm Sara logo">
+  <!-- علامة أم سارة — قوس المعرفة واللؤلؤة (تكوين أفقي، خلفية داكنة) -->
+  <rect width="240" height="72" rx="18" fill="#080e0b"/>
+  <g transform="translate(8,4)">
+    <path d="M 55 54 Q 32 58.5 9 54" fill="none" stroke="#c5a059" stroke-opacity="0.75" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M 52 46.5 C 52 29.5 43.5 17 32 11.5 C 20.5 17 12 29.5 12 46.5" fill="none" stroke="url(#g)" stroke-width="3.4" stroke-linecap="round"/>
+    <circle cx="32" cy="30.5" r="5.2" fill="#c5a059"/>
+    <circle cx="30.2" cy="28.7" r="1.7" fill="#f4e9c8" opacity="0.9"/>
+  </g>
+  <text x="82" y="42" font-family="Georgia, 'Times New Roman', serif" font-size="26" fill="#f4f1e8" text-anchor="start" direction="rtl">&#1571;&#1605; &#1587;&#1575;&#1585;&#1577;</text>
+  <text x="84" y="56" font-family="Georgia, 'Times New Roman', serif" font-size="8" letter-spacing="3.4" fill="#8ba297">UMM SARA</text>
+  <defs>
+    <linearGradient id="g" x1="40" y1="15.5" x2="40" y2="50.5" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e8d48b"/>
+      <stop offset="1" stop-color="#c5a059"/>
+    </linearGradient>
+  </defs>
+</svg>

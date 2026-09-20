@@ -1,0 +1,23 @@
+الدليل,النوع,الحالة,الموجة,المسار/المصدر
+تجميد خط الصفر (BASELINE_V5 + 8 لقطات + SHA256),وثيقة+لقطات,PASS,التجميد,BASELINE_V5.md + download/baseline-v5/
+فحص بكسلي للخط الأساس (داكن 97.8% فاتح 97.1%),قياس,PASS,التجميد,scripts/baseline-color-check.py
+بناء 18/18 صفحة 16.6s (v5),قياس,PASS,التجميد,worklog Task 11
+13/13 مسار 200 + علامات الهوية (أم سارة×17 pearl×19 rtl),قياس,PASS,التجميد,BASELINE_V5.md §3
+صفر أثر لـ V6-V9 (git/reflog/fsck/ملفات),تدقيق جنائي,PASS,التجميد,BASELINE_V5.md §1
+رفع تتبع 1481 ملفاً مولّداً + شجرة نظيفة,تنظيف,PASS,النظافة,كوميتات 4ddb0ee/b011057/94aa857
+tsc=0 مع فحص مفعّل في البناء,قياس,PASS,موجة 1,كوميت 3715ecc
+تباين WCAG 14/14 AA سمتين,قياس,PASS,موجة 1,scripts/v10-contrast-check.py
+SceneBoundary — فشل WebGL لا يسقط الصفحة,اختبار,PASS,موجة 1,كوميت 3715ecc
+مقارنة بكسلية موجة 1 متطابقة جوهرياً,قياس,PASS,موجة 1,scripts/v10-pixel-compare.py
+صفر انتهاك تباعد حروف عربية (كان 11),تدقيق,PASS,موجة 2,rg شامل + كوميت 0f0c477
+هرمية h1=1 في 13/13 صفحة,قياس,PASS,موجة 2,scripts/v10-wave2-verify.sh
+صفر تجاوز أفقي 390/768/1920 (كان 406/776),قياس,PASS,موجة 3,scripts/v10-wave3-fix-verify.sh
+قائمة الجوال: فتح + 7 روابط + إغلاق Escape,اختبار وظيفي,PASS,موجة 3,04-mobile-menu-open-390.png
+TTFB 6-112ms لكل المسارات,قياس,PASS,موجة 4,scripts/v10-wave4-perf.sh
+JS أول تحميل 269KB gzip + 3D lazy مثبت,قياس,PASS,موجة 4,scripts/v10-wave4-fonts.sh
+هوية بكسلية نهائية 4/4 متطابقة (متوسطات للبكسل),قياس,PASS,موجة 5,download/v10-release/ + CHECKSUMS
+بصمات SHA256 لأدلة الإطلاق,بصمات,PASS,موجة 5,download/v10-release/CHECKSUMS.sha256
+نشر إنتاجي حقيقي على Render,نشر,UNVERIFIED,موجة 5,محجوب: لا GitHub/Render/اعتمادات
+متغيرات الإنتاج (واتساب/Supabase),بيئة,UNVERIFIED,موجة 5,placeholder 966500000000 موثق
+حذف public/v5-screenshots.zip,نظافة نشر,مؤجل,موجة 5,قرار المستخدم قبل أول نشر
+الكتابة المباشرة في Notion,توثيق,UNVERIFIED,جلسة 20-09,جدار دخول Task 11 — الحل: حزمة استيراد كاملة
