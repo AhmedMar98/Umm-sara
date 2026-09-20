@@ -413,3 +413,27 @@ Stage Summary:
 - القرائن المتراكمة على السبب البنيوي: الرابط كان ميتاً حتى قبل اليوم (النشر القديم live منذ 05-09 لكن الرابط كان يتجاوز المهلة) · قاعدة بيانات الخدمة القديمة ميتة (SSL closed) · 402 Payment information is required على أي إنشاء خدمة في مساحة الفريق — النمط يطابق مساحة عمل فقدت معلومات الدفع وتدهورت مواردها
 - الحكم: التطبيق سليم، البناء سليم، التكوين سليم — عطل توجيه عام من طرف Render غير قابل للإصلاح عبر API
 - مسارا المستخدم الموثقان: (أ) إضافة بطاقة في dashboard.render.com/billing — لا تخصم شيئاً على خطة free، ترجّح إصلاح التوجيه وتفتح إنشاء خدمة جديدة بـ slug نظيف (umm-sarah-web) أنفذها فوراً · (ب) الحل السحابي الجذري البديل: Vercel — Next.js من صنعهم أصلاً، خطة Hobby مجانية بلا بطاقة، autoDeploy من GitHub، تكامل Supabase رسمي؛ يلزم توكن واحد من vercel.com/account/tokens لأنفذ كل شيء آلياً
+
+---
+Task ID: 20
+Agent: main (Super Z)
+Task: الإطلاق الحي على Vercel — المستخدم زوّد توكن Vercel (مسار «ب» الجذري بعد رفض Docker ومطالبة بحل سحابي يطابق Supabase)
+
+Work Log:
+- الحساب عبر /v2/user: ahmedmar98 (tasahom.1998@gmail.com) — خطة Hobby فعّالة (billing.status=active) بلا بطاقة · GitHub مربوط (importFlowGitProvider=github)
+- إنشاء المشروع umm-sara (prj_vi2clYV8PAjeYvHWGlLKFgkK8B9C) عبر POST /v9/projects مربوطاً بـ AhmedMar98/Umm-sara (فرع الإنتاج main) مع installCommand=npm ci --legacy-peer-deps (المسار المُثبت في محاكاة Task 17)
+- متغيرات البيئة 5/5 عبر POST/PATCH /v10/projects/{id}/env (اكتشاف: PUT upsert غير موجود — 404؛ POST ينشئ وPATCH بالمعرّف يحدّث): SUPABASE_URL · SUPABASE_SERVICE_ROLE_KEY (مشفّر من /tmp/sb-keys.json) · NEXT_PUBLIC_SUPABASE_URL · NEXT_PUBLIC_WHATSAPP_NUMBER · NEXT_TELEMETRY_DISABLED — لكلٍّ من production وpreview
+- النشر الأول dpl_73fk8ex9c1NArbgS8EFQQ9MjgmVY (gitSource github repoId 1378003756 + ref main — اكتشاف: ref إلزامي وإلا 400): بناء سليم 100% (تجميع 17.4s + 18/18 صفحة + TS سليم + Build Output API) لكن كل الدومينات 404 (x-vercel-error: NOT_FOUND)
+- التشخيص المزدوج: (1) مشروع أُنشئ بلا framework => الموجّه لا يخدم مخرجاته إطلاقاً · (2) ssoProtection كانت all_except_custom_domains (302→vercel.com/sso-api قبل إطفائها — تُحمي حتى الإنتاج)
+- الإصلاح المُثبت: PATCH framework=nextjs + ssoProtection=preview (الإنتاج عام والمعاينات محمية) ثم نشر ثانٍ بنفس gitSource
+- النشر الثاني dpl_8W1z7Gbre2Cz35M4D5XTMCtCuAUr (كوميت 0cc3254): READY => umm-sara.vercel.app = 200
+- التحقق النهائي (scripts/verify-live.py): 8 صفحات HTML كلها 200 بهوية «أم سارة» وdir=rtl (/ · /about · /consultation · /contact · /cv-builder · /plagiarism-check · /services · /services/university-services) + /healthz يرجع status:ok + /api يرجع 200 + POST /api/orders و/api/consultations من الإنتاج أرجعا ok:true persisted:true + استعلام SQL مباشر أثبت الصفين في Supabase ثم حُذفا (الإنتاج نظيف) + البذور سليمة (6 أقسام)
+- الحوكمة: بوابة الإصدار — البند 11 UNVERIFIED→PASS · البند 13 مؤجل→PASS (zip محذوف من الشجرة تحققاً بـ ls-tree والأصل محفوظ) · تحديث البند 12 بدليل Vercel · الخلاصة: 13 بنداً محسوماً · DEPLOYMENT.md أعيدت كتابته حول Vercel (البنية + الخريطة + الخطوات + جدول المتغيرات + الأمان) · README حدّث رابط النشر بالرابط الحي
+- سكربتات موثقة: scripts/vercel-create-deploy.py (إنشاء+بيئة+إطلاق النشر) · scripts/vercel-poll.py (مراقبة حتى الحكم) · scripts/verify-live.py (التحقق الكامل القابل لإعادة التشغيل)
+
+Stage Summary:
+- المنصة حيّة رسمياً: https://umm-sara.vercel.app (Vercel Hobby — بلا بطاقة ولا رسوم) — أقوى دليل في المشروع: بناء حقيقي على المنصة + كل المسارات 200 + كتابتان حقيقيتان إلى Supabase حُذفتا بعد التوثيق
+- التلقائية من طرف إلى طرف: كل push إلى main => نشر إنتاج تلقائي (Git Integration) · كل مس لـ supabase/** => تطبيق المخطط تلقائياً (GitHub Action) — لا خطوة يدوية متبقية في دورة التطوير
+- المتبقي الوحيد: رقم واتساب الحقيقي (الافتراضي 966500000000 مدمج في البناء)
+- أمان (إلزامي بعد تأكيد المستخدم): تدوير كل المفاتيح الظاهرة في المحادثة (GitHub ghp_ · Supabase sbp_ · Render rnd_ · Vercel vcp_ · كلمة مرور قاعدة postgres) — كلها وصلت نصاً صريحاً في الدردشة
+- درس موثق: النشران الأول والثاني تطابقان في الكود والبيئة تماماً — الفارق الوحيد framework: nextjs على المشروع؛ إطار غير مضبوط يبني بنجاح ثم يُخدم 404 على Vercel — البناء الناجح ليس دليل نشر يخدم
