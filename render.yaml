@@ -1,16 +1,25 @@
 # ============================================================
-# منصة أم سارة — إعدادات النشر على Render
-# خدمتان: الواجهة (Next.js) + الخدمة البرمجية (FastAPI/Python)
-# قاعدة البيانات: Supabase (تُدار من لوحتها — ليست خدمة Render)
+# منصة أم سارة — Render Blueprint (نشر تلقائي كامل من المستودع)
+#
+# الطريقة (مرة واحدة): Render → New → Blueprint → اختر AhmedMar98/Umm-sara
+#   → املأ المتغيرات السرية (sync: false) → Deploy
+# بعدها: كل push إلى main ينشر تلقائياً (autoDeploy: true)
+#
+# مُثبت بالمحاكاة الكاملة (2026-09-20، worklog Task 17):
+#   تثبيت نظيف NODE_ENV=production (devDeps مُقصاة، prisma/sharp سكربتات ناجحة)
+#   → بناء 22.4s (18/18 صفحة، فحص TS مفعّل)
+#   → خادم standalone يستجيب 200 + مسارات API تعمل بالتدهور الرشيق
 # ============================================================
 
 services:
-  # ---------- الواجهة الرئيسية ----------
+  # ---------- الواجهة (Next.js) — الخدمة المفعّلة الوحيدة ----------
   - type: web
     name: umm-sarah-web
     runtime: node
     plan: starter
-    region: frankfurt # الأقرب للسعودية ضمن خطط Render
+    region: frankfurt # الأقرب للسعودية ضمن مناطق Render
+    branch: main
+    autoDeploy: true # كل push إلى main = نشر تلقائي
     # --legacy-peer-deps مطلوب: @lexical/yjs (من @mdxeditor) يصرح بـ peer على yjs
     # لا يستخدمه التطبيق، وسلسلة peerOptional الخاصة بـ @react-three/fiber تجبر
     # npm على بناء شجرة مثالية متضاربة. العلم يثبّت الشجرة المقفلة الحرفية.
@@ -22,26 +31,28 @@ services:
         value: 20.19.0
       - key: NEXT_TELEMETRY_DISABLED
         value: "1"
-      - key: NEXT_PUBLIC_SUPABASE_URL
-        sync: false
-      - key: NEXT_PUBLIC_WHATSAPP_NUMBER
-        sync: false # مثال: 966501234567
       - key: SUPABASE_URL
-        sync: false
+        sync: false # من Supabase → Project Settings → API → Project URL
       - key: SUPABASE_SERVICE_ROLE_KEY
-        sync: false # سري — من Service Role في Supabase
-      - key: API_SERVICE_URL
-        value: https://umm-sarah-api.onrender.com
+        sync: false # سري — من Supabase → Project Settings → API → service_role
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false # احتياط الكود إن غاب SUPABASE_URL (نفس Project URL)
+      - key: NEXT_PUBLIC_WHATSAPP_NUMBER
+        sync: false # مثال: 966501234567 — يُدمج وقت البناء؛ اضبطه قبل أول نشر
 
-  # ---------- الخدمة البرمجية (Python) ----------
-  - type: web
-    name: umm-sarah-api
-    runtime: docker
-    plan: starter
-    region: frankfurt
-    dockerfilePath: ./api-service/Dockerfile
-    dockerContext: ./api-service
-    healthCheckPath: /health
-    envVars:
-      - key: ALLOWED_ORIGINS
-        sync: false # مثال: https://umm-sarah-web.onrender.com
+  # ---------- الخدمة البرمجية (FastAPI) — معطّلة مؤقتاً ----------
+  # السبب الموثق (2026-09-20): توليد PDF فيها TODO (استجابة تأكيدية فقط —
+  # api-service/main.py) ولا يستوردها كود الواجهة (API_SERVICE_URL غير مستعمل في src/)
+  # التنشيط لاحقاً بعد تنفيذ reportlab: أزل التعليقات وعيّن ALLOWED_ORIGINS
+  # - type: web
+  #   name: umm-sarah-api
+  #   runtime: docker
+  #   plan: starter
+  #   region: frankfurt
+  #   autoDeploy: true
+  #   dockerfilePath: ./api-service/Dockerfile
+  #   dockerContext: ./api-service
+  #   healthCheckPath: /health
+  #   envVars:
+  #     - key: ALLOWED_ORIGINS
+  #       sync: false # مثال: https://umm-sarah-web.onrender.com

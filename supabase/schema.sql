@@ -1,7 +1,10 @@
 -- ============================================================
 -- منصة أم سارة — مخطط قاعدة بيانات Supabase (PostgreSQL)
 -- المصدر المرجعي: services-data.md
--- طريقة التطبيق: Supabase Dashboard → SQL Editor → تشغيل هذا الملف
+-- طريقة التطبيق (يدوي): Supabase Dashboard → SQL Editor → تشغيل هذا الملف
+-- طريقة التطبيق (تلقائي): GitHub Action جاهز —
+--   .github/workflows/supabase-db.yml (سر SUPABASE_DB_URL)
+-- الملف idempotent بالكامل: آمن لإعادة التشغيل أي عدد من المرات
 -- ============================================================
 
 -- ---------- الأقسام ----------
@@ -170,7 +173,13 @@ alter table public.subcategories enable row level security;
 alter table public.testimonials enable row level security;
 
 -- قراءة عامة للمحتوى (الخدمات والأقسام والآراء) عبر المفتاح المجهول
+-- (drop قبل كل create: يجعل الملف كله قابلاً لإعادة التشغيل بأمان —
+--  يطلبه مسار التطبيق التلقائي .github/workflows/supabase-db.yml)
+drop policy if exists "public read categories" on public.categories;
 create policy "public read categories" on public.categories for select using (true);
+drop policy if exists "public read subcategories" on public.subcategories;
 create policy "public read subcategories" on public.subcategories for select using (true);
+drop policy if exists "public read services" on public.services;
 create policy "public read services" on public.services for select using (is_active = true);
+drop policy if exists "public read testimonials" on public.testimonials;
 create policy "public read testimonials" on public.testimonials for select using (is_visible = true);
