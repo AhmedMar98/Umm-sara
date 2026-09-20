@@ -1,0 +1,33 @@
+# ============================================================
+# Supabase DB — تطبيق تلقائي لمخطط قاعدة البيانات
+#
+# المشغّل: أي push إلى main يمس supabase/** + تشغيل يدوي (workflow_dispatch)
+# المتطلب الوحيد (سر واحد في GitHub): SUPABASE_DB_URL
+#   القيمة: من لوحة Supabase → Project Settings → Database
+#           → Connection string → URI (استخدم Session pooler — منفذ 5432)
+#   الإضافة: GitHub → Umm-sara → Settings → Secrets and variables
+#            → Actions → New repository secret
+# المخطط idempotent — إعادة التشغيل آمنة
+# ============================================================
+name: Supabase DB
+
+on:
+  push:
+    branches: [main]
+    paths: ['supabase/**']
+  workflow_dispatch:
+
+jobs:
+  apply-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - name: جلب الشيفرة
+        uses: actions/checkout@v4
+
+      - name: تجهيز عميل PostgreSQL
+        run: command -v psql >/dev/null || (sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client)
+
+      - name: تطبيق المخطط على Supabase
+        run: psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -f supabase/schema.sql
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}

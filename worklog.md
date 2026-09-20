@@ -350,3 +350,23 @@ Stage Summary:
 - النسخة الاحتياطية: `history/full-v5-v10` = السلسلة الكاملة مدفوعة (تحذير GitHub موثق بصدق: بلوب 82.95MB فوق توصية الـ 50MB وتحت الحد الصارم 100MB — مقبول لفرع أرشيفي) + وسم `baseline-v5` مدفوع
 - اختبار الاستنساخ النهائي (الدليل الأقوى): `git clone --depth 1` → 172 ملفاً = الشجرة المحلية بالعدد الدقيق · README/DEPLOYMENT.md/BASELINE_V5.md/docs/V10_RELEASE_GATE.md حاضرة · package name=`umm-sara` · public/ نظيف — ثم حُذف الاستنساخ
 - رابط المعاينة الخارجي `preview-<bot-id>.space-z.ai`: **UNVERIFIED من داخل الحاوية** — 5 مرشحين (اسم الدالة/الجلسة/المحادثة/الحاوية) كلها أعادت 404؛ لا اختراع روابط بلا دليل — الرابط الفعلي متاح من واجهة المنصة (زر المعاينة)، والخادم حي خلف بروكسي المنصة (Caddy :81 → :3000)
+
+---
+Task ID: 17
+Agent: main (Super Z)
+Task: تجهيز التلقائية الكاملة للنشر الحقيقي — توجيه المستخدم: «جهز ملفات render و Supabase عشان النشر الحقيقي على الويب يكون تلقائي»
+
+Work Log:
+- تحقيق شامل قبل الكتابة: متغيرات البيئة المستعملة فعلاً في src/ أربعة فقط (SUPABASE_URL/SERVICE_KEY/NEXT_PUBLIC_SUPABASE_URL/NEXT_PUBLIC_WHATSAPP_NUMBER) — API_SERVICE_URL غير مستعمل في أي كود (يزال من render.yaml) · `src/lib/db.ts` يستورد PrismaClient ولا يستورده أحد (سقالة ميتة — لا تحذف بلا حاجة، أثبتت المحاكاة أنها غير مؤذية) · خدمة FastAPI (api-service/main.py) فيها TODO لتوليد PDF = استجابة تأكيدية فقط → تعليقها في render.yaml يوفر خدمة مدفوعة بلا وظيفة
+- **المحاكاة الحاسمة (دليل أن بناء Render سينجح)**: `git archive main` → `.render-sim/` → `NODE_ENV=production npm ci --legacy-peer-deps` (تثبيت نظيف، devDeps مُقصاة كما على Render، سكربتات prisma/sharp نجحت رغم تحذيرات npm 11 المعلوماتية) → `npm run build` = **22.4s، 18/18 صفحة، فحص TS مفعّل** → خادم standalone على PORT=3957: جاهز في 62ms، / = 200 (181KB)، هوية وRTL حاضرة، POST /api/orders يعمل بالتدهور الرشيق (persisted:false) — ثم قتل PID مباشرة (القاعدة الحاكمة) وحذف المحاكاة
+- render.yaml أعيدت كتابته: خدمة ويب واحدة مفعّلة + autoDeploy: true + branch: main + إزالة API_SERVICE_URL + خدمة FastAPI معلقة بتعليق يشرح السبب وطريقة التنشيط لاحقاً + توثيق المحاكاة في الترويسة
+- supabase/schema.sql صار idempotent بالكامل: `drop policy if exists` قبل كل سياسة من الأربع (كانت الوحيدة غير القابلة للإعادة) + ترويسة توثق المسارين (يدوي/تلقائي)
+- ملف جديد `.github/workflows/supabase-db.yml`: تطبيق المخطط تلقائياً عند أي push يمس supabase/** + تشغيل يدوي (workflow_dispatch) — سر واحد فقط: SUPABASE_DB_URL (Session pooler منفذ 5432)
+- ملف جديد `.env.example` + إصلاح حرج مكتشف: نمط `.env.*` في .gitignore كان سيحجب القالب نفسه → استثناء `!.env.example` + حراسة آثار الجلسة (.render-sim/ و .verify-clone/)
+- DEPLOYMENT.md أُعيدت هيكلته حول التلقائية: خريطة «كل push → Render تلقائي + Action تلقائي» + خطوة Supabase بطريقين + تحديث جدول الأدلة بنتائج المحاكاة الجديدة + إزالة API_SERVICE_URL من جدول المتغيرات + إضافة SUPABASE_DB_URL + تحديث قسم الأمان
+- التحقق: YAML صالح للملفين (python yaml.safe_load) · .env.example غير محجوب (check-ignore) · الخادم الحي / = 200 بعد التغييرات (لا تغيير في src/)
+
+Stage Summary:
+- التلقائية الكاملة جاهزة وموثقة: Render Blueprint بنقرة واحدة + autoDeploy + GitHub Action للمخطط + دليل متغيرات مرجعي
+- الدليل الأقوى في المشروع حتى الآن على نجاح نشر Render: محاكاة تثبيت نظيف كاملة من git archive حتى استجابة الخادم المستقل — نُفذت بظروف Render الحرفية
+- المتبقي على المستخدم (مرة واحدة): إنشاء مشروع Supabase وتشغيل المخطط (أو سر SUPABASE_DB_URL) + Render → New → Blueprint وملء 4 متغيرات → ثم الدورة تلقائية بالكامل
