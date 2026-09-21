@@ -46,6 +46,7 @@ scripts/*
 !scripts/reham-*.py
 !scripts/sara-mobile-diag.py
 !scripts/modernity-*.py
+!scripts/wavea-*.py
 upload/
 skills/
 
