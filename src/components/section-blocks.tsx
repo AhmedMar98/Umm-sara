@@ -57,7 +57,7 @@ export function SectionHeading({
         className={cn(
           "font-display",
           as === "h1"
-            ? "text-3xl font-black sm:text-4xl" /* مطابق لمقياس h1 الداخلي الموحد */
+            ? "text-4xl font-black leading-[1.08] sm:text-5xl lg:text-6xl" /* V10.2 Wave B: تايبوغرافيا عرضية تحريرية للصفحات */
             : "text-2xl font-extrabold leading-snug sm:text-3xl md:text-4xl"
         )}
       >

@@ -52,7 +52,6 @@ const MARQUEE_WORDS = [
 /* بيانات الأركان mono (نمط activetheory/locomotive) */
 const CORNER_META = [
   { text: "SA · RIYADH", pos: "top-right" },
-  { text: "EST. MMXXV", pos: "top-left" },
   { text: "26.4°N — 47.6°E", pos: "bottom-left" },
   { text: "AR · EN", pos: "bottom-right" },
 ] as const;
@@ -94,7 +93,7 @@ export default function HomePage() {
             key={m.text}
             className={`mono-chip pointer-events-none absolute z-10 hidden text-[10px] text-muted-foreground/70 md:block ${
               m.pos === "top-right" && "right-8 top-24"
-            } ${m.pos === "top-left" && "left-8 top-24" } ${
+            } ${
               m.pos === "bottom-left" && "bottom-8 left-8"
             } ${m.pos === "bottom-right" && "bottom-8 right-8"}`}
             dir="ltr"

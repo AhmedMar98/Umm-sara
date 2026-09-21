@@ -792,3 +792,204 @@
   }
   @page { size: A4; margin: 0; }
 }
+
+/* ======================================================================
+   V10.2 — Wave A «قاتلة 2022»: عدة الأعماق الطليعية
+   (حدود متدرجة · زجاجية حقيقية · إمالة 3D · ظلال منبعثة ملونة ·
+    أغلفة توليدية · أرقام شبحية · بحث بتوهج تركيز)
+   ======================================================================= */
+
+/* حدود متدرجة (تقنية mask — تحافظ على خلفية العنصر نفسها) */
+.gradient-border { position: relative; }
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    140deg,
+    rgba(197, 160, 89, 0.42),
+    rgba(16, 185, 129, 0.20) 42%,
+    rgba(197, 160, 89, 0.10) 78%,
+    transparent
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+}
+.light .gradient-border::before {
+  background: linear-gradient(
+    140deg,
+    rgba(155, 118, 47, 0.38),
+    rgba(6, 95, 70, 0.18) 42%,
+    rgba(155, 118, 47, 0.08) 78%,
+    transparent
+  );
+}
+
+/* زجاجية حقيقية (backdrop-blur + تشبع) — تعمل بالسمتين */
+.glass {
+  background: color-mix(in oklab, var(--card) 74%, transparent);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+}
+
+/* إمالة ثلاثية الأبعاد خفيفة عند التحويم (توقيع 2026-27) */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.55s var(--ease-expo), box-shadow 0.55s var(--ease-expo);
+  will-change: transform;
+}
+.tilt-card:hover {
+  transform: perspective(1100px) rotateX(1.6deg) rotateY(-1.6deg)
+    translateY(-6px) scale(1.014);
+}
+
+/* ظلال منبعثة ملونة (ذهبي/زمردي) — هوية كل قسم */
+.emit-gold:hover {
+  box-shadow: 0 26px 74px -30px rgba(197, 160, 89, 0.5),
+    0 0 52px -16px rgba(197, 160, 89, 0.32);
+}
+.emit-emerald:hover {
+  box-shadow: 0 26px 74px -30px rgba(16, 185, 129, 0.42),
+    0 0 52px -16px rgba(16, 185, 129, 0.28);
+}
+
+/* رقم شبحي ضخم (تايبوغرافيا عرضية فوق البطاقات) */
+.ghost-index {
+  font-family: var(--font-plex-mono), monospace;
+  font-weight: 700;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(197, 160, 89, 0.55);
+  line-height: 0.8;
+  user-select: none;
+}
+.light .ghost-index {
+  -webkit-text-stroke: 1px rgba(10, 61, 44, 0.4);
+}
+
+/* أغلفة توليدية للأعمال — mesh gradients (وسائط غنية بلا صور مزعومة) */
+.mesh-cover { position: relative; overflow: hidden; isolation: isolate; }
+.mesh-cover::before,
+.mesh-cover::after {
+  content: "";
+  position: absolute;
+  inset: -34%;
+  border-radius: 50%;
+  filter: blur(48px);
+  opacity: 0.5;
+  transition: opacity 0.6s var(--ease-expo), transform 0.9s var(--ease-expo);
+  pointer-events: none;
+}
+.mesh-cover:hover::before { transform: scale(1.18) rotate(12deg); opacity: 0.62; }
+.mesh-cover:hover::after { transform: scale(1.14) rotate(-10deg); opacity: 0.55; }
+.light .mesh-cover::before, .light .mesh-cover::after { opacity: 0.3; }
+
+.mesh-a::before { background: radial-gradient(circle at 28% 42%, rgba(16, 185, 129, 0.55), transparent 62%); }
+.mesh-a::after  { background: radial-gradient(circle at 72% 66%, rgba(197, 160, 89, 0.42), transparent 58%); }
+.mesh-b::before { background: radial-gradient(circle at 34% 58%, rgba(45, 212, 191, 0.5), transparent 62%); }
+.mesh-b::after  { background: radial-gradient(circle at 66% 32%, rgba(245, 158, 11, 0.38), transparent 56%); }
+.mesh-c::before { background: radial-gradient(circle at 30% 50%, rgba(6, 182, 212, 0.48), transparent 60%); }
+.mesh-c::after  { background: radial-gradient(circle at 70% 60%, rgba(16, 185, 129, 0.4), transparent 58%); }
+.mesh-d::before { background: radial-gradient(circle at 32% 44%, rgba(197, 160, 89, 0.5), transparent 60%); }
+.mesh-d::after  { background: radial-gradient(circle at 68% 64%, rgba(217, 119, 6, 0.36), transparent 56%); }
+.mesh-e::before { background: radial-gradient(circle at 30% 46%, rgba(16, 185, 129, 0.46), transparent 60%); }
+.mesh-e::after  { background: radial-gradient(circle at 70% 58%, rgba(45, 212, 191, 0.36), transparent 56%); }
+
+/* بحث بتوهج تركيز (spotlight) */
+.spotlight-input {
+  transition: border-color 0.45s var(--ease-expo), box-shadow 0.45s var(--ease-expo);
+}
+.spotlight-input:focus,
+.spotlight-input:focus-visible {
+  border-color: rgba(197, 160, 89, 0.55);
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(197, 160, 89, 0.35),
+    0 18px 64px -26px rgba(197, 160, 89, 0.5);
+}
+
+/* احترام تقليل الحركة للعدة الجديدة */
+@media (prefers-reduced-motion: reduce) {
+  .tilt-card, .tilt-card:hover { transition: none; transform: none; }
+  .mesh-cover::before, .mesh-cover::after { transition: none; }
+}
+
+/* ===== V10.2 Wave A+ : تعميق الغلاف التوليدي (بلوغ الطليعة) ===== */
+
+/* ملمس حبيبي سينمائي فوق الغلاف — عمق مادي بلا وزن */
+.mesh-cover .mesh-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* لمعة مخروطية بطيئة الدوران — إحساس توليدي حي */
+.mesh-cover .mesh-sheen {
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(244, 241, 232, 0.07) 60deg,
+    transparent 120deg,
+    transparent 240deg,
+    rgba(197, 160, 89, 0.06) 300deg,
+    transparent 360deg
+  );
+  animation: mesh-sheen-spin 26s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes mesh-sheen-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* انسياب الموشورات — المادة تتنفس ببطء (إحساس generative) */
+.mesh-a::before { animation: mesh-drift-a 22s ease-in-out infinite alternate; }
+.mesh-a::after  { animation: mesh-drift-b 26s ease-in-out infinite alternate; }
+.mesh-b::before { animation: mesh-drift-b 24s ease-in-out infinite alternate; }
+.mesh-b::after  { animation: mesh-drift-a 28s ease-in-out infinite alternate; }
+.mesh-c::before { animation: mesh-drift-a 26s ease-in-out infinite alternate; }
+.mesh-c::after  { animation: mesh-drift-b 22s ease-in-out infinite alternate; }
+.mesh-d::before { animation: mesh-drift-b 28s ease-in-out infinite alternate; }
+.mesh-d::after  { animation: mesh-drift-a 24s ease-in-out infinite alternate; }
+.mesh-e::before { animation: mesh-drift-a 24s ease-in-out infinite alternate; }
+.mesh-e::after  { animation: mesh-drift-b 28s ease-in-out infinite alternate; }
+@keyframes mesh-drift-a {
+  from { transform: translate(-4%, -3%) scale(1); }
+  to   { transform: translate(4%, 5%) scale(1.14); }
+}
+@keyframes mesh-drift-b {
+  from { transform: translate(5%, 4%) scale(1.12) rotate(0deg); }
+  to   { transform: translate(-4%, -4%) scale(1) rotate(9deg); }
+}
+
+/* تلاشي الغلاف نحو جسم البطاقة — استمرارية مادية */
+.mesh-fade {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 46%;
+  background: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--card) 88%, transparent),
+    transparent
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mesh-cover .mesh-sheen { animation: none; }
+  .mesh-a::before, .mesh-a::after, .mesh-b::before, .mesh-b::after,
+  .mesh-c::before, .mesh-c::after, .mesh-d::before, .mesh-d::after,
+  .mesh-e::before, .mesh-e::after { animation: none; }
+}
