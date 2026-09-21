@@ -1,24 +1,28 @@
 "use client";
 
 /**
- * مستكشف الخدمات — V10.2 Wave A «ثورة الأعماق»
- * من أكوام أقسام متماثلة (2021) إلى شبكة bento حية:
- *   - إيقاع كامل/نصفي/نصفي على 6 أعمدة — القسم الأكبر يتنفس بعرض الصفحة
+ * مستكشف الخدمات — V10.2 Wave A «ثورة الأعماق» + Wave C «قاموس الحركة»
+ *   - إيقاع bento كامل/نصف/نصف على 6 أعمدة — القسم الأكبر يتنفس بعرض الصفحة
  *   - أورورا داخلية لكل كتلة (عمق مادي حقيقي بالسمتين)
  *   - حدود متدرجة + زجاجية + ظلال منبعثة ملونة بالتناوب (ذهبي/زمردي)
  *   - بحث بتوهج تركيز (spotlight) — الحقل يستحضر الضوء عند الطلب
+ * Wave C — نتائج البحث بحركة FLIP: الأقسام تنزلق لمواضعها الجديدة
+ *   عند كل ضغطة مفتاح، والخارج منها يُقتلع بلطف (popLayout).
  */
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 import { Search, ArrowLeft, MessageCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Reveal } from "@/components/reveal";
 import { ICONS } from "@/components/section-blocks";
 import { AddToCartButton } from "@/components/add-to-cart";
 import type { Category } from "@/lib/platform-data";
 import { whatsappLink } from "@/lib/platform-data";
 import { cn } from "@/lib/utils";
+
+/** منحنى النظام الموقّع — مطابق لـ --ease-expo في CSS */
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 /** إيقاع bento: كامل · نصف · نصف — يتكرر */
 function bentoSpan(i: number): string {
@@ -47,7 +51,8 @@ export function ServicesExplorer({ categories }: { categories: Category[] }) {
   }, [query, categories]);
 
   return (
-    <div className="mt-10">
+    <MotionConfig reducedMotion="user">
+      <div className="mt-10">
       {/* البحث — بتوهج تركيز */}
       <div className="relative mx-auto max-w-xl">
         <Search className="absolute right-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -67,7 +72,12 @@ export function ServicesExplorer({ categories }: { categories: Category[] }) {
       </p>
 
       {filtered.length === 0 && (
-        <div className="glass gradient-border mx-auto mt-10 max-w-md rounded-2xl p-8 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: EASE }}
+          className="glass gradient-border mx-auto mt-10 max-w-md rounded-2xl p-8 text-center"
+        >
           <p className="font-display font-bold">لم نجد نتائج مطابقة</p>
           <p className="mt-2 text-sm leading-7 text-muted-foreground">
             خدمتك غير مدرجة؟ راسلنا وسنؤمّنها لك بأقرب وقت.
@@ -81,16 +91,34 @@ export function ServicesExplorer({ categories }: { categories: Category[] }) {
             <MessageCircle className="size-4" />
             اسأل عن خدمتك
           </a>
-        </div>
+        </motion.div>
       )}
 
-      {/* شبكة bento — كتل بأحجام متباينة */}
-      <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-6">
-        {filtered.map((c, ci) => {
-          const Icon = ICONS[c.icon];
-          const wide = ci % 4 === 0;
-          return (
-            <Reveal key={c.slug} delay={Math.min(ci * 60, 240)} variant="up" className={cn(bentoSpan(ci))}>
+      {/* شبكة bento — كتل بأحجام متباينة · FLIP عند البحث */}
+      <motion.div
+        layout
+        className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-6"
+      >
+        <AnimatePresence mode="popLayout">
+          {filtered.map((c, ci) => {
+            const Icon = ICONS[c.icon];
+            const wide = ci % 4 === 0;
+            const enterDelay = Math.min(ci * 0.04, 0.24);
+            return (
+              <motion.div
+                key={c.slug}
+                layout
+                initial={{ opacity: 0, y: 22 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{
+                  opacity: { duration: 0.3, delay: enterDelay },
+                  y: { duration: 0.5, ease: EASE, delay: enterDelay },
+                  scale: { duration: 0.22 },
+                  layout: { duration: 0.5, ease: EASE },
+                }}
+                className={bentoSpan(ci)}
+              >
               <section
                 id={c.slug}
                 className={cn(
@@ -148,10 +176,12 @@ export function ServicesExplorer({ categories }: { categories: Category[] }) {
                   ))}
                 </ul>
               </section>
-            </Reveal>
+            </motion.div>
           );
         })}
+        </AnimatePresence>
+      </motion.div>
       </div>
-    </div>
+    </MotionConfig>
   );
 }

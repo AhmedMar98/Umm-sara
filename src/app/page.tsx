@@ -104,8 +104,8 @@ export default function HomePage() {
         ))}
 
         <div className="relative z-10 mx-auto grid w-full max-w-6xl flex-1 items-center gap-10 px-4 py-28 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-6">
-          {/* العمود النصي — بداية القراءة في RTL */}
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-start">
+          {/* العمود النصي — بداية القراءة في RTL (Wave C: خروج سينمائي خفيف مدفوع بالتمرير) */}
+          <div className="hero-parallax-near flex flex-col items-center text-center lg:items-start lg:text-start">
             <Reveal>
               <Badge
                 variant="outline"
@@ -191,8 +191,8 @@ export default function HomePage() {
             </Reveal>
           </div>
 
-          {/* العمود البصري — مدار المعرفة ← مشهد اللؤلؤة السينمائي (v5) */}
-          <div className="relative hidden items-center justify-center lg:flex" aria-hidden="true">
+          {/* العمود البصري — مدار المعرفة ← مشهد اللؤلؤة السينمائي (v5 · Wave C: parallax عمق) */}
+          <div className="hero-parallax-far relative hidden items-center justify-center lg:flex" aria-hidden="true">
             {/* هالة ضوئية خلف المدار — كتلة بصرية إضافية */}
             <div className="absolute h-[26rem] w-[26rem] rounded-full bg-primary/[0.13] blur-[110px]" />
             <div className="absolute h-[18rem] w-[18rem] rounded-full bg-gold/[0.08] blur-[90px]" />

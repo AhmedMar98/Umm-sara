@@ -993,3 +993,31 @@
   .mesh-c::before, .mesh-c::after, .mesh-d::before, .mesh-d::after,
   .mesh-e::before, .mesh-e::after { animation: none; }
 }
+
+/* ======================================================================
+   V10.2 — Wave C «قاموس الحركة» — parallax مدفوع بالتمرير (CSS صرف)
+   تعزيز تدريجي: يعمل حيث animation-timeline مدعوم (Chrome 115+ / Safari 18+
+   / Edge / Opera — تغطية ~85% في 2026) وغائب بأمان تام في البقية.
+   المصادر: annnimate.com (State of Web Animation 2026 — الأكبر حجماً) ·
+   mintec.co · caniuse.com (scroll-driven animations)
+   ======================================================================= */
+@keyframes hero-scroll-far {
+  to { transform: translateY(6.5rem) scale(0.955); }
+}
+@keyframes hero-scroll-near {
+  to { transform: translateY(1.75rem); opacity: 0.4; }
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-parallax-far {
+      animation: hero-scroll-far linear both;
+      animation-timeline: scroll();
+      animation-range: 0px 92svh;
+    }
+    .hero-parallax-near {
+      animation: hero-scroll-near linear both;
+      animation-timeline: scroll();
+      animation-range: 0px 92svh;
+    }
+  }
+}

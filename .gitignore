@@ -48,6 +48,7 @@ scripts/*
 !scripts/modernity-*.py
 !scripts/wavea-*.py
 !scripts/waveb-*.py
+!scripts/wavec-*.py
 upload/
 skills/
 
