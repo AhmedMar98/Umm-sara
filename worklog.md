@@ -566,3 +566,21 @@ Stage Summary:
 - إجابة «لماذا التجمّد» مُثبتة بالتنفيذ: التجمّد كان حقيقياً في الرئيسية (وصفة V5 + أزرار pill 2020-21 + شريط تقليدي) — والموجة B قتله في الجلسة نفسها: قراءة سنتين إلى ثلاث سنوات تصميمية مقيسة، بلا أي كيلوبايت جديد
 - الوضع الآن: الهيرو/الشريط 2025-27 · البطاقات «ترقية مادية» 9/9 · الخدمات 2026-27 · المعرض 2025 Elite · الجوال محمي
 - المتبقي الطوعي للطليعة الكاملة 2027: Wave C (حركة layout animation للفلاتر، scroll-driven) وWave D (أغلفة أعمال واقعية/صور حقيقية عند توفرها) — كلاهما تحسين فوق مستوى مُرضٍ مُقاساً
+
+---
+Task ID: 27
+Agent: main (Super Z)
+Task: توجيه نخبوي: بحث موثق بمصادر عن تصاميم 2025/2027 + تطبيقها + مراجعة المحادثة كاملة — تنفيذ Wave C «قاموس الحركة»
+
+Work Log:
+- البحث الحقيقي (4 استعلامات web_search موثقة): scroll-driven animations أكبر فئة حركة 2026 بدعم ~85% (annnimate.com «State of Web Animation 2026» · mintec.co: Chrome 115+/Safari 18+/Edge/Opera · caniuse) — FLIP/layout animations معيار framer-motion (motion.dev · maximeheckel) — bento grids وglassmorphism مستمرة في 2026 (sanjaydey «data-backed» · contra) — squircle-morphism مسماة اتجاهاً لـ2026-27 (michalmalewicz) — micro-animations كأدوات وظيفية (figma.com: Nike/Ralph Lauren) — kinetic typography (studiomeyer)
+- التنفيذ (4 ملفات): works-explorer.tsx — استبدال Reveal بحركة FLIP كاملة: AnimatePresence mode=popLayout + motion.div layout بمنحنى النظام (0.16,1,0.3,1) وdelay تتابعي للداخل فقط (layout بلا delay للانزلاق) + عداد الأعمال motion.p | services-explorer.tsx — نفس الوصفة للبحث (نتائج تنزلق عند كل ضغطة مفتاح) + الحالة الفارغة motion | MotionConfig reducedMotion=user على المستكشفين — إطفاء تلقائي كامل لتقليل الحركة | globals.css — parallax مدفوع بالتمرير CSS صرف: hero-scroll-far (اللؤلؤة يهبط 6.5rem ويصغر — عمق خلفي) وhero-scroll-near (النص يرتفع ويخفت — خروج سينمائي) داخل @supports (animation-timeline: scroll()) و@media prefers-reduced-motion: no-preference | page.tsx — ربط العمودين
+- قرار مؤجل موثق: View Transitions — علم تجريبي في Next.js، رفاهية فوق الميزانية دون ضمان إنتاج — أُرجئ بقرار واعٍ لا إغفالاً
+- الأدلة: 8 لقطات (قبل/منتصف FLIP 280ms/بعد للمعرض والخدمات + هيرو أعلى/متمرر) | تحليل بكسل: الإطار الأوسط يختلف عن الطرفين (2.38 و2.41 للمبيع؛ 4.04 و1.23 للخدمات) — توقيع الانتقال لا القطع | حكم VLM: «اللقطة الثانية تُظهر البطاقات في وضع انتقالي» + الفلترة ناجحة 6←2 + تايبوغرافيا 9 · مادة 9.5 · حداثة 10 | تحقق تقني مباشر: animationName=hero-scroll-far مع timeline: scroll() مفعّلان في Chromium
+- الميزانية: +3KB سلك فقط (framer-motion كان كاملاً في الحزمة عبر navbar — AnimatePresence حاشية صفرية) — 872KB محلي مقابل 869KB قبل الموجة
+- النشر: dc3f2ca ← حي بعد ~135 ثانية (hero-parallax-far/near ×2 في HTML الحي + tablist في /works) + التحقق الكامل 12/12
+
+Stage Summary:
+- الموجات A+B+C مكتملة وحية: الأعماق (تحريري/bento) ثم سطوح الإدراك (كبسولة/زجاج/squircle) ثم قاموس الحركة (FLIP/parallax تمريري) — الموقع الآن يملك الثلاثية الكاملة لتوقيع 2025-27: مادة + تكوين + حركة
+- المنهجية صمدت: كل موجة = بحث/قرار ← تنفيذ ← أدلة مقيسة (بكسل + VLM + getComputedStyle) ← نشر ← تحقق حي — بلا خطوة «ثقة عمياء»
+- المتبقي الطوعي الوحيد: Wave D بنودها الأساسية تحققت ضمن A (mesh/أغلفة) — يبقى استبدال النماذج التوضيحية بأعمال حقيقية عند توفرها من المستخدم
