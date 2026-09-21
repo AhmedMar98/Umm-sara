@@ -47,6 +47,7 @@ scripts/*
 !scripts/sara-mobile-diag.py
 !scripts/modernity-*.py
 !scripts/wavea-*.py
+!scripts/waveb-*.py
 upload/
 skills/
 

@@ -75,15 +75,10 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gold/10 bg-background/70 backdrop-blur-xl">
-      {/* خط شعري ذهبي أسفل الشريط (نمط الفخامة الهادئة) */}
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-l from-transparent via-gold/40 to-transparent"
-        aria-hidden="true"
-      />
-      {/* خط تقدم القراءة — شعرة ذهبية تنمو مع التمرير (v3) */}
-      <ScrollProgress />
-      <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
+    <header className="sticky top-0 z-50 w-full px-3 pt-3 sm:px-4">
+      {/* V10.2 Wave B — كبسولة زجاجية عائمة (توقيع 2026): منفصلة عن الحواف،
+          حد متدرج + زجاج حقيقي + خط تقدم القراءة على حافة الكبسولة */}
+      <div className="glass gradient-border mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 rounded-2xl px-4 shadow-[0_18px_50px_-24px_rgba(3,8,6,0.55)] sm:px-6">
         {/* الشعار — نبضة لؤلؤة عند التحويم (v4) */}
         <Link
           href="/"
@@ -92,7 +87,7 @@ export function Navbar() {
           data-cursor
         >
           <span className="logo-hover-pulse text-gold">
-            <LogoMark size={38} />
+            <LogoMark size={36} />
           </span>
           <span className="flex flex-col leading-none">
             <span className="font-serif-accent text-2xl text-foreground">
@@ -107,17 +102,17 @@ export function Navbar() {
           </span>
         </Link>
 
-        {/* روابط سطح المكتب — كشف خط سفلي عند التحويم */}
+        {/* روابط سطح المكتب — شريط زجاجي ناعم عند التحويم */}
         <nav
           aria-label="التنقل الرئيسي"
-          className="hidden items-center gap-1 lg:flex"
+          className="hidden items-center gap-0.5 lg:flex"
         >
           {NAV_LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               className={cn(
-                "group relative rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-300 hover:text-gold",
+                "group relative rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 hover:bg-accent/40 hover:text-gold",
                 pathname === l.href
                   ? "text-gold"
                   : "text-muted-foreground"
@@ -145,7 +140,7 @@ export function Navbar() {
             asChild
             variant="outline"
             size="sm"
-            className="hidden rounded-full border-gold/40 text-gold hover:bg-gold-soft hover:text-gold sm:inline-flex"
+            className="hidden rounded-xl border-gold/40 text-gold transition-all hover:-translate-y-px hover:bg-gold-soft hover:text-gold sm:inline-flex"
           >
             <Link href="/consultation">
               <CalendarClock className="size-4" />
@@ -156,7 +151,7 @@ export function Navbar() {
           <Button
             asChild
             size="sm"
-            className="hidden rounded-full sm:inline-flex"
+            className="emit-emerald hidden rounded-xl sm:inline-flex"
           >
             <a
               href={whatsappLink("السلام عليكم، أود الاستفسار عن خدمات منصة أم سارة الأكاديمية.")}
@@ -174,7 +169,7 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="lg:hidden"
+                className="rounded-xl lg:hidden"
                 aria-label="فتح القائمة"
               >
                 <Menu className="size-5" />
@@ -212,6 +207,9 @@ export function Navbar() {
             </SheetContent>
           </Sheet>
         </div>
+
+        {/* خط تقدم القراءة — على حافة الكبسولة */}
+        <ScrollProgress />
       </div>
       {/* V10.1 — درج السلة (الدرس 3): مثبت واحد على مستوى الشريط */}
       <CartDrawer />

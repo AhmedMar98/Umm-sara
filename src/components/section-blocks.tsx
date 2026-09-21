@@ -99,7 +99,7 @@ export function CategoryCard({
     <Reveal delay={delay} variant="up">
       <Link
         href={`/services/${slug}`}
-        className="hairline-top shine card-lift group relative flex h-full flex-col rounded-xl border border-border bg-card p-6 card-glow hover:border-gold/30"
+        className="glass gradient-border card-glow tilt-card shine hairline-top emit-gold group relative flex h-full flex-col rounded-2xl p-6"
       >
         {/* فهرس شبحي عملاق — يتوشّح ذهبياً عند التحويم (انتقال CSS عام) */}
         {index && (

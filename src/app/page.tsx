@@ -152,7 +152,7 @@ export default function HomePage() {
                   <Button
                     asChild
                     size="lg"
-                    className="shine h-14 w-full rounded-full border border-gold/40 bg-gradient-to-l from-gold-bright to-gold px-8 text-base font-black text-[#241a08] shadow-[0_10px_40px_-10px_rgba(197,160,89,0.55)] sm:h-12 sm:w-auto"
+                    className="shine emit-gold h-14 w-full rounded-2xl border border-gold/45 bg-gradient-to-l from-gold-bright to-gold px-8 text-base font-black text-[#241a08] shadow-[0_10px_40px_-10px_rgba(197,160,89,0.55)] hover:-translate-y-0.5 sm:h-12 sm:w-auto"
                   >
                     <Link href="/services" data-cursor>
                       ابدأ طلبك الآن
@@ -165,7 +165,7 @@ export default function HomePage() {
                     asChild
                     size="lg"
                     variant="outline"
-                    className="h-14 w-full rounded-full border-primary/50 bg-background/60 px-8 text-base font-black text-primary backdrop-blur-md transition-colors hover:border-primary hover:bg-glow/20 sm:h-12 sm:w-auto"
+                    className="glass gradient-border h-14 w-full rounded-2xl px-8 text-base font-black text-primary transition-all hover:-translate-y-0.5 hover:text-primary sm:h-12 sm:w-auto"
                   >
                     <Link href="/consultation" data-cursor>
                       <CalendarClock className="size-5" />
@@ -285,7 +285,7 @@ export default function HomePage() {
               <Reveal key={u.slug} delay={Math.min(i * 60, 300)} variant="up">
                 <Link
                   href={`/services/university-services?university=${u.slug}`}
-                  className="hairline-top card-lift group flex h-full flex-col gap-2.5 rounded-xl border border-border bg-card p-5 card-glow hover:border-gold/30"
+                  className="hairline-top gradient-border card-glow tilt-card emit-emerald group flex h-full flex-col gap-2.5 rounded-2xl bg-card p-5"
                 >
                   <span className="flex size-11 items-center justify-center rounded-xl border border-gold/20 bg-gold-soft text-gold transition-transform duration-500 [transition-timing-function:var(--ease-pearl)] group-hover:scale-110 group-hover:-rotate-6">
                     <GraduationCap className="size-5" strokeWidth={1.8} />
@@ -350,7 +350,7 @@ export default function HomePage() {
           />
           {HOW_IT_WORKS.map((s, i) => (
             <Reveal key={s.step} delay={i * 120}>
-              <div className="hairline-top flex h-full flex-col items-center rounded-xl border border-border bg-card p-8 text-center card-glow">
+              <div className="hairline-top gradient-border card-glow tilt-card emit-gold flex h-full flex-col items-center rounded-2xl bg-card p-8 text-center">
                 <span className="flex size-14 items-center justify-center rounded-full border border-gold/40 bg-background font-mono text-lg font-semibold text-gold" dir="ltr">
                   {s.step}
                 </span>
@@ -377,7 +377,7 @@ export default function HomePage() {
           <div className="mt-14 grid gap-5 md:grid-cols-3">
             {TESTIMONIALS.map((t, i) => (
               <Reveal key={t.name} delay={i * 100}>
-                <figure className="hairline-top flex h-full flex-col rounded-xl border border-border bg-card p-7 card-glow">
+                <figure className="hairline-top glass gradient-border card-glow tilt-card emit-gold flex h-full flex-col rounded-2xl p-7">
                   <Quote className="size-6 text-gold" aria-hidden="true" />
                   <blockquote className="font-serif-accent mt-4 flex-1 text-[1.05rem] leading-9 text-foreground/90">
                     {t.text}
@@ -416,7 +416,7 @@ export default function HomePage() {
               <Reveal key={w.slug} delay={i * 100}>
                 <Link
                   href={`/works/${w.slug}`}
-                  className="hairline-top card-lift group flex h-full flex-col rounded-xl border border-border bg-card p-6 card-glow hover:border-gold/30"
+                  className="hairline-top gradient-border card-glow tilt-card shine emit-gold group flex h-full flex-col rounded-2xl bg-card p-6"
                 >
                   <div className="flex items-center justify-between gap-3">
                     <Badge variant="outline" className="border-primary/30 bg-accent text-[10px] text-primary">
@@ -445,7 +445,7 @@ export default function HomePage() {
           </div>
           <Reveal delay={150}>
             <div className="mt-8 text-center">
-              <Button asChild variant="outline" className="rounded-full border-primary/40 font-bold text-primary hover:bg-glow/20 hover:text-primary">
+              <Button asChild variant="outline" className="glass gradient-border rounded-2xl border-transparent font-bold text-primary hover:text-primary">
                 <Link href="/works">
                   <Layers className="size-4" />
                   تصفح المعرض الكامل
@@ -459,7 +459,7 @@ export default function HomePage() {
       {/* ================= CTA الختامي — إطار-داخل-إطار ================= */}
       <section className="mx-auto w-full max-w-6xl px-4 py-24 sm:px-6">
         <Reveal>
-          <div className="gradient-frame corner-marks relative overflow-hidden rounded-2xl bg-card p-10 text-center card-glow sm:p-16">
+          <div className="glass gradient-frame corner-marks relative overflow-hidden rounded-3xl p-10 text-center card-glow sm:p-16">
             <div
               className="absolute -top-28 left-1/2 h-64 w-[38rem] -translate-x-1/2 rounded-full bg-primary/15 blur-[120px]"
               aria-hidden="true"
@@ -482,7 +482,7 @@ export default function HomePage() {
                 <Button
                   asChild
                   size="lg"
-                  className="shine h-12 rounded-full border border-gold/40 bg-gradient-to-l from-gold-bright to-gold px-8 text-base font-bold text-[#241a08] shadow-[0_10px_40px_-10px_rgba(197,160,89,0.55)]"
+                  className="shine emit-gold h-12 rounded-2xl border border-gold/45 bg-gradient-to-l from-gold-bright to-gold px-8 text-base font-bold text-[#241a08] shadow-[0_10px_40px_-10px_rgba(197,160,89,0.55)] hover:-translate-y-0.5"
                 >
                   <a
                     href={whatsappLink("السلام عليكم، أريد مناقشة مشروعي الأكاديمي مع منصة أم سارة.")}
@@ -499,7 +499,7 @@ export default function HomePage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="h-12 rounded-full border-primary/40 bg-transparent px-8 text-base font-bold text-primary transition-colors hover:border-primary hover:bg-glow/20"
+                className="glass gradient-border h-12 rounded-2xl border-transparent px-8 text-base font-bold text-primary transition-all hover:-translate-y-0.5 hover:text-primary"
               >
                 <Link href="/consultation">احجز استشارة مجانية</Link>
               </Button>
